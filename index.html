@@ -69,11 +69,13 @@
         .splash-overlay {
             position: absolute;
             inset: 0;
-            background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.1) 100%);
+            background: linear-gradient(to top, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.0) 100%);
+            pointer-events: none;
+            z-index: 1;
         }
         .splash-content {
             position: relative;
-            z-index: 2;
+            z-index: 3;
             text-align: center;
             padding: 40px 20px 60px;
             width: 100%;
@@ -527,6 +529,199 @@
         ul { list-style-type: none; padding-left: 0; }
         ul li { position: relative; padding-left: 20px; margin-bottom: 10px; }
         ul li::before { content: "•"; color: var(--taino-gold); position: absolute; left: 0; font-size: 1.5em; line-height: 1; top: -2px; }
+
+        /* ══════════════════════════════════════
+           AGENDA VISUAL UPGRADES
+        ══════════════════════════════════════ */
+
+        /* SOL BANNER — día header */
+        .sol-banner {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            background: var(--taino-dark);
+            border-radius: 16px;
+            padding: 22px 28px;
+            margin: 36px 0 20px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+        }
+        .sol-banner::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(212,175,55,0.18) 0%, transparent 60%);
+            pointer-events: none;
+        }
+        .sol-banner-icon {
+            font-size: 42px;
+            line-height: 1;
+            flex-shrink: 0;
+            filter: drop-shadow(0 0 10px rgba(212,175,55,0.6));
+        }
+        .sol-banner-info { flex: 1; }
+        .sol-banner-title {
+            font-family: 'Cinzel Decorative', serif;
+            color: var(--taino-gold);
+            font-size: clamp(14px, 3.5vw, 22px);
+            font-weight: 700;
+            margin: 0 0 4px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        .sol-banner-subtitle {
+            font-family: 'Philosopher', sans-serif;
+            color: rgba(255,255,255,0.65);
+            font-size: 13px;
+            font-style: italic;
+            margin: 0;
+        }
+        .sol-banner-pts {
+            font-family: 'Cinzel', serif;
+            background: var(--taino-gold);
+            color: var(--taino-dark);
+            padding: 8px 16px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 14px;
+            white-space: nowrap;
+            box-shadow: 0 2px 10px rgba(212,175,55,0.4);
+        }
+
+        /* BENDICIÓN BOX — pergamino */
+        .bendicion-box {
+            background: linear-gradient(135deg, rgba(212,175,55,0.07) 0%, rgba(0,86,151,0.05) 100%);
+            border: 1px solid rgba(212,175,55,0.3);
+            border-left: 4px solid var(--taino-gold);
+            border-radius: 12px;
+            padding: 22px 24px;
+            margin-bottom: 24px;
+            position: relative;
+        }
+        .bendicion-box::before {
+            content: '✦';
+            position: absolute;
+            top: -10px; left: 20px;
+            background: var(--bg-sand);
+            padding: 0 8px;
+            color: var(--taino-gold);
+            font-size: 18px;
+        }
+        .bendicion-box .quote-line {
+            font-style: italic;
+            color: var(--primary-blue);
+            font-size: 1.05em;
+            font-weight: 700;
+            border-left: 3px solid var(--primary-blue);
+            padding-left: 14px;
+            margin: 14px 0;
+        }
+        .leyenda-label {
+            display: inline-block;
+            background: var(--primary-blue);
+            color: white;
+            font-family: 'Cinzel', serif;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 6px;
+        }
+
+        /* SECTION LABELS dentro de parada */
+        .sec-row {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        .sec-row:last-child { border-bottom: none; }
+        .sec-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+        .sec-icon.umbral  { background: rgba(0,86,151,0.12); }
+        .sec-icon.senal   { background: rgba(212,175,55,0.18); }
+        .sec-icon.reto    { background: rgba(237,28,36,0.10); }
+        .sec-icon.registro{ background: rgba(91,200,245,0.15); }
+        .sec-icon.ofrenda { background: rgba(76,175,80,0.15); }
+        .sec-label {
+            font-family: 'Cinzel', serif;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: block;
+            margin-bottom: 3px;
+        }
+        .sec-label.umbral  { color: var(--primary-blue); }
+        .sec-label.senal   { color: #b8860b; }
+        .sec-label.reto    { color: var(--primary-red); }
+        .sec-label.registro{ color: #1a7ea8; }
+        .sec-label.ofrenda { color: #2e7d32; }
+        .sec-content { flex: 1; font-size: 0.97em; }
+
+        /* PUNTO BADGE */
+        .pts-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: var(--taino-gold);
+            color: var(--taino-dark);
+            font-family: 'Cinzel', serif;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 20px;
+            margin-left: 6px;
+            vertical-align: middle;
+            white-space: nowrap;
+        }
+
+        /* SUBTOTAL BAR */
+        .subtotal-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--taino-dark);
+            color: var(--taino-gold);
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            font-size: 15px;
+            padding: 12px 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            letter-spacing: 1px;
+        }
+
+        /* SUB-PARADA header (Parada 1,2,3 dentro del Viernes/Sábado) */
+        .sub-parada-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(212,175,55,0.12);
+            border-left: 4px solid var(--taino-gold);
+            border-radius: 8px;
+            padding: 10px 16px;
+            margin: 22px 0 12px;
+        }
+        .sub-parada-header h4 {
+            margin: 0 !important;
+            padding: 0 !important;
+            color: var(--taino-dark) !important;
+            font-size: 14px;
+        }
     </style>
 </head>
 <body>
@@ -666,12 +861,24 @@
             </div>
         </div>
 
-        <h3>☀️ SOL 1 (Jueves 2 de Abril): El Despertar de Guahayona</h3>
-        <p><strong>La Bendición de Atabey:</strong><br>"Como la Diosa Madre y señora de las aguas dulces, Atabey bendice hoy tu inicio. Todo gran imperio comienza con un cimiento sólido, y hoy regresas al origen para reconocer tu fuerza. Que las aguas de Borikén limpien tu camino y el sol de la mañana ilumine tu rastro."</p>
-        <p class="quote">"Quererse a uno mismo es el principio de una historia de amor que dura toda la vida." — Oscar Wilde.</p>
-        <p>"Baby, ¡Feliz cumpleaños! A tus 45 años, has construido una versión de ti que admiro profundamente. El amor propio no es egoísmo, es saber cuidar el templo que eres para poder entregarte a los demás. Que este nuevo año de vida sea para seguir priorizando tu paz, tus sueños y esa fuerza interna que te hace único. Celebro tu resiliencia y el gran hombre que eres hoy. Eres el Cacique de tu propio destino."</p>
-        <p><strong>(Guía Espiritual) La Leyenda del Día: Guahayona, el Guerrero-Navegante Rebelde</strong><br>
-        Hoy caminas bajo la sombra de Guahayona, el cacique que rompió el maleficio de la cueva y se atrevió a llevar a su pueblo más allá del mundo conocido, abandonando lo familiar para explorar lo desconocido. Como el Venus matutino, hoy íntegras tus opuestos: la fuerza del guerrero y la sabiduría del navegante. Eres el símbolo vivo de la resiliencia; aquel que muere y renace con más poder en cada ciclo.</p>
+        <!-- SOL 1 BANNER -->
+        <div class="sol-banner">
+            <div class="sol-banner-icon">☀️</div>
+            <div class="sol-banner-info">
+                <div class="sol-banner-title">Sol 1 · Jueves 2 de Abril</div>
+                <div class="sol-banner-subtitle">El Despertar de Guahayona</div>
+            </div>
+            <div class="sol-banner-pts">185 pts</div>
+        </div>
+
+        <div class="bendicion-box">
+            <p><strong>La Bendición de Atabey:</strong><br>"Como la Diosa Madre y señora de las aguas dulces, Atabey bendice hoy tu inicio. Todo gran imperio comienza con un cimiento sólido, y hoy regresas al origen para reconocer tu fuerza. Que las aguas de Borikén limpien tu camino y el sol de la mañana ilumine tu rastro."</p>
+            <div class="quote-line">"Quererse a uno mismo es el principio de una historia de amor que dura toda la vida." — Oscar Wilde.</div>
+            <p>"Baby, ¡Feliz cumpleaños! A tus 45 años, has construido una versión de ti que admiro profundamente. El amor propio no es egoísmo, es saber cuidar el templo que eres para poder entregarte a los demás. Que este nuevo año de vida sea para seguir priorizando tu paz, tus sueños y esa fuerza interna que te hace único. Celebro tu resiliencia y el gran hombre que eres hoy. Eres el Cacique de tu propio destino."</p>
+            <span class="leyenda-label">⚔ Guía Espiritual</span>
+            <p><strong>La Leyenda del Día: Guahayona, el Guerrero-Navegante Rebelde</strong><br>
+            Hoy caminas bajo la sombra de Guahayona, el cacique que rompió el maleficio de la cueva y se atrevió a llevar a su pueblo más allá del mundo conocido, abandonando lo familiar para explorar lo desconocido. Como el Venus matutino, hoy íntegras tus opuestos: la fuerza del guerrero y la sabiduría del navegante. Eres el símbolo vivo de la resiliencia; aquel que muere y renace con más poder en cada ciclo.</p>
+        </div>
 
         <!-- JUEVES P1 -->
         <div class="parada-wrapper">
@@ -680,12 +887,27 @@
                     <h4>📍 Parada 1: Ubicación Sagrada — Palmer</h4>
                 </div>
                 <div class="parada-body">
-                    <p><strong>Umbral del Yucayeque:</strong> Como Guahayona en busca de la esencia de la tierra, has cruzado el portal hacia tu primer gran batey. Atabey te recibe en este rincón de Palmer, donde el aroma a grano tostado y pan recién horneado confirma que la travesía de la Guaca ha comenzado bajo su protección.</p>
-                    <p><strong>La Señal:</strong> Busca el tesoro blanco que nace de la palma y se adorna con los frutos de la tierra lejana. No es pan, pero alimenta el alma; es una joya de nieve que cruje al morder y guarda el dulzor de los ancestros.</p>
-                    <p><strong>Reto de Sabiduría (La Alquimia del Manjar):</strong> La Ceremonia del Gusto (20 pts): Debes reclamar y degustar el Dulce de la Casa. No es un simple bocado; es una prueba de tus sentidos. Tu lengua debe ser el instrumento tras el primer bocado, deberás identificar los elementos ocultos que componen este postre.</p>
-                    <p><strong>El Registro (10 pts):</strong> Captura del Dulce de la Casa antes de que su rastro desaparezca de la tierra junto a tu primer café de la Odisea.</p>
-                    <p><strong>Ofrenda (10 pts):</strong> Beso de impacto para que el Oráculo abra los senderos hacia la montaña sagrada.</p>
-                    <p><em>Subtotal Parada 1: 40 pts</em></p>
+                    <div class="sec-row">
+                        <div class="sec-icon umbral">🏛️</div>
+                        <div class="sec-content"><span class="sec-label umbral">Umbral del Yucayeque</span>Como Guahayona en busca de la esencia de la tierra, has cruzado el portal hacia tu primer gran batey. Atabey te recibe en este rincón de Palmer, donde el aroma a grano tostado y pan recién horneado confirma que la travesía de la Guaca ha comenzado bajo su protección.</div>
+                    </div>
+                    <div class="sec-row">
+                        <div class="sec-icon senal">🔮</div>
+                        <div class="sec-content"><span class="sec-label senal">La Señal</span>Busca el tesoro blanco que nace de la palma y se adorna con los frutos de la tierra lejana. No es pan, pero alimenta el alma; es una joya de nieve que cruje al morder y guarda el dulzor de los ancestros.</div>
+                    </div>
+                    <div class="sec-row">
+                        <div class="sec-icon reto">🧠</div>
+                        <div class="sec-content"><span class="sec-label reto">Reto de Sabiduría — La Alquimia del Manjar</span>La Ceremonia del Gusto: Debes reclamar y degustar el Dulce de la Casa. No es un simple bocado; es una prueba de tus sentidos. Tu lengua debe ser el instrumento — tras el primer bocado, deberás identificar los elementos ocultos que componen este postre. <span class="pts-badge">🏅 20 pts</span></div>
+                    </div>
+                    <div class="sec-row">
+                        <div class="sec-icon registro">📸</div>
+                        <div class="sec-content"><span class="sec-label registro">El Registro</span>Captura del Dulce de la Casa antes de que su rastro desaparezca de la tierra junto a tu primer café de la Odisea. <span class="pts-badge">🏅 10 pts</span></div>
+                    </div>
+                    <div class="sec-row">
+                        <div class="sec-icon ofrenda">🌿</div>
+                        <div class="sec-content"><span class="sec-label ofrenda">Ofrenda</span>Beso de impacto para que el Oráculo abra los senderos hacia la montaña sagrada. <span class="pts-badge">🏅 10 pts</span></div>
+                    </div>
+                    <div class="subtotal-bar"><span>⚔ Subtotal Parada 1</span><span>40 pts</span></div>
                 </div>
             </div>
         </div>
@@ -697,13 +919,28 @@
                     <h4>📍 Parada 2: Ubicación Sagrada — Ceiba</h4>
                 </div>
                 <div class="parada-body">
-                    <p><strong>Umbral del Yucayeque:</strong> Has dejado atrás el aroma del pan para encontrarte con el abrazo de Karaya (la luna/el mar). En Ceiba, donde los vientos cuentan historias de Roosevelt Roads, la costa te espera para purificar el espíritu.</p>
-                    <p><strong>La Señal:</strong> Busca el camino donde el metal de los carros descansa sobre la arena. No busques portones ni muros; el refugio es un bohío de madera que mira fijamente hacia donde nace el sol sobre las aguas.</p>
-                    <p><strong>Reto de Sabiduría (10 pts):</strong> La Vigilancia del Guerrero: Al estacionarte, identifica cuántos bohíos (gazebos) de madera protegen la orilla en tu zona inmediata.</p>
-                    <p><strong>El Secreto de la Arena (10 pts):</strong> Camina hacia la orilla y encuentra una piedra o caracol que haya sido "esculpido" por el mar. El Oráculo validará tu hallazgo si logras describir su forma única.</p>
-                    <p><strong>El Registro:</strong> Foto de tu nombre "Cacique 45" escrito en la arena con uvas de playa (20 pts). El Sello de la Guaca: Reportar el número de bohíos contados (5 pts).</p>
-                    <p><strong>Ofrenda:</strong> Cargar a la Guaca 20 pasos. (20 pts)</p>
-                    <p><em>Subtotal Parada 2: 65 pts</em></p>
+                    <div class="sec-row">
+                        <div class="sec-icon umbral">🏛️</div>
+                        <div class="sec-content"><span class="sec-label umbral">Umbral del Yucayeque</span>Has dejado atrás el aroma del pan para encontrarte con el abrazo de Karaya (la luna/el mar). En Ceiba, donde los vientos cuentan historias de Roosevelt Roads, la costa te espera para purificar el espíritu.</div>
+                    </div>
+                    <div class="sec-row">
+                        <div class="sec-icon senal">🔮</div>
+                        <div class="sec-content"><span class="sec-label senal">La Señal</span>Busca el camino donde el metal de los carros descansa sobre la arena. No busques portones ni muros; el refugio es un bohío de madera que mira fijamente hacia donde nace el sol sobre las aguas.</div>
+                    </div>
+                    <div class="sec-row">
+                        <div class="sec-icon reto">🧠</div>
+                        <div class="sec-content"><span class="sec-label reto">Reto de Sabiduría — La Vigilancia del Guerrero</span>Al estacionarte, identifica cuántos bohíos (gazebos) de madera protegen la orilla en tu zona inmediata. <span class="pts-badge">🏅 10 pts</span><br><br>
+                        <strong>El Secreto de la Arena:</strong> Camina hacia la orilla y encuentra una piedra o caracol que haya sido "esculpido" por el mar. El Oráculo validará tu hallazgo si logras describir su forma única. <span class="pts-badge">🏅 10 pts</span></div>
+                    </div>
+                    <div class="sec-row">
+                        <div class="sec-icon registro">📸</div>
+                        <div class="sec-content"><span class="sec-label registro">El Registro</span>Foto de tu nombre "Cacique 45" escrito en la arena con uvas de playa. <span class="pts-badge">🏅 20 pts</span> &nbsp; El Sello de la Guaca: Reportar el número de bohíos contados. <span class="pts-badge">🏅 5 pts</span></div>
+                    </div>
+                    <div class="sec-row">
+                        <div class="sec-icon ofrenda">🌿</div>
+                        <div class="sec-content"><span class="sec-label ofrenda">Ofrenda</span>Cargar a la Guaca 20 pasos. <span class="pts-badge">🏅 20 pts</span></div>
+                    </div>
+                    <div class="subtotal-bar"><span>⚔ Subtotal Parada 2</span><span>65 pts</span></div>
                 </div>
             </div>
             <div id="lock-jueves-p2" class="locked-overlay">
@@ -720,13 +957,28 @@
                     <h4>📍 Parada 3: Ubicación Sagrada — Fajardo</h4>
                 </div>
                 <div class="parada-body">
-                    <p><strong>Umbral del Yucayeque:</strong> Has navegado las aguas de Ceiba y ahora, transformado en lucero de la tarde, arribas al Batey de las Sombras Luminosas. En Fajardo, las cuevas se vuelven templos de cristal y el fuego brilla en hilos de luz (neón) sobre las paredes.</p>
-                    <p><strong>La Señal:</strong> Busca el caney donde los espíritus del teatro susurran historias de otros mundos. No busques el sol de Atabey, busca la luz que imita a las luciérnagas gigantes y el muro que guarda la memoria de los maestros del escenario.</p>
-                    <p><strong>Reto de Sabiduría:</strong> 1. Invocar al Phantom of the Opera. 2. El Descifrado de la Sombra (15 pts): Identificar qué elementos de la tierra y el bosque (ingredientes) componen su esencia.</p>
-                    <p><strong>El Registro:</strong> Evidencia del Guerrero (15 pts): Inmortalizar tu imagen en el Mural Clásico del local.</p>
-                    <p><strong>El Sello de la Sabiduría (30 pts):</strong> Grabar El Discurso de Guahayona y brindar. (Sigue las instrucciones del libreto sagrado).</p>
-                    <p><strong>Ofrenda:</strong> Beso de Victoria + Abrazo de 45 segundos. (20 pts)</p>
-                    <p><em>Subtotal Parada 3: 80 pts</em></p>
+                    <div class="sec-row">
+                        <div class="sec-icon umbral">🏛️</div>
+                        <div class="sec-content"><span class="sec-label umbral">Umbral del Yucayeque</span>Has navegado las aguas de Ceiba y ahora, transformado en lucero de la tarde, arribas al Batey de las Sombras Luminosas. En Fajardo, las cuevas se vuelven templos de cristal y el fuego brilla en hilos de luz (neón) sobre las paredes.</div>
+                    </div>
+                    <div class="sec-row">
+                        <div class="sec-icon senal">🔮</div>
+                        <div class="sec-content"><span class="sec-label senal">La Señal</span>Busca el caney donde los espíritus del teatro susurran historias de otros mundos. No busques el sol de Atabey, busca la luz que imita a las luciérnagas gigantes y el muro que guarda la memoria de los maestros del escenario.</div>
+                    </div>
+                    <div class="sec-row">
+                        <div class="sec-icon reto">🧠</div>
+                        <div class="sec-content"><span class="sec-label reto">Reto de Sabiduría</span>1. Invocar al Phantom of the Opera.<br>2. El Descifrado de la Sombra: Identificar qué elementos de la tierra y el bosque (ingredientes) componen su esencia. <span class="pts-badge">🏅 15 pts</span></div>
+                    </div>
+                    <div class="sec-row">
+                        <div class="sec-icon registro">📸</div>
+                        <div class="sec-content"><span class="sec-label registro">El Registro</span>Evidencia del Guerrero: Inmortalizar tu imagen en el Mural Clásico del local. <span class="pts-badge">🏅 15 pts</span><br><br>
+                        <strong>El Sello de la Sabiduría:</strong> Grabar El Discurso de Guahayona y brindar. (Sigue las instrucciones del libreto sagrado). <span class="pts-badge">🏅 30 pts</span></div>
+                    </div>
+                    <div class="sec-row">
+                        <div class="sec-icon ofrenda">🌿</div>
+                        <div class="sec-content"><span class="sec-label ofrenda">Ofrenda</span>Beso de Victoria + Abrazo de 45 segundos. <span class="pts-badge">🏅 20 pts</span></div>
+                    </div>
+                    <div class="subtotal-bar"><span>⚔ Subtotal Parada 3</span><span>80 pts</span></div>
                 </div>
             </div>
             <div id="lock-jueves-p3" class="locked-overlay">
@@ -739,48 +991,105 @@
         <!-- VIERNES -->
         <div class="parada-wrapper">
             <div id="viernes" class="parada locked">
-                <div class="parada-header">
-                    <h3>🌿 SOL 2 (Viernes): El Reposo de Anacaona</h3>
+                <div class="parada-header" style="background:var(--taino-dark); padding:0; border-radius:0;">
+                    <div class="sol-banner" style="margin:0; border-radius:0; box-shadow:none;">
+                        <div class="sol-banner-icon">🌿</div>
+                        <div class="sol-banner-info">
+                            <div class="sol-banner-title">Sol 2 · Viernes</div>
+                            <div class="sol-banner-subtitle">El Reposo de Anacaona</div>
+                        </div>
+                        <div class="sol-banner-pts">300 pts</div>
+                    </div>
                 </div>
                 <div class="parada-body">
-                    <p><strong>La Leyenda:</strong> Mientras Guahayona es la acción, Anacaona es la belleza, el arte y la armonía. Hoy, en el silencio del Viernes Santo, el Yucayeque se detiene. No hay rutas externas, solo el viaje hacia el interior y hacia la conexión con la Guaca. Es el día de honrar el templo (el cuerpo) y celebrar el amor en el refugio sagrado.</p>
+                    <div class="bendicion-box">
+                        <p><strong>La Bendición de la Guaca:</strong><br>
+                        "Atabey, en su infinita calma, susurra hoy a tu oído. En el silencio del Viernes Santo, la agitación del mundo se detiene para dar paso al refugio sagrado. Hoy no hay rumbos externos, solo el camino hacia el corazón. Que el aroma de las flores y la calidez de la piel sean tu nueva brújula."</p>
+                        <div class="quote-line">"El amor no se mide por el tiempo que pasamos juntos, sino por la huella que dejamos el uno en el otro." — <strong>Anónimo</strong></div>
+                        <p>"Baby, en este primer año, agradezco cada minuto compartido; aunque el tiempo ha sido poco, ha sido hermoso y de una calidad invaluable. Mi único deseo hoy es permanecer en tu vida para seguir sumándonos: experiencias que nos hagan felices y momentos que nos transformen en mejores personas. Quiero que nos acompañemos en los tiempos difíciles y atesoremos los buenos. Aspiro a que sigamos conociéndonos y creciendo juntos, paso a paso, solidificando este lazo que nos une."</p>
+                        <span class="leyenda-label">🌿 Guía Espiritual</span>
+                        <p><strong>La Leyenda del Día: Anacaona y la Unión de los Espíritus</strong><br>
+                        Hoy caminas bajo el aura de Anacaona, la reina poeta. Mientras Guahayona representa la acción, Anacaona es el reposo y la conexión espiritual. Hoy el Yucayeque se detiene para que tú, nuestro Cacique, encuentres en la intimidad de tu refugio la fuerza que solo el amor compartido puede otorgar.</p>
+                    </div>
+                    <!-- Viernes P1 -->
+                    <div class="sub-parada-header"><h4>📍 Parada 1: El Saludo a Karaya (Picnic de Café en la Arena)</h4></div>
+                    <div class="sec-row">
+                        <div class="sec-icon umbral">🏛️</div>
+                        <div class="sec-content"><span class="sec-label umbral">Umbral del Yucayeque</span>El sol nace sobre las aguas frente a tu bohío. Como los antiguos que agradecían el nuevo día, tu primera misión es salir al encuentro del mar antes de que el mundo despierte.</div>
+                    </div>
+                    <div class="sec-row">
+                        <div class="sec-icon senal">🔮</div>
+                        <div class="sec-content"><span class="sec-label senal">La Señal</span>"Busca el lugar donde la espuma besa la tierra. Allí, sobre un manto tejido, el grano sagrado (café) te espera para despertar tus sentidos frente al horizonte infinito."</div>
+                    </div>
+                    <div class="sec-row">
+                        <div class="sec-icon reto">🧠</div>
+                        <div class="sec-content"><span class="sec-label reto">Reto de Sabiduría — Meditación del Guerrero</span>Identifica 3 sonidos distintos de la naturaleza que no sean el mar. Debes reportarlos al Oráculo para validar tu presencia en el presente. <span class="pts-badge">🏅 30 pts</span></div>
+                    </div>
+                    <div class="sec-row">
+                        <div class="sec-icon registro">📸</div>
+                        <div class="sec-content"><span class="sec-label registro">El Registro</span>Foto del Cacique mirando al horizonte con su cuenco de café, con los pies enterrados en la arena sagrada. <span class="pts-badge">🏅 20 pts</span></div>
+                    </div>
+                    <div class="sec-row">
+                        <div class="sec-icon ofrenda">🌿</div>
+                        <div class="sec-content"><span class="sec-label ofrenda">Ofrenda</span>Escribir en la arena un agradecimiento a Atabey por el Sol 45 y dejar que la marea se lo lleve. <span class="pts-badge">🏅 15 pts</span></div>
+                    </div>
 
-                    <h4>📍 Parada 1: El Saludo a Karaya (Picnic de Café en la Arena)</h4>
-                    <p><strong>Umbral del Yucayeque:</strong> El sol nace sobre las aguas frente a tu bohío. Como los antiguos que agradecían el nuevo día, tu primera misión es salir al encuentro del mar antes de que el mundo despierte.</p>
-                    <p><strong>La Señal:</strong> "Busca el lugar donde la espuma besa la tierra. Allí, sobre un manto tejido, el grano sagrado (café) te espera para despertar tus sentidos frente al horizonte infinito."</p>
-                    <ul>
-                        <li><strong>Reto de Sabiduría (Meditación del Guerrero):</strong> Identifica 3 sonidos distintos de la naturaleza que no sean el mar. Debes reportarlos al Oráculo para validar tu presencia en el presente. (30 pts)</li>
-                        <li><strong>El Registro:</strong> Foto del Cacique mirando al horizonte con su cuenco de café, con los pies enterrados en la arena sagrada. (20 pts)</li>
-                        <li><strong>Ofrenda:</strong> Escribir en la arena un agradecimiento a Atabey por el Sol 45 y dejar que la marea se lo lleve. (15 pts)</li>
-                    </ul>
+                    <!-- Viernes P2 -->
+                    <div class="sub-parada-header"><h4>📍 Parada 2: El Manjar del Bohío y la Caricia de la Guaca (Spa en Casa)</h4></div>
+                    <div class="sec-row">
+                        <div class="sec-icon umbral">🏛️</div>
+                        <div class="sec-content"><span class="sec-label umbral">Umbral del Yucayeque</span>Regresas al refugio donde el fuego de la cocina ya ha preparado el sustento. Tras el alimento, viene la purificación del cuerpo a través del tacto.</div>
+                    </div>
+                    <div class="sec-row">
+                        <div class="sec-icon senal">🔮</div>
+                        <div class="sec-content"><span class="sec-label senal">La Señal</span>"Busca el aroma a canela y frutas frescas en la mesa. Tras el banquete, el ambiente cambiará: aceites y esencias marcarán el inicio de la Ceremonia del Tacto."</div>
+                    </div>
+                    <div class="sec-row">
+                        <div class="sec-icon reto">🧠</div>
+                        <div class="sec-content"><span class="sec-label reto">Reto de Sabiduría — El Banquete de Atabey</span>Desayuno hecho en casa. El Cacique debe identificar el ingrediente "secreto" que la Cacica añadió para darle fuerza. <span class="pts-badge">🏅 30 pts</span><br><br>
+                        <strong>La Ceremonia del Tacto:</strong> Sesión de Masaje, Manicura y Pedicura. El reto es el Silencio Sagrado: durante el masaje, el Cacique no puede hablar, solo sentir la energía que fluye. <span class="pts-badge">🏅 40 pts</span></div>
+                    </div>
+                    <div class="sec-row">
+                        <div class="sec-icon registro">📸</div>
+                        <div class="sec-content"><span class="sec-label registro">El Registro</span>Foto de las manos/pies del Cacique tras la purificación o una imagen del ambiente del spa (velas/aceites). <span class="pts-badge">🏅 20 pts</span></div>
+                    </div>
+                    <div class="sec-row">
+                        <div class="sec-icon ofrenda">🌿</div>
+                        <div class="sec-content"><span class="sec-label ofrenda">Ofrenda</span>Un masaje recíproco de 5 minutos en las manos de la Cacica, honrando su labor de guía. <span class="pts-badge">🏅 20 pts</span></div>
+                    </div>
 
-                    <h4>📍 Parada 2: El Manjar del Bohío y la Caricia de la Guaca (Spa en Casa)</h4>
-                    <p><strong>Umbral del Yucayeque:</strong> Regresas al refugio donde el fuego de la cocina ya ha preparado el sustento. Tras el alimento, viene la purificación del cuerpo a través del tacto.</p>
-                    <p><strong>La Señal:</strong> "Busca el aroma a canela y frutas frescas en la mesa. Tras el banquete, el ambiente cambiará: aceites y esencias marcarán el inicio de la Ceremonia del Tacto."</p>
-                    <ul>
-                        <li><strong>Reto de Sabiduría (El Banquete de Atabey):</strong> Desayuno hecho en casa. El Cacique debe identificar el ingrediente "secreto" que la Cacica añadió para darle fuerza. (30 pts)</li>
-                        <li><strong>La Ceremonia del Tacto:</strong> Sesión de Masaje, Manicura y Pedicura. El reto es el Silencio Sagrado: durante el masaje, el Cacique no puede hablar, solo sentir la energía que fluye. (40 pts)</li>
-                        <li><strong>El Registro:</strong> Foto de las manos/pies del Cacique tras la purificación o una imagen del ambiente del spa (velas/aceites). (20 pts)</li>
-                        <li><strong>Ofrenda:</strong> Un masaje recíproco de 5 minutos en las manos de la Cacica, honrando su labor de guía. (20 pts)</li>
-                    </ul>
-
-                    <h4>📍 Parada 3: El Areyto de los Cuerpos (Las 5 Estampas de la Pasión)</h4>
-                    <p><strong>Umbral del Yucayeque:</strong> Cuando las sombras se alargan y el bohío se ilumina solo con fuego tenue, comienza la danza prohibida de los sentidos. Es el momento de la unión total, donde Guahayona y Anacaona se funden en un solo espíritu. Ya no hay mapas externos, solo el relieve de la piel y el latido compartido.</p>
-                    <p><strong>La Señal:</strong> "Busca el rincón del deseo, donde la piel es el mapa y el susurro es la brújula. No busques respuestas en la mente, búscalas en el calor del encuentro. El conocimiento de tu pareja no se dice, se siente. La noche es vuestra y el tiempo se detiene en el año 45."</p>
-                    <ul>
-                        <li><strong>Reto de Sabiduría (Las 5 Estampas de la Pasión):</strong> Para ganar tus Puntos de Valor y demostrar tu maestría como Guerrero de la Pasión, el Cacique debe navegar y conquistar los 5 actos sagrados de la entrega. Cada estampa debe vivirse en total presencia:
-                            <ul style="margin-top:10px;">
-                                <li><strong>1. El Susurro de Atabey:</strong> El Cacique debe acercarse al oído de la Cacica y pronunciar tres verdades profundas que solo su corazón conozca, verdades que estremezcan el alma antes de tocar el cuerpo.</li>
-                                <li><strong>2. El Fluido Sagrado:</strong> Utilizando los aceites o néctares de la tierra preparados en el spa, el Cacique realizará la unción. Debe recorrer con sus manos y el fluido cada camino de la piel de la Cacica, preparando el templo para la unión.</li>
-                                <li><strong>3. El Abrazo de la Ceiba:</strong> Una unión física inquebrantable. Deben permanecer fundidos en un abrazo total durante 5 minutos de reloj, respirando al unísono, sintiendo cómo los dos pechos se vuelven un solo latido sin mediar palabra.</li>
-                                <li><strong>4. La Ofrenda de Cacao:</strong> El deleite del gusto. El Cacique alimentará a la Cacica con el fruto sagrado, explorando los sabores y la dulzura como preámbulo a la entrega final.</li>
-                                <li><strong>5. La Danza de Coaybay:</strong> La consagración definitiva. La entrega total de los cuerpos bajo la ley del deseo puro, donde el Cacique Francisco reclama su derecho al deleite y la abundancia en los brazos de su Cacica. (100 pts)</li>
-                            </ul>
-                        </li>
-                        <li><strong>El Registro:</strong> Una foto sugerente de la atmósfera (el juego de luces de las velas, las copas brindando o las sombras proyectadas) que capture la esencia mística del ritual sin romper la privacidad sagrada de la Guaca. (25 pts)</li>
-                        <li><strong>Ofrenda Final (El Sello de la Alianza):</strong> Beso de victoria de 45 segundos exactos y un pacto de intimidad absoluta donde el Cacique, con voz de autoridad, declare una nueva "ley de placer" o un deseo secreto que regirá su relación durante este nuevo ciclo de vida. (25 pts)</li>
-                    </ul>
-                    <p><em>Subtotal Viernes: 300 pts</em></p>
+                    <!-- Viernes P3 -->
+                    <div class="sub-parada-header"><h4>📍 Parada 3: El Areyto de los Cuerpos (Las 5 Estampas de la Pasión)</h4></div>
+                    <div class="sec-row">
+                        <div class="sec-icon umbral">🏛️</div>
+                        <div class="sec-content"><span class="sec-label umbral">Umbral del Yucayeque</span>Cuando las sombras se alargan y el bohío se ilumina solo con fuego tenue, comienza la danza prohibida de los sentidos. Es el momento de la unión total, donde Guahayona y Anacaona se funden en un solo espíritu. Ya no hay mapas externos, solo el relieve de la piel y el latido compartido.</div>
+                    </div>
+                    <div class="sec-row">
+                        <div class="sec-icon senal">🔮</div>
+                        <div class="sec-content"><span class="sec-label senal">La Señal</span>"Busca el rincón del deseo, donde la piel es el mapa y el susurro es la brújula. No busques respuestas en la mente, búscalas en el calor del encuentro. El conocimiento de tu pareja no se dice, se siente. La noche es vuestra y el tiempo se detiene en el año 45."</div>
+                    </div>
+                    <div class="sec-row">
+                        <div class="sec-icon reto">🧠</div>
+                        <div class="sec-content"><span class="sec-label reto">Reto de Sabiduría — Las 5 Estampas de la Pasión</span>Para ganar tus Puntos de Valor, el Cacique debe navegar y conquistar los 5 actos sagrados de la entrega. Cada estampa debe vivirse en total presencia:
+                            <ol style="margin-top:10px; padding-left:18px; list-style:decimal;">
+                                <li style="padding-left:0;"><strong>El Susurro de Atabey:</strong> Acercarse al oído de la Cacica y pronunciar tres verdades profundas que solo su corazón conozca, verdades que estremezcan el alma antes de tocar el cuerpo.</li>
+                                <li style="padding-left:0;"><strong>El Fluido Sagrado:</strong> Utilizando los aceites o néctares preparados en el spa, el Cacique realizará la unción. Debe recorrer con sus manos y el fluido cada camino de la piel de la Cacica.</li>
+                                <li style="padding-left:0;"><strong>El Abrazo de la Ceiba:</strong> Permanecer fundidos en un abrazo total durante 5 minutos de reloj, respirando al unísono, sintiendo cómo los dos pechos se vuelven un solo latido sin mediar palabra.</li>
+                                <li style="padding-left:0;"><strong>La Ofrenda de Cacao:</strong> El deleite del gusto. El Cacique alimentará a la Cacica con el fruto sagrado, explorando los sabores y la dulzura como preámbulo a la entrega final.</li>
+                                <li style="padding-left:0;"><strong>La Danza de Coaybay:</strong> La consagración definitiva. La entrega total bajo la ley del deseo puro, donde el Cacique Francisco reclama su derecho al deleite y la abundancia en los brazos de su Cacica.</li>
+                            </ol>
+                            <span class="pts-badge">🏅 100 pts</span>
+                        </div>
+                    </div>
+                    <div class="sec-row">
+                        <div class="sec-icon registro">📸</div>
+                        <div class="sec-content"><span class="sec-label registro">El Registro</span>Una foto sugerente de la atmósfera (juego de luces de velas, las copas brindando o las sombras proyectadas) que capture la esencia mística del ritual sin romper la privacidad sagrada de la Guaca. <span class="pts-badge">🏅 25 pts</span></div>
+                    </div>
+                    <div class="sec-row">
+                        <div class="sec-icon ofrenda">🌿</div>
+                        <div class="sec-content"><span class="sec-label ofrenda">Ofrenda Final — El Sello de la Alianza</span>Beso de victoria de 45 segundos exactos y un pacto de intimidad absoluta donde el Cacique, con voz de autoridad, declare una nueva "ley de placer" o un deseo secreto que regirá su relación durante este nuevo ciclo de vida. <span class="pts-badge">🏅 25 pts</span></div>
+                    </div>
+                    <div class="subtotal-bar"><span>🌿 Subtotal Viernes</span><span>300 pts</span></div>
                 </div>
             </div>
             <div id="lock-viernes" class="locked-overlay">
@@ -793,33 +1102,64 @@
         <!-- SÁBADO -->
         <div class="parada-wrapper">
             <div id="sabado" class="parada locked">
-                <div class="parada-header">
-                    <h3>🔥 SOL 3 (Sábado): La Consagración de Agüeybaná en Loíza</h3>
+                <div class="parada-header" style="background:var(--taino-dark); padding:0; border-radius:0;">
+                    <div class="sol-banner" style="margin:0; border-radius:0; box-shadow:none;">
+                        <div class="sol-banner-icon">🔥</div>
+                        <div class="sol-banner-info">
+                            <div class="sol-banner-title">Sol 3 · Sábado</div>
+                            <div class="sol-banner-subtitle">La Consagración de Agüeybaná en Loíza</div>
+                        </div>
+                        <div class="sol-banner-pts">450 pts</div>
+                    </div>
                 </div>
                 <div class="parada-body">
-                    <p><strong>La Leyenda:</strong> Agüeybaná, el Gran Cacique, es el sol del centro que irradia luz a su tribu. Hoy, tras la exploración y la purificación, regresas a la tierra de tus ancestros en Loíza. Es un día de comunidad, de fuego y de reconocer que el mayor imperio es aquel que se construye con amor en los pequeños detalles.</p>
+                    <div class="bendicion-box">
+                        <span class="leyenda-label">🔥 Guía Espiritual</span>
+                        <p><strong>La Leyenda:</strong> Agüeybaná, el Gran Cacique, es el sol del centro que irradia luz a su tribu. Hoy, tras la exploración y la purificación, regresas a la tierra de tus ancestros en Loíza. Es un día de comunidad, de fuego y de reconocer que el mayor imperio es aquel que se construye con amor en los pequeños detalles.</p>
+                    </div>
 
-                    <h4>📍 Parada 1: El Sustento del Guerrero (Desayuno en el Bohío)</h4>
-                    <ul>
-                        <li><strong>Reto de Sabiduría:</strong> Mencionar tres momentos de los últimos dos días que te hayan hecho sentir más fuerte. (50 pts)</li>
-                        <li><strong>El Registro:</strong> Foto del Cacique en su mesa, listo para la conquista de Loíza. (25 pts)</li>
-                        <li><strong>Ofrenda:</strong> Un gesto de servicio hacia la familia en la mesa. (15 pts)</li>
-                    </ul>
+                    <div class="sub-parada-header"><h4>📍 Parada 1: El Sustento del Guerrero (Desayuno en el Bohío)</h4></div>
+                    <div class="sec-row">
+                        <div class="sec-icon reto">🧠</div>
+                        <div class="sec-content"><span class="sec-label reto">Reto de Sabiduría</span>Mencionar tres momentos de los últimos dos días que te hayan hecho sentir más fuerte. <span class="pts-badge">🏅 50 pts</span></div>
+                    </div>
+                    <div class="sec-row">
+                        <div class="sec-icon registro">📸</div>
+                        <div class="sec-content"><span class="sec-label registro">El Registro</span>Foto del Cacique en su mesa, listo para la conquista de Loíza. <span class="pts-badge">🏅 25 pts</span></div>
+                    </div>
+                    <div class="sec-row">
+                        <div class="sec-icon ofrenda">🌿</div>
+                        <div class="sec-content"><span class="sec-label ofrenda">Ofrenda</span>Un gesto de servicio hacia la familia en la mesa. <span class="pts-badge">🏅 15 pts</span></div>
+                    </div>
 
-                    <h4>📍 Parada 2: El Batey de Vacia Talega (Ritual del Fuego y Sal)</h4>
-                    <ul>
-                        <li><strong>Reto de Sabiduría — El Dominio del Fuego (Liderar el BBQ):</strong> Lograr el término perfecto en la ofrenda sagrada (la carne). (100 pts)</li>
-                        <li><strong>El Registro:</strong> Foto frente a las brasas con el mar de Vacia Talega de fondo. (50 pts)</li>
-                        <li><strong>Ofrenda:</strong> Compartir el primer bocado con la Guaca. (25 pts)</li>
-                    </ul>
+                    <div class="sub-parada-header"><h4>📍 Parada 2: El Batey de Vacia Talega (Ritual del Fuego y Sal)</h4></div>
+                    <div class="sec-row">
+                        <div class="sec-icon reto">🧠</div>
+                        <div class="sec-content"><span class="sec-label reto">Reto de Sabiduría — El Dominio del Fuego</span>Liderar el BBQ: Lograr el término perfecto en la ofrenda sagrada (la carne). <span class="pts-badge">🏅 100 pts</span></div>
+                    </div>
+                    <div class="sec-row">
+                        <div class="sec-icon registro">📸</div>
+                        <div class="sec-content"><span class="sec-label registro">El Registro</span>Foto frente a las brasas con el mar de Vacia Talega de fondo. <span class="pts-badge">🏅 50 pts</span></div>
+                    </div>
+                    <div class="sec-row">
+                        <div class="sec-icon ofrenda">🌿</div>
+                        <div class="sec-content"><span class="sec-label ofrenda">Ofrenda</span>Compartir el primer bocado con la Guaca. <span class="pts-badge">🏅 25 pts</span></div>
+                    </div>
 
-                    <h4>📍 Parada 3: El Remanso de la Guaca (Piscina y Visión Nocturna)</h4>
-                    <ul>
-                        <li><strong>Reto de Sabiduría:</strong> Flotación silenciosa de 3 minutos en la piscina para disolver el peso de los 45 años. (50 pts)</li>
-                        <li><strong>El Registro:</strong> Foto del brindis nocturno junto al agua o de la "fogata moderna" (Netflix). (50 pts)</li>
-                        <li><strong>Ofrenda Final:</strong> Entrega simbólica del mando a la Cacica. (35 pts)</li>
-                    </ul>
-                    <p><em>Subtotal Sábado: 450 pts</em></p>
+                    <div class="sub-parada-header"><h4>📍 Parada 3: El Remanso de la Guaca (Piscina y Visión Nocturna)</h4></div>
+                    <div class="sec-row">
+                        <div class="sec-icon reto">🧠</div>
+                        <div class="sec-content"><span class="sec-label reto">Reto de Sabiduría</span>Flotación silenciosa de 3 minutos en la piscina para disolver el peso de los 45 años. <span class="pts-badge">🏅 50 pts</span></div>
+                    </div>
+                    <div class="sec-row">
+                        <div class="sec-icon registro">📸</div>
+                        <div class="sec-content"><span class="sec-label registro">El Registro</span>Foto del brindis nocturno junto al agua o de la "fogata moderna" (Netflix). <span class="pts-badge">🏅 50 pts</span></div>
+                    </div>
+                    <div class="sec-row">
+                        <div class="sec-icon ofrenda">🌿</div>
+                        <div class="sec-content"><span class="sec-label ofrenda">Ofrenda Final</span>Entrega simbólica del mando a la Cacica. <span class="pts-badge">🏅 35 pts</span></div>
+                    </div>
+                    <div class="subtotal-bar"><span>🔥 Subtotal Sábado</span><span>450 pts</span></div>
                 </div>
             </div>
             <div id="lock-sabado" class="locked-overlay">
@@ -1113,3 +1453,90 @@
 </script>
 </body>
 </html>
+<div id="areito-juego" style="text-align: center; margin: 40px auto; max-width: 90%; width: 400px; padding: 25px; background: var(--card-bg); border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); border-top: 5px solid var(--taino-gold);">
+    <h2 class="sol-title" style="font-size: 1.5rem; margin-top: 0;">🃏 El Areito de los Enamorados</h2>
+    <p style="font-size: 0.9rem; color: #555;">La ceremonia privada del Cacique. Toca el botón para revelar una carta del destino...</p>
+
+    <div id="carta-display-outer" style="display: none; width: 320px; height: 500px; margin: 25px auto; border-radius: 15px; border: 3px solid #D4AF37; box-shadow: 0 5px 15px rgba(0,0,0,0.4); background-size: cover; background-position: center; background-repeat: no-repeat; transition: background-image 0.5s ease-in-out; display: none; position: relative;">
+        <div id="carta-display-inner" style="position: absolute; bottom: 0; left: 0; width: 100%; padding: 20px; box-sizing: border-box; background: rgba(0,0,0,0.7); border-radius: 0 0 12px 12px; color: white; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 180px;">
+            <h3 id="carta-categoria" style="margin-top: 0; margin-bottom: 10px; font-family: 'Cinzel', serif; font-size: 1rem; border-bottom: 1px solid rgba(255,255,255,0.3); padding-bottom: 8px; width: 100%; letter-spacing: 1px;">Categoría</h3>
+            <p id="carta-texto" style="font-size: 1.1rem; font-family: 'Philosopher', sans-serif; font-style: italic; margin-top: 5px; text-shadow: 1px 1px 3px rgba(0,0,0,0.8); line-height: 1.3;">El texto de la carta aparecerá aquí...</p>
+        </div>
+    </div>
+
+    <button onclick="sacarCarta()" style="background-color: var(--primary-red); color: white; border: none; padding: 15px 30px; border-radius: 50px; font-size: 1rem; cursor: pointer; font-family: 'Cinzel', serif; font-weight: bold; width: 100%; box-shadow: 0 4px 6px rgba(0,0,0,0.3); margin-top: 15px;">
+        ✨ REVELAR CARTA
+    </button>
+</div>
+
+<script>
+    // Las 45 cartas del juego con sus imágenes
+    const cartasAreito = [
+        // CATEGORÍA 1: El Oráculo de Atabey (image_0.png)
+        { cat: "🏺 El Oráculo de Atabey", texto: "¿Qué fue lo primero que pensaste de mí el día que nos conocimos?", img: "image_0.png" },
+        { cat: "🏺 El Oráculo de Atabey", texto: "En los días de tormenta, ¿qué es lo que más te da paz de nuestra relación?", img: "image_0.png" },
+        { cat: "🏺 El Oráculo de Atabey", texto: "Si el Francisco de hoy pudiera abrazar al de hace un año, ¿qué le agradecería por haberme permitido entrar en su vida?", img: "image_0.png" },
+        { cat: "🏺 El Oráculo de Atabey", texto: "Menciona una cualidad mía que te haga sentir orgulloso de caminar a mi lado.", img: "image_0.png" },
+        { cat: "🏺 El Oráculo de Atabey", texto: "¿Qué valor o principio crees que es el 'cimiento' más fuerte de lo que estamos construyendo?", img: "image_0.png" },
+        { cat: "🏺 El Oráculo de Atabey", texto: "¿En qué sientes que has cambiado para mejor desde que estamos juntos?", img: "image_0.png" },
+        { cat: "🏺 El Oráculo de Atabey", texto: "¿Cómo te imaginas nuestro 'Yucayeque' (hogar/futuro) dentro de dos años?", img: "image_0.png" },
+        { cat: "🏺 El Oráculo de Atabey", texto: "¿Cuál es ese pequeño gesto que hago que te hace sentir más amado?", img: "image_0.png" },
+        { cat: "🏺 El Oráculo de Atabey", texto: "¿Hay algo que siempre has querido decirme pero no habías encontrado el momento 'místico' para hacerlo?", img: "image_0.png" },
+        { cat: "🏺 El Oráculo de Atabey", texto: "Como padre, ¿qué valor de nuestra relación te gustaría que tu hijo viera y aprendiera?", img: "image_0.png" },
+        { cat: "🏺 El Oráculo de Atabey", texto: "¿Qué es lo que más respetas de mi forma de ser?", img: "image_0.png" },
+        { cat: "🏺 El Oráculo de Atabey", texto: "¿Cuál ha sido nuestra mejor aventura de este primer año?", img: "image_0.png" },
+        { cat: "🏺 El Oráculo de Atabey", texto: "Una cosa que prometes cuidar de nosotros este nuevo año de vida.", img: "image_0.png" },
+        { cat: "🏺 El Oráculo de Atabey", texto: "¿Crees en las señales? ¿Cuál fue la señal de que debíamos estar juntos?", img: "image_0.png" },
+        { cat: "🏺 El Oráculo de Atabey", texto: "Agradéceme algo que haya hecho por ti esta semana, por pequeño que sea.", img: "image_0.png" },
+
+        // CATEGORÍA 2: Las Travesuras de Guahayona (image_2.png)
+        { cat: "🦜 Travesuras de Guahayona", texto: "Imita mi cara cuando me despierto por la mañana. ¡Si lo haces bien, ganas un punto!", img: "image_2.png" },
+        { cat: "🦜 Travesuras de Guahayona", texto: "Si nos perdiéramos en una isla, ¿quién de los dos sería el primero en intentar hablar con los animales?", img: "image_2.png" },
+        { cat: "🦜 Travesuras de Guahayona", texto: "¿Cuál fue la primera mentira piadosa que me dijiste para impresionarme?", img: "image_2.png" },
+        { cat: "🦜 Travesuras de Guahayona", texto: "Inventa un paso de baile de 5 segundos y tengo que repetirlo.", img: "image_2.png" },
+        { cat: "🦜 Travesuras de Guahayona", texto: "Si yo fuera una comida, ¿qué comida sería y por qué?", img: "image_2.png" },
+        { cat: "🦜 Travesuras de Guahayona", texto: "¿Cómo suena tu 'grito de guerra' cuando logras algo que te costó mucho trabajo?", img: "image_2.png" },
+        { cat: "🦜 Travesuras de Guahayona", texto: "A la cuenta de tres, ambos debemos decir un color. Si coinciden, ¡premio!", img: "image_2.png" },
+        { cat: "🦜 Travesuras de Guahayona", texto: "Si tuvieras que elegir un actor para que hiciera de ti en una película de nuestra historia, ¿quién sería?", img: "image_2.png" },
+        { cat: "🦜 Travesuras de Guahayona", texto: "¿Cuál es el objeto más raro que guardas por valor sentimental?", img: "image_2.png" },
+        { cat: "🦜 Travesuras de Guahayona", texto: "Si tuviéramos que ir a una fiesta de disfraces de parejas taínas, ¿quién sería el Cacique y quién la Diosa?", img: "image_2.png" },
+        { cat: "🦜 Travesuras de Guahayona", texto: "¿Qué ropa llevaba yo el día de nuestra primera cita? (Si fallas, castigo).", img: "image_2.png" },
+        { cat: "🦜 Travesuras de Guahayona", texto: "Si tuvieras que ponerme un apodo basado en un animal del bosque, ¿cuál sería?", img: "image_2.png" },
+        { cat: "🦜 Travesuras de Guahayona", texto: "Cuéntame el momento más vergonzoso que hemos pasado juntos.", img: "image_2.png" },
+        { cat: "🦜 Travesuras de Guahayona", texto: "Si pudieras tener un superpoder para usar solo en nuestra relación, ¿cuál elegirías?", img: "image_2.png" },
+        { cat: "🦜 Travesuras de Guahayona", texto: "Si fuera nuestra última noche en la tierra, ¿qué pedirías de cenar?", img: "image_2.png" },
+
+        // CATEGORÍA 3: El Reto del Cacique (image_4.png)
+        { cat: "🏹 El Reto del Cacique", texto: "Mírame a los ojos fijamente por 45 segundos. El primero que sonría pierde.", img: "image_4.png" },
+        { cat: "🏹 El Reto del Cacique", texto: "Dime al oído, con voz muy baja, algo que quieras hacerme esta noche.", img: "image_4.png" },
+        { cat: "🏹 El Reto del Cacique", texto: "Dame un masaje de 2 minutos en los hombros para liberar la tensión del guerrero.", img: "image_4.png" },
+        { cat: "🏹 El Reto del Cacique", texto: "Bésame en tres lugares de la cara que no sean los labios.", img: "image_4.png" },
+        { cat: "🏹 El Reto del Cacique", texto: "Déjame ver la última foto que tomaste con tu celular (sin borrar nada).", img: "image_4.png" },
+        { cat: "🏹 El Reto del Cacique", texto: "Descríbeme en tres palabras qué es lo que más te atrae físicamente de mí hoy.", img: "image_4.png" },
+        { cat: "🏹 El Reto del Cacique", texto: "Dame un abrazo que dure al menos 30 segundos, sin hablar.", img: "image_4.png" },
+        { cat: "🏹 El Reto del Cacique", texto: "Si pudieras pedir un deseo 'travieso' que tengo que cumplir ahora mismo, ¿cuál sería?", img: "image_4.png" },
+        { cat: "🏹 El Reto del Cacique", texto: "Encuentra mi punto más sensible con solo usar tus manos (tienes 10 segundos).", img: "image_4.png" },
+        { cat: "🏹 El Reto del Cacique", texto: "Dime una fantasía que quieras cumplir conmigo antes de los 46.", img: "image_4.png" },
+        { cat: "🏹 El Reto del Cacique", texto: "Cántame el estribillo de 'nuestra canción' (o una que te recuerde a mí).", img: "image_4.png" },
+        { cat: "🏹 El Reto del Cacique", texto: "¿En qué parte de mi cuerpo te sientes más 'en casa'?", img: "image_4.png" },
+        { cat: "🏹 El Reto del Cacique", texto: "Dame un beso que dure exactamente 10 segundos. Yo contaré.", img: "image_4.png" },
+        { cat: "🏹 El Reto del Cacique", texto: "Escribe con tu dedo en mi espalda una palabra y tengo que adivinar qué es.", img: "image_4.png" },
+        { cat: "🏹 El Reto del Cacique", texto: "Béstate mi mano y haz una promesa de amor para este fin de semana.", img: "image_4.png" }
+    ];
+
+    function sacarCarta() {
+        const displayOuter = document.getElementById('carta-display-outer');
+        const titulo = document.getElementById('carta-categoria');
+        const texto = document.getElementById('carta-texto');
+
+        // Elegir una carta al azar
+        const indiceRandom = Math.floor(Math.random() * cartasAreito.length);
+        const carta = cartasAreito[indiceRandom];
+
+        // Mostrarla en pantalla con su imagen de categoría
+        displayOuter.style.display = 'block'; // Aseguramos que sea block para las dimensiones
+        displayOuter.style.backgroundImage = 'url(' + carta.img + ')';
+        titulo.innerText = carta.cat;
+        texto.innerText = carta.texto;
+    }
+</script>
