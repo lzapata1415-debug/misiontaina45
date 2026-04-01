@@ -3,710 +3,336 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gesta de los 45 Soles - Cacique Francisco</title>
+    <title>¡Descubre la Magia de la Conexión!</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Cinzel:wght@600;700&family=Philosopher:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary-blue: #005697;
-            --primary-red: #ED1C24;
             --taino-gold: #D4AF37;
-            --taino-dark: #2C3539;
-            --bg-sand: #F4F1EA;
-            --card-bg: #FFFFFF;
-            --text-dark: #2C3539;
+            --light-cream: #f4f1ea;
+            --dark-text: #333;
+            --light-text: #fff;
         }
-
-        * { box-sizing: border-box; }
 
         body {
-            font-family: 'Philosopher', sans-serif;
-            background-color: var(--bg-sand);
-            color: var(--text-dark);
-            margin: 0; padding: 0;
-            line-height: 1.7;
-            font-size: 17px;
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--light-cream);
+            color: var(--dark-text);
+            line-height: 1.6;
+            scroll-behavior: smooth;
         }
 
-        body::before {
-            content: "";
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-image: url('fondo.jpg');
-            background-size: 400px;
-            background-repeat: repeat;
-            opacity: 0.10;
-            z-index: -1;
-        }
-
-        /* ══════════════════════════════════════
-           VIDEO SPLASH SCREEN
-        ══════════════════════════════════════ */
-        #video-splash {
-            position: fixed;
-            inset: 0;
-            background: #000;
-            z-index: 9999;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-end;
-            transition: opacity 0.8s ease;
-        }
-        #video-splash.fade-out {
-            opacity: 0;
-            pointer-events: none;
-        }
-        #intro-video {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        .splash-overlay {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to top, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.0) 100%);
-            pointer-events: none;
-            z-index: 1;
-        }
-        .splash-content {
-            position: relative;
-            z-index: 3;
+        header {
+            background-color: var(--primary-blue);
+            color: var(--light-text);
+            padding: 15px 0;
             text-align: center;
-            padding: 40px 20px 60px;
-            width: 100%;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
-        .splash-title {
-            font-family: 'Cinzel Decorative', serif;
-            color: var(--taino-gold);
-            font-size: clamp(20px, 5vw, 36px);
-            text-shadow: 0 2px 20px rgba(0,0,0,0.8);
-            margin-bottom: 8px;
-            letter-spacing: 2px;
-        }
-        .splash-subtitle {
-            font-family: 'Philosopher', sans-serif;
-            color: rgba(255,255,255,0.85);
-            font-size: clamp(14px, 3vw, 18px);
-            margin-bottom: 35px;
-            font-style: italic;
-        }
-        .btn-enter {
-            font-family: 'Cinzel', serif;
-            background: var(--taino-gold);
-            color: var(--taino-dark);
-            border: none;
-            padding: 16px 50px;
-            font-size: 18px;
-            font-weight: 700;
-            border-radius: 50px;
-            cursor: pointer;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            transition: all 0.3s ease;
-            box-shadow: 0 0 30px rgba(212,175,55,0.5);
-        }
-        .btn-enter:hover {
-            background: #fff;
-            color: var(--taino-dark);
-            transform: scale(1.05);
-            box-shadow: 0 0 40px rgba(212,175,55,0.8);
-        }
-        .btn-skip {
-            display: block;
-            margin-top: 16px;
-            color: rgba(255,255,255,0.5);
-            font-size: 13px;
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-family: 'Philosopher', sans-serif;
-            transition: color 0.2s;
-        }
-        .btn-skip:hover { color: rgba(255,255,255,0.9); }
-        .btn-mute {
-            position: absolute;
-            top: 18px;
-            right: 18px;
-            background: rgba(0,0,0,0.45);
-            border: 1px solid rgba(255,255,255,0.3);
-            color: #fff;
-            font-size: 22px;
-            width: 46px;
-            height: 46px;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 10;
-            transition: background 0.2s;
-        }
-        .btn-mute:hover { background: rgba(212,175,55,0.6); }
 
-        /* ══════════════════════════════════════
-           HEADER & NAV
-        ══════════════════════════════════════ */
-        header.banner {
-            width: 100%;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-        header.banner img {
-            width: 100%; height: auto;
-            display: block;
-            border-radius: 0 0 20px 20px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        header h1 {
+            font-family: 'Cinzel', serif;
+            margin: 0;
+            font-size: 1.8em;
+            letter-spacing: 1px;
         }
 
         nav {
-            background: var(--taino-dark);
-            max-width: 1000px;
-            margin: 0 auto 20px;
             display: flex;
             justify-content: center;
-            flex-wrap: wrap;
-            gap: 8px;
-            padding: 14px 20px;
-            border-radius: 0 0 20px 20px;
-            box-shadow: 0 6px 20px rgba(44,53,57,0.3);
+            padding: 10px 0;
+            background-color: var(--primary-blue); /* Mismo color que el header */
         }
+
         nav button {
-            background: transparent;
-            border: 1px solid rgba(212,175,55,0.35);
-            color: rgba(212,175,55,0.75);
-            padding: 10px 22px;
+            background: none;
+            border: none;
+            color: var(--light-text);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1em;
+            padding: 10px 20px;
+            margin: 0 5px;
             cursor: pointer;
-            border-radius: 30px;
-            font-weight: bold;
-            font-size: 15px;
-            font-family: 'Philosopher', sans-serif;
-            transition: all 0.3s ease;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            border-radius: 5px;
         }
+
         nav button:hover, nav button.active {
-            background: var(--taino-gold);
-            color: var(--taino-dark);
-            border-color: var(--taino-gold);
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(212,175,55,0.4);
+            background-color: var(--taino-gold);
+            color: var(--dark-text);
         }
-
-        @media (max-width: 600px) {
-            nav {
-                flex-wrap: nowrap;
-                overflow-x: auto;
-                justify-content: flex-start;
-                padding-bottom: 14px;
-                -webkit-overflow-scrolling: touch;
-                border-radius: 0;
-            }
-            nav::-webkit-scrollbar { display: none; }
-            nav { -ms-overflow-style: none; scrollbar-width: none; }
-            nav button { flex: 0 0 auto; white-space: nowrap; padding: 9px 16px; font-size: 14px; }
-            .page { padding: 25px 20px; }
-            h1, h2 { font-size: 22px; margin-bottom: 20px; }
-            .galeria-grid { grid-template-columns: 1fr; }
-            .sol-timeline { flex-direction: column; gap: 10px; }
-            .sol-connector { display: none; }
-        }
-
-        /* ══════════════════════════════════════
-           MAIN LAYOUT
-        ══════════════════════════════════════ */
-        main { max-width: 900px; margin: 20px auto; padding: 0 15px; }
 
         .page {
             display: none;
-            background: rgba(255,255,255,0.96);
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-            margin-bottom: 40px;
+            padding: 40px 20px;
+            max-width: 900px;
+            margin: 20px auto;
+            background-color: var(--light-text);
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
-        .page.active { display: block; }
 
-        h1, h2 { font-family: 'Cinzel Decorative', serif; color: var(--primary-blue); text-align: center; margin-bottom: 30px; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; }
-        h3, h4 { font-family: 'Cinzel', serif; color: var(--primary-red); margin-top: 30px; font-weight: 700; }
+        .page.active {
+            display: block;
+        }
 
-        .quote { font-style: italic; color: var(--primary-blue); font-size: 1.1em; text-align: center; margin: 30px 0; font-weight: 700; }
-        strong { color: var(--text-dark); font-weight: 700; }
+        h2, h3 {
+            font-family: 'Cinzel', serif;
+            color: var(--primary-blue);
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        .intro-section {
+            text-align: center;
+        }
+
+        .intro-section img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .intro-video {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            height: 0;
+            overflow: hidden;
+            max-width: 100%;
+            background: #000;
+            margin-top: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        .intro-video iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
 
         /* ══════════════════════════════════════
-           COUNTDOWN — DARK/GOLD
+           JUEGO DE CARTAS - EL AREÍTO DEL SABER
         ══════════════════════════════════════ */
-        #countdown-container {
-            background: var(--taino-dark);
-            padding: 22px 20px;
-            border-radius: 15px;
+        .areito-container {
+            padding: 40px 20px;
+            background: linear-gradient(135deg, rgba(212,175,55,0.05), rgba(0,86,151,0.05));
+            border-radius: 20px;
+            margin-top: 20px;
+        }
+        .areito-header {
             text-align: center;
             margin-bottom: 30px;
-            box-shadow: 0 6px 20px rgba(44,53,57,0.25);
         }
-        #countdown-container h3 {
-            color: rgba(212,175,55,0.8);
+        .areito-header h2 {
+            font-size: 2.2em;
+            color: var(--primary-blue);
+            margin-bottom: 10px;
+        }
+        .areito-header h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 300;
+            font-size: 1.2em;
+            color: #555;
             margin-top: 0;
-            font-size: 15px;
-            letter-spacing: 1px;
-        }
-        #countdown {
-            font-family: 'Cinzel', serif;
-            font-size: 38px;
-            font-weight: bold;
-            color: var(--taino-gold);
-            margin-top: 6px;
-            letter-spacing: 2px;
-            text-shadow: 0 0 20px rgba(212,175,55,0.4);
         }
 
-        /* ══════════════════════════════════════
-           PROGRESS BAR — WITH MILESTONES
-        ══════════════════════════════════════ */
-        .progress-container {
-            text-align: center;
-            margin-bottom: 40px;
-            padding: 20px 20px 12px;
-            background: rgba(44,53,57,0.04);
-            border-radius: 15px;
-            border: 1px solid rgba(212,175,55,0.2);
-        }
-        .progress-container h3 { margin-top: 0; }
-
-        .progress-bar-wrap {
-            position: relative;
-            margin: 16px 0 6px;
-        }
-        .progress-track {
-            width: 100%;
-            height: 14px;
-            background: #e0ddd5;
+        .mensaje-inicial {
+            background-color: var(--light-cream);
+            border: 1px solid var(--taino-gold);
             border-radius: 10px;
-            overflow: visible;
-            position: relative;
-        }
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--primary-blue), var(--taino-gold));
-            border-radius: 10px;
-            width: 0%;
-            transition: width 0.6s ease;
-            position: relative;
-        }
-        .progress-fill::after {
-            content: '';
-            position: absolute;
-            right: 0; top: 0;
-            height: 100%; width: 30px;
-            background: rgba(255,255,255,0.35);
-            border-radius: 0 10px 10px 0;
-        }
-        .progress-milestones {
-            display: flex;
-            justify-content: space-between;
-            padding: 0 0;
-            margin-top: 6px;
-        }
-        .milestone-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            font-size: 11px;
-            color: #999;
-            gap: 2px;
-            flex: 1;
-        }
-        .milestone-item span:first-child { font-size: 16px; line-height: 1; }
-        .milestone-item.reached { color: var(--taino-gold); }
-        #puntosTexto {
-            font-size: 20px;
-            color: var(--taino-dark);
-            display: block;
-            margin-top: 12px;
-            font-weight: 700;
-            font-family: 'Cinzel', serif;
-        }
-        #puntosTexto span { color: var(--taino-gold); }
-
-        /* ══════════════════════════════════════
-           TIMELINE 3 SOLES
-        ══════════════════════════════════════ */
-        .sol-timeline {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0;
-            margin: 0 0 35px;
             padding: 20px;
-            background: var(--taino-dark);
-            border-radius: 15px;
-        }
-        .sol-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
-            flex: 1;
-            max-width: 180px;
-        }
-        .sol-dot {
-            width: 52px; height: 52px;
-            border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 22px;
-            border: 2px solid rgba(212,175,55,0.3);
-            background: rgba(255,255,255,0.05);
-            transition: all 0.4s ease;
-        }
-        .sol-dot.done { background: var(--primary-blue); border-color: var(--primary-blue); }
-        .sol-dot.active { background: var(--taino-gold); border-color: var(--taino-gold); box-shadow: 0 0 18px rgba(212,175,55,0.6); }
-        .sol-dot.locked { opacity: 0.4; }
-        .sol-info { text-align: center; }
-        .sol-name {
-            font-family: 'Cinzel', serif;
-            font-size: 13px;
-            font-weight: 700;
-            color: rgba(255,255,255,0.9);
-        }
-        .sol-status {
-            font-family: 'Philosopher', sans-serif;
-            font-size: 11px;
-            color: rgba(255,255,255,0.5);
-        }
-        .sol-status.done { color: var(--primary-blue); }
-        .sol-status.active { color: var(--taino-gold); }
-        .sol-status.locked { color: rgba(255,255,255,0.3); }
-        .sol-connector {
-            flex: 1;
-            height: 2px;
-            background: rgba(212,175,55,0.2);
-            position: relative;
-            transition: background 0.4s;
-        }
-        .sol-connector.filled { background: var(--taino-gold); }
-
-        /* ══════════════════════════════════════
-           PARADAS CARDS
-        ══════════════════════════════════════ */
-        .parada-wrapper { position: relative; margin-bottom: 25px; }
-        .parada {
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.08);
-            overflow: hidden;
-            position: relative;
-            transition: filter 0.3s, opacity 0.3s;
-        }
-        .parada.locked { filter: blur(3px); opacity: 0.8; }
-        .parada-header {
-            background: var(--primary-blue);
-            padding: 20px 28px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 14px;
-        }
-        .parada-header h3 {
-            font-family: 'Cinzel Decorative', serif;
-            font-size: 18px;
-            color: white;
-            margin: 0;
-            flex: 1;
-        }
-        .parada-body { padding: 25px 28px; }
-        .parada-body h3,
-        .parada-body h4 {
-            font-family: 'Cinzel', serif;
-            color: var(--primary-red);
-            margin-top: 20px;
-            font-size: 14px;
-        }
-        .parada-body p { margin-bottom: 12px; }
-
-        /* ══════════════════════════════════════
-           LOCKED OVERLAY — DARK
-        ══════════════════════════════════════ */
-        .locked-overlay {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(180deg, rgba(30,35,38,0.88) 0%, rgba(20,25,28,0.95) 100%);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            z-index: 10;
-            border-radius: 15px;
-            gap: 12px;
-        }
-        .locked-overlay .lock-icon { font-size: 36px; opacity: 0.8; }
-        .locked-overlay .lock-badge {
-            font-family: 'Cinzel', serif;
-            font-size: 13px;
-            font-weight: 700;
-            color: var(--taino-dark);
-            background: var(--taino-gold);
-            padding: 7px 22px;
-            border-radius: 30px;
-            letter-spacing: 1px;
-        }
-        .locked-overlay .lock-pts {
-            font-size: 12px;
-            color: rgba(255,255,255,0.4);
-            font-family: 'Philosopher', sans-serif;
-        }
-
-        /* ══════════════════════════════════════
-           UNLOCK ANIMATION
-        ══════════════════════════════════════ */
-        @keyframes unlockFlash {
-            0%   { box-shadow: 0 0 0 0 rgba(212,175,55,0); }
-            30%  { box-shadow: 0 0 30px 10px rgba(212,175,55,0.6); }
-            100% { box-shadow: 0 0 0 0 rgba(212,175,55,0); }
-        }
-        .just-unlocked { animation: unlockFlash 1s ease forwards; }
-
-        /* ══════════════════════════════════════
-           DECRETO FINAL
-        ══════════════════════════════════════ */
-        #decreto-final {
-            border-radius: 15px;
-            overflow: hidden;
-            margin-top: 10px;
-            transition: filter 0.3s, opacity 0.3s;
-        }
-        #decreto-final.locked { filter: blur(4px); opacity: 0.75; }
-        #decreto-final .parada-header { background: var(--primary-red); }
-        #decreto-final .parada-header h3 { color: #fff !important; }
-
-        /* ══════════════════════════════════════
-           GALERÍA - AHORA CON WIDGET ELFSIGHT
-        ══════════════════════════════════════ */
-        .galeria-elfsight-container {
-            margin: 30px 0;
+            margin-bottom: 30px;
             text-align: center;
         }
-        .galeria-intro {
-            text-align: center;
-            color: var(--primary-blue);
-            padding: 0 15px;
-            margin-bottom: 35px;
-            font-weight: bold;
-            line-height: 1.8;
-        }
-
-        /* ══════════════════════════════════════
-           BUTTONS & FORMS
-        ══════════════════════════════════════ */
-        .btn-drive { display: block; width: 100%; text-align: center; background: #0F9D58; color: white; padding: 15px; border-radius: 30px; font-weight: bold; font-size: 18px; text-decoration: none; margin: 20px 0; box-shadow: 0 4px 10px rgba(15,157,88,0.3); transition: 0.3s; }
-        .btn-drive:hover { background: #0b7a44; transform: scale(1.02); color: white; }
-        .btn-maps { display: inline-block; background: var(--primary-blue); color: white; padding: 8px 15px; border-radius: 20px; font-weight: bold; text-decoration: none; font-size: 14px; margin-left: 10px; transition: 0.3s; }
-        .btn-maps:hover { background: var(--primary-red); color: white; }
-        button.btn-submit { font-family: 'Philosopher', sans-serif; padding: 15px 40px; background: var(--primary-blue); color: white; border: none; font-size: 18px; cursor: pointer; border-radius: 30px; font-weight: bold; transition: 0.3s; }
-        button.btn-submit:hover { background: var(--primary-red); }
-        .error-msg { color: var(--primary-red); font-weight: bold; display: none; margin-top: 15px; }
-
-        .password-box { text-align: center; margin: 20px 0; padding: 40px; background: rgba(250,249,246,0.9); border-radius: 15px; border: 1px solid #ddd; }
-        input[type="password"] { font-family: 'Philosopher', sans-serif; padding: 15px; font-size: 16px; width: 80%; max-width: 300px; border: 1px solid #ccc; border-radius: 30px; margin-bottom: 20px; text-align: center; outline: none; }
-        input[type="password"]:focus { border-color: var(--primary-blue); }
-
-        .admin-panel { background: rgba(255,245,245,0.95); padding: 30px; border-radius: 15px; }
-        .admin-controls button { font-family: 'Philosopher', sans-serif; margin: 5px; padding: 10px 20px; background: white; color: var(--primary-blue); border: 1px solid var(--primary-blue); cursor: pointer; border-radius: 20px; transition: 0.3s; font-weight: bold; }
-        .admin-controls button:hover { background: var(--primary-blue); color: white; }
-        .btn-reset { background: var(--primary-red) !important; color: white !important; width: 100%; margin-top: 30px !important; font-size: 18px; padding: 15px !important; border-radius: 20px; cursor: pointer; font-family: 'Philosopher', sans-serif; font-weight: bold; border: none; }
-
-        /* ══════════════════════════════════════
-           MODAL
-        ══════════════════════════════════════ */
-        .modal { display: none; position: fixed; z-index: 2000; padding-top: 50px; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.95); backdrop-filter: blur(5px); }
-        .modal-content { margin: auto; display: block; max-width: 95%; max-height: 85vh; border-radius: 10px; object-fit: contain; }
-        .close-modal { position: absolute; top: 20px; right: 30px; color: #fff; font-size: 40px; font-weight: bold; cursor: pointer; transition: 0.3s; }
-        .close-modal:hover { color: var(--primary-red); }
-
-        /* ══════════════════════════════════════
-           LISTS
-        ══════════════════════════════════════ */
-        ul { list-style-type: none; padding-left: 0; }
-        ul li { position: relative; padding-left: 20px; margin-bottom: 10px; }
-        ul li::before { content: "•"; color: var(--taino-gold); position: absolute; left: 0; font-size: 1.5em; line-height: 1; top: -2px; }
-
-        /* ══════════════════════════════════════
-           AGENDA VISUAL UPGRADES
-        ══════════════════════════════════════ */
-
-        /* SOL BANNER — día header */
-        .sol-banner {
-            display: flex;
-            align-items: center;
-            gap: 18px;
-            background: var(--taino-dark);
-            border-radius: 16px;
-            padding: 22px 28px;
-            margin: 36px 0 20px;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.18);
-        }
-        .sol-banner::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, rgba(212,175,55,0.18) 0%, transparent 60%);
-            pointer-events: none;
-        }
-        .sol-banner-icon {
-            font-size: 42px;
-            line-height: 1;
-            flex-shrink: 0;
-            filter: drop-shadow(0 0 10px rgba(212,175,55,0.6));
-        }
-        .sol-banner-info { flex: 1; }
-        .sol-banner-title {
-            font-family: 'Cinzel Decorative', serif;
+        .mensaje-inicial h3 {
             color: var(--taino-gold);
-            font-size: clamp(14px, 3.5vw, 22px);
-            font-weight: 700;
-            margin: 0 0 4px;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-        .sol-banner-subtitle {
-            font-family: 'Philosopher', sans-serif;
-            color: rgba(255,255,255,0.65);
-            font-size: 13px;
-            font-style: italic;
-            margin: 0;
-        }
-        .sol-banner-pts {
-            font-family: 'Cinzel', serif;
-            background: var(--taino-gold);
-            color: var(--taino-dark);
-            padding: 8px 16px;
-            border-radius: 30px;
-            font-weight: 700;
-            font-size: 14px;
-            white-space: nowrap;
-            box-shadow: 0 2px 10px rgba(212,175,55,0.4);
+            margin-top: 0;
         }
 
-        /* BENDICIÓN BOX — pergamino */
-        .bendicion-box {
-            background: linear-gradient(135deg, rgba(212,175,55,0.07) 0%, rgba(0,86,151,0.05) 100%);
-            border: 1px solid rgba(212,175,55,0.3);
-            border-left: 4px solid var(--taino-gold);
-            border-radius: 12px;
-            padding: 22px 24px;
-            margin-bottom: 24px;
+        .carta-area {
             position: relative;
-        }
-        .bendicion-box::before {
-            content: '✦';
-            position: absolute;
-            top: -10px; left: 20px;
-            background: var(--bg-sand);
-            padding: 0 8px;
-            color: var(--taino-gold);
-            font-size: 18px;
-        }
-        .bendicion-box .quote-line {
-            font-style: italic;
-            color: var(--primary-blue);
-            font-size: 1.05em;
-            font-weight: 700;
-            border-left: 3px solid var(--primary-blue);
-            padding-left: 14px;
-            margin: 14px 0;
-        }
-        .leyenda-label {
-            display: inline-block;
-            background: var(--primary-blue);
-            color: white;
-            font-family: 'Cinzel', serif;
-            font-size: 11px;
-            font-weight: 700;
-            padding: 3px 10px;
-            border-radius: 20px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 6px;
-        }
-
-        /* SECTION LABELS dentro de parada */
-        .sec-row {
+            width: 100%;
+            max-width: 350px; /* Tamaño de carta base */
+            height: 500px;    /* Ajustar según diseño de imagen */
+            margin: 0 auto 30px;
+            background-color: #f0f0f0; /* Color de fondo si no hay imagen */
+            border-radius: 15px;
+            box-shadow: 0 8px 15px rgba(0,0,0,0.2);
             display: flex;
-            gap: 12px;
-            align-items: flex-start;
-            padding: 12px 0;
-            border-bottom: 1px solid rgba(0,0,0,0.05);
-        }
-        .sec-row:last-child { border-bottom: none; }
-        .sec-icon {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
+            flex-direction: column;
             justify-content: center;
-            font-size: 16px;
-            flex-shrink: 0;
-            margin-top: 2px;
-        }
-        .sec-icon.umbral  { background: rgba(0,86,151,0.12); }
-        .sec-icon.senal   { background: rgba(212,175,55,0.18); }
-        .sec-icon.reto    { background: rgba(237,28,36,0.10); }
-        .sec-icon.registro{ background: rgba(91,200,245,0.15); }
-        .sec-icon.ofrenda { background: rgba(76,175,80,0.15); }
-        .sec-label {
-            font-family: 'Cinzel', serif;
-            font-size: 10px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            display: block;
-            margin-bottom: 3px;
-        }
-        .sec-label.umbral  { color: var(--primary-blue); }
-        .sec-label.senal   { color: #b8860b; }
-        .sec-label.reto    { color: var(--primary-red); }
-        .sec-label.registro{ color: #1a7ea8; }
-        .sec-label.ofrenda { color: #2e7d32; }
-        .sec-content { flex: 1; font-size: 0.97em; }
-
-        /* PUNTO BADGE */
-        .pts-badge {
-            display: inline-flex;
             align-items: center;
-            gap: 4px;
-            background: var(--taino-gold);
-            color: var(--taino-dark);
-            font-family: 'Cinzel', serif;
-            font-size: 11px;
-            font-weight: 700;
-            padding: 3px 10px;
-            border-radius: 20px;
-            margin-left: 6px;
-            vertical-align: middle;
-            white-space: nowrap;
+            text-align: center;
+            overflow: hidden; /* Para que la imagen de fondo se ajuste */
+            background-size: cover; /* Ajusta la imagen de fondo para cubrir */
+            background-position: center; /* Centra la imagen de fondo */
+            background-repeat: no-repeat;
+            color: white; /* Asume que el texto estará sobre un fondo oscuro de la imagen */
+            transition: transform 0.3s ease;
+            cursor: pointer;
+            border: 5px solid var(--taino-gold); /* Borde para resaltar */
         }
 
-        /* SUBTOTAL BAR */
-        .subtotal-bar {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: var(--taino-dark);
-            color: var(--taino-gold);
-            font-family: 'Cinzel', serif;
-            font-weight: 700;
-            font-size: 15px;
-            padding: 12px 20px;
+        .carta-area:hover {
+            transform: translateY(-5px);
+        }
+
+        .carta-contenido {
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.5); /* Fondo semitransparente para el texto */
             border-radius: 10px;
-            margin-top: 20px;
-            letter-spacing: 1px;
+            max-width: 80%;
         }
 
-        /* SUB-PARADA header (Parada 1,2,3 dentro del Viernes/Sábado) */
+        .carta-categoria {
+            font-family: 'Cinzel', serif;
+            font-size: 1.1em;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: var(--taino-gold);
+        }
+
+        .carta-pregunta {
+            font-size: 1.3em;
+            margin-bottom: 15px;
+        }
+
+        .carta-puntos {
+            font-family: 'Cinzel', serif;
+            font-size: 1em;
+            font-weight: bold;
+            color: #a0a0a0; /* Color gris para los puntos */
+        }
+
+        .shuffle-button {
+            display: block;
+            margin: 0 auto 30px;
+            padding: 15px 30px;
+            background: var(--primary-blue);
+            color: var(--light-text);
+            border: none;
+            border-radius: 30px;
+            font-family: 'Cinzel', serif;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .shuffle-button:hover {
+            background-color: var(--taino-gold);
+            transform: translateY(-2px);
+            color: var(--dark-text);
+        }
+        
+        .imprimir-container {
+            text-align: center;
+            margin-top: 30px;
+        }
+        .imprimir-container button {
+            padding: 12px 25px;
+            background-color: #28a745; /* Color verde para imprimir */
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .imprimir-container button:hover {
+            background-color: #218838;
+        }
+
+
+        /* ══════════════════════════════════════
+           RUTAS ALTERNAS
+        ══════════════════════════════════════ */
+        .rutas-alternas-section h2 {
+            font-size: 2em;
+            margin-bottom: 30px;
+        }
+
+        .parada {
+            background-color: var(--light-cream);
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin-bottom: 25px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .parada-header {
+            background-color: var(--primary-blue);
+            color: var(--light-text);
+            padding: 15px 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: 'Cinzel', serif;
+            font-size: 1.1em;
+        }
+
+        .parada-header:hover {
+            background-color: #00447a;
+        }
+
+        .parada-header .arrow {
+            transition: transform 0.3s ease;
+        }
+
+        .parada-header.active .arrow {
+            transform: rotate(90deg);
+        }
+
+        .parada-content {
+            padding: 20px;
+            display: none; /* Oculto por defecto */
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .parada-content p {
+            margin-bottom: 10px;
+        }
+
+        .parada-content ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .parada-content ul li {
+            background: #e9e9e9;
+            margin-bottom: 8px;
+            padding: 10px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+        }
+        .parada-content ul li::before {
+            content: '✓';
+            color: var(--primary-blue);
+            font-weight: bold;
+            margin-right: 8px;
+        }
+
         .sub-parada-header {
             display: flex;
             align-items: center;
@@ -725,1143 +351,466 @@
             font-weight: 700;
         }
 
-        /* ══════════════════════════════════════
-           JUEGO DE CARTAS - EL AREITO DE LOS ENAMORADOS
-        ══════════════════════════════════════ */
-        .areito-container {
-            padding: 40px 20px;
-            background: linear-gradient(135deg, rgba(212,175,55,0.05), rgba(0,86,151,0.05));
-            border-radius: 20px;
-            margin-top: 20px;
+        /* Bonificación (Nueva Sección) */
+        .bonificacion-section {
+            margin-top: 30px;
+            border-top: 2px dashed var(--taino-gold);
+            padding-top: 30px;
         }
-        .areito-header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        .areito-title {
-            font-family: 'Cinzel Decorative', serif;
-            color: var(--primary-blue);
-            font-size: 28px;
-            margin-bottom: 10px;
-        }
-        .areito-subtitle {
-            font-family: 'Philosopher', serif;
-            font-style: italic;
-            color: var(--taino-dark);
-            font-size: 16px;
-        }
-        
-        .carta-display {
-            min-height: 400px;
-            background-size: cover;
-            background-position: center;
-            border-radius: 20px;
-            padding: 40px;
-            margin-bottom: 30px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-            position: relative;
-            overflow: hidden;
-        }
-        .carta-display::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: rgba(0,0,0,0.4);
-            backdrop-filter: blur(2px);
-        }
-        .carta-content {
-            position: relative;
-            z-index: 2;
-            color: white;
-            text-align: center;
-        }
-        .carta-categoria {
-            font-family: 'Cinzel', serif;
-            font-size: 14px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: var(--taino-gold);
-            margin-bottom: 15px;
-        }
-        .carta-pregunta {
-            font-family: 'Philosopher', serif;
-            font-size: 22px;
-            line-height: 1.6;
-            margin-bottom: 20px;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.8);
-        }
-        .carta-puntos {
-            font-family: 'Cinzel', serif;
-            font-size: 16px;
-            background: var(--taino-gold);
-            color: var(--taino-dark);
-            display: inline-block;
-            padding: 8px 20px;
-            border-radius: 30px;
-            font-weight: 700;
-        }
-        
-        .areito-controls {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-bottom: 25px;
-        }
-        .areito-btn {
-            font-family: 'Cinzel', serif;
-            background: var(--primary-blue);
-            color: white;
-            border: none;
-            padding: 15px 35px;
-            font-size: 16px;
-            font-weight: 700;
-            border-radius: 30px;
+
+        .bonificacion-header {
+            background-color: var(--taino-gold);
+            color: var(--dark-text);
+            padding: 15px 20px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            letter-spacing: 1px;
-        }
-        .areito-btn:hover {
-            background: var(--taino-gold);
-            color: var(--taino-dark);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
-        .areito-btn.secondary {
-            background: var(--taino-dark);
-        }
-        .areito-btn.secondary:hover {
-            background: var(--primary-red);
-        }
-        
-        .areito-stats {
             display: flex;
-            justify-content: space-around;
-            flex-wrap: wrap;
-            gap: 20px;
-            background: var(--taino-dark);
+            justify-content: space-between;
+            align-items: center;
+            font-family: 'Cinzel', serif;
+            font-size: 1.1em;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .bonificacion-header:hover {
+            background-color: #c9a031;
+        }
+        .bonificacion-header .arrow {
+            transition: transform 0.3s ease;
+        }
+        .bonificacion-header.active .arrow {
+            transform: rotate(90deg);
+        }
+
+        .bonificacion-content {
             padding: 20px;
-            border-radius: 15px;
-            color: white;
-            text-align: center;
-        }
-        .stat-item {
-            flex: 1;
-            min-width: 120px;
-        }
-        .stat-label {
-            font-family: 'Philosopher', serif;
-            font-size: 13px;
-            color: rgba(255,255,255,0.6);
-            margin-bottom: 5px;
-        }
-        .stat-value {
-            font-family: 'Cinzel', serif;
-            font-size: 24px;
-            color: var(--taino-gold);
-            font-weight: 700;
+            background-color: var(--light-cream);
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            display: none; /* Oculto por defecto */
+            animation: fadeIn 0.5s ease-out;
+            border-left: 5px solid var(--taino-gold);
         }
 
-        .mensaje-inicial {
-            text-align: center;
-            padding: 60px 20px;
-        }
-        .mensaje-inicial h3 {
-            font-family: 'Cinzel', serif;
-            color: var(--primary-blue);
-            font-size: 24px;
-            margin-bottom: 15px;
-        }
-        .mensaje-inicial p {
-            font-family: 'Philosopher', serif;
-            font-size: 16px;
-            color: var(--taino-dark);
-            line-height: 1.8;
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Estilos de impresión */
-        @media print {
-            body * { visibility: hidden; }
-            .print-area, .print-area * { visibility: visible; }
-            .print-area {
-                position: absolute;
-                left: 0;
-                top: 0;
-                width: 100%;
+        /* ══════════════════════════════════════
+           MEDIA QUERIES
+        ══════════════════════════════════════ */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.5em;
             }
-            .areito-controls, .areito-stats { display: none !important; }
+            nav button {
+                font-size: 0.9em;
+                padding: 8px 10px;
+            }
+            .page {
+                padding: 20px 15px;
+                margin: 10px auto;
+            }
+            h2 {
+                font-size: 1.8em;
+            }
+            .carta-area {
+                height: 400px;
+            }
+            .carta-pregunta {
+                font-size: 1.1em;
+            }
+            .parada-header, .bonificacion-header {
+                font-size: 1em;
+            }
+        }
+        @media (max-width: 480px) {
+            nav {
+                flex-wrap: wrap;
+            }
+            nav button {
+                width: 45%;
+                margin: 5px;
+            }
         }
     </style>
 </head>
 <body>
+    <header>
+        <h1>¡Descubre la Magia de la Conexión!</h1>
+    </header>
 
-<!-- VIDEO SPLASH -->
-<div id="video-splash">
-    <video id="intro-video" autoplay muted loop playsinline>
-        <source src="intro.mp4" type="video/mp4">
-    </video>
-    <div class="splash-overlay"></div>
-    <button class="btn-mute" onclick="document.getElementById('intro-video').muted = !document.getElementById('intro-video').muted">🔇</button>
-    <div class="splash-content">
-        <h1 class="splash-title">La Gesta de los 45 Soles</h1>
-        <p class="splash-subtitle">Una Odisea Taína para Cacique Francisco</p>
-        <button class="btn-enter" onclick="enterApp()">Entrar al Yucayeque</button>
-        <button class="btn-skip" onclick="enterApp()">Saltar introducción</button>
+    <nav>
+        <button id="nav-intro" class="active" onclick="showPage('intro')">✨ Intro</button>
+        <button id="nav-areito" onclick="showPage('areito')">🎴 Areíto del Saber</button>
+        <button id="nav-rutas" onclick="showPage('rutas')">🗺️ Rutas Alternas</button>
+    </nav>
+
+    <div id="intro" class="page active intro-section">
+        <h2>Bienvenida a la Magia de la Conexión</h2>
+        <p>Un espacio donde la intimidad y el conocimiento mutuo se entrelazan para fortalecer tus relaciones. Prepárate para embarcarte en un viaje de descubrimiento, risas y comprensión profunda.</p>
+        <img src="images/intro_placeholder.jpg" alt="Imagen de Introducción a la Magia de la Conexión">
+        <p>Aquí encontrarás herramientas poderosas para explorar el corazón de tus vínculos, desbloquear conversaciones significativas y construir un puente hacia una conexión más auténtica.</p>
+        
+        <div class="intro-video">
+            <!-- HE AÑADIDO 'controls=1&modestbranding=1&rel=0' PARA INTENTAR FORZAR LOS CONTROLES Y EVITAR SUGERENCIAS. -->
+            <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ?controls=1&modestbranding=1&rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <p style="margin-top: 20px;">Observa este video para una introducción a lo que te espera.</p>
     </div>
-</div>
 
-<!-- BANNER -->
-<header class="banner">
-    <img src="banner.jpg" alt="Banner Gesta de los 45 Soles">
-</header>
-
-<!-- NAV -->
-<nav>
-    <button id="nav-inicio" class="active" onclick="showPage('inicio')">🏠 Inicio</button>
-    <button id="nav-agenda" onclick="showPage('agenda')">📜 La Gesta</button>
-    <button id="nav-galeria" onclick="showPage('galeria')">📷 Los 45 Soles</button>
-    <button id="nav-areito" onclick="showPage('areito')">🎴 Areito Enamorados</button>
-    <button id="nav-glosario" onclick="showPage('glosario')">📖 Glosario</button>
-    <button id="nav-boveda-admin" onclick="showPage('boveda-admin')">⚙️ Bóveda & Admin</button>
-</nav>
-
-<main>
-    <!-- ════════ INICIO ════════ -->
-    <section id="inicio" class="page active">
-        <h1>Bienvenido, Cacique Francisco</h1>
-
-        <div id="countdown-container">
-            <h3>Cuenta Regresiva a tu Gran Gesta</h3>
-            <div id="countdown">Cargando...</div>
+    <div id="areito" class="page areito-container">
+        <div class="areito-header">
+            <h2>🎴 El Areíto del Saber</h2>
+            <h3>El Juego de las 45 Cartas Sagradas</h3>
         </div>
-
-        <div class="quote">"Cada sol que pasa deja una huella en tu corazón. Hoy celebramos 45 años de luz, sabiduría y valentía."</div>
-
-        <p>Durante tres días, del <strong>Jueves 2 al Sábado 4 de abril de 2026</strong>, emprenderás una aventura épica bajo el manto de los antiguos dioses taínos. Tu misión: acumular <strong>1,000 puntos de valor</strong> en tu viaje a través de paradas secretas y retos sagrados que solo el Oráculo (tu Cacica) te revelará.</p>
-
-        <div class="progress-container">
-            <h3>🏆 Progreso del Cacique</h3>
-            <div class="progress-bar-wrap">
-                <div class="progress-track">
-                    <div id="progressBar" class="progress-fill"></div>
-                </div>
-            </div>
-            <div class="progress-milestones">
-                <div id="ms-jp1" class="milestone-item"><span>🌅</span><span>JP1</span></div>
-                <div id="ms-jp2" class="milestone-item"><span>🌄</span><span>JP2</span></div>
-                <div id="ms-vie" class="milestone-item"><span>🌿</span><span>Viernes</span></div>
-                <div id="ms-sab" class="milestone-item"><span>🔥</span><span>Sábado</span></div>
-                <div id="ms-fin" class="milestone-item"><span>👑</span><span>Final</span></div>
-            </div>
-            <div id="puntosTexto">Puntos Actuales: <span id="ptsCurrent">0</span> / 1000</div>
-        </div>
-
-        <div class="sol-timeline">
-            <div class="sol-item">
-                <div id="tl-dot-jueves" class="sol-dot">🌅</div>
-                <div class="sol-info">
-                    <div class="sol-name">Sol 1 · Jueves</div>
-                    <div id="tl-status-jueves" class="sol-status">—</div>
-                </div>
-            </div>
-            <div id="tl-conn-1" class="sol-connector"></div>
-            <div class="sol-item">
-                <div id="tl-dot-viernes" class="sol-dot">🌿</div>
-                <div class="sol-info">
-                    <div class="sol-name">Sol 2 · Viernes</div>
-                    <div id="tl-status-viernes" class="sol-status">—</div>
-                </div>
-            </div>
-            <div id="tl-conn-2" class="sol-connector"></div>
-            <div class="sol-item">
-                <div id="tl-dot-sabado" class="sol-dot">🔥</div>
-                <div class="sol-info">
-                    <div class="sol-name">Sol 3 · Sábado</div>
-                    <div id="tl-status-sabado" class="sol-status">—</div>
-                </div>
-            </div>
-        </div>
-
-        <p><strong>Importante:</strong> Las rutas y direcciones de tus paradas permanecerán ocultas hasta que el Oráculo (Cacica) las revele en el momento preciso. Solo ella posee el mapa completo de esta odisea sagrada.</p>
-    </section>
-
-    <!-- ════════ LA GESTA (AGENDA) ════════ -->
-    <section id="agenda" class="page">
-        <h2>📜 La Gesta de los 45 Soles</h2>
-
-        <!-- JUEVES -->
-        <div class="parada-wrapper">
-            <div id="jueves-p1" class="parada">
-                <div class="parada-header" style="background:var(--taino-dark); padding:0; border-radius:0;">
-                    <div class="sol-banner" style="margin:0; border-radius:0; box-shadow:none;">
-                        <div class="sol-banner-icon">🌅</div>
-                        <div class="sol-banner-info">
-                            <div class="sol-banner-title">Sol 1 · Jueves</div>
-                            <div class="sol-banner-subtitle">El Despertar de Guahayona</div>
-                        </div>
-                        <div class="sol-banner-pts">250 pts</div>
-                    </div>
-                </div>
-                <div class="parada-body">
-                    <div class="bendicion-box">
-                        <p><strong>La Bendición de Yúcahu:</strong><br>
-                        "Cacique Francisco, el dios de la yuca y las cosechas bendice hoy tu camino. Que cada paso te acerque a los tesoros ocultos que solo tu corazón puede descifrar."</p>
-                        <div class="quote-line">"No es el destino quien hace al guerrero, sino el camino que recorre." — <strong>Proverbio Taíno</strong></div>
-                        <p>"Hoy despiertas con el primer sol de una aventura sagrada. Prepárate para descubrir no solo los lugares de tu isla, sino los rincones más profundos de tu espíritu."</p>
-                        <span class="leyenda-label">🌅 Guía Espiritual</span>
-                        <p><strong>La Leyenda del Día: El Despertar de Guahayona</strong><br>
-                        Guahayona fue el primer héroe taíno que se atrevió a explorar lo desconocido. Hoy tú, Cacique Francisco, encarnas su espíritu al adentrarte en un viaje que desafiará tu coraje, tu ingenio y tu conexión con los elementos sagrados de Borikén.</p>
-                    </div>
-
-                    <h4>📍 Parada 1: El Umbral del Yucayeque (Hora del desayuno)</h4>
-                    <div class="sec-row">
-                        <div class="sec-icon umbral">🏛️</div>
-                        <div class="sec-content"><span class="sec-label umbral">Umbral del Yucayeque</span>Tu punto de partida será revelado por el Oráculo cuando amanezca.</div>
-                    </div>
-                    <div class="sec-row">
-                        <div class="sec-icon senal">🔮</div>
-                        <div class="sec-content"><span class="sec-label senal">La Señal</span>"Busca el lugar donde el maíz se convierte en oro y el grano sagrado despierta los sentidos del Cacique. Allí, el pan de los dioses te espera con canela y miel."</div>
-                    </div>
-                    <div class="sec-row">
-                        <div class="sec-icon reto">🧠</div>
-                        <div class="sec-content"><span class="sec-label reto">Reto de Sabiduría</span>Identifica dos ingredientes en tu desayuno que simbolicen abundancia y compártelos en un brindis con el Oráculo. <span class="pts-badge">🏅 20 pts</span></div>
-                    </div>
-                    <div class="sec-row">
-                        <div class="sec-icon registro">📸</div>
-                        <div class="sec-content"><span class="sec-label registro">El Registro</span>Foto del Cacique frente a su primer alimento sagrado del día. <span class="pts-badge">🏅 10 pts</span></div>
-                    </div>
-                    <div class="sec-row">
-                        <div class="sec-icon ofrenda">🌿</div>
-                        <div class="sec-content"><span class="sec-label ofrenda">Ofrenda</span>Dejar una propina generosa al servidor, honrando la labor de quien sirve. <span class="pts-badge">🏅 10 pts</span></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="parada-wrapper">
-            <div id="jueves-p2" class="parada locked">
-                <div class="parada-header">
-                    <h3>📍 Parada 2: El Encuentro con Karaya (La Playa Mística)</h3>
-                </div>
-                <div class="parada-body">
-                    <div class="sec-row">
-                        <div class="sec-icon umbral">🏛️</div>
-                        <div class="sec-content"><span class="sec-label umbral">Umbral del Yucayeque</span>Tras el primer alimento, el camino se abre hacia las aguas sagradas de Karaya (el mar).</div>
-                    </div>
-                    <div class="sec-row">
-                        <div class="sec-icon senal">🔮</div>
-                        <div class="sec-content"><span class="sec-label senal">La Señal</span>"Busca las aguas que besan la tierra del antiguo pueblo de Ceiba. Donde las olas susurran secretos, allí encontrarás el descanso del guerrero antes de la Gran Odisea."</div>
-                    </div>
-                    <div class="sec-row">
-                        <div class="sec-icon reto">🧠</div>
-                        <div class="sec-content"><span class="sec-label reto">Reto de Sabiduría — La Ofrenda al Mar</span>Recoger 3 piedras de la orilla y lanzarlas al agua con una intención personal para cada una (amor, salud, prosperidad). <span class="pts-badge">🏅 25 pts</span></div>
-                    </div>
-                    <div class="sec-row">
-                        <div class="sec-icon registro">📸</div>
-                        <div class="sec-content"><span class="sec-label registro">El Registro</span>Foto del Cacique con los pies en el agua o contemplando el horizonte marino. <span class="pts-badge">🏅 20 pts</span></div>
-                    </div>
-                    <div class="sec-row">
-                        <div class="sec-icon ofrenda">🌿</div>
-                        <div class="sec-content"><span class="sec-label ofrenda">Ofrenda</span>Escribir en la arena un mensaje de gratitud hacia alguien importante en tu vida. <span class="pts-badge">🏅 20 pts</span></div>
-                    </div>
-                </div>
-            </div>
-            <div id="lock-jueves-p2" class="locked-overlay">
-                <span class="lock-icon">🔒</span>
-                <span class="lock-badge">Misión Bloqueada</span>
-                <span class="lock-pts">Requiere 40 puntos</span>
-            </div>
-        </div>
-
-        <div class="parada-wrapper">
-            <div id="jueves-p3" class="parada locked">
-                <div class="parada-header">
-                    <h3>📍 Parada 3: El Batey de los Sabores (Almuerzo Ceremonial)</h3>
-                </div>
-                <div class="parada-body">
-                    <div class="sec-row">
-                        <div class="sec-icon umbral">🏛️</div>
-                        <div class="sec-content"><span class="sec-label umbral">Umbral del Yucayeque</span>Mediodía. El sol está en lo alto y tu cuerpo necesita reponer energías en un lugar donde la comida se convierte en celebración.</div>
-                    </div>
-                    <div class="sec-row">
-                        <div class="sec-icon senal">🔮</div>
-                        <div class="sec-content"><span class="sec-label senal">La Señal</span>"Busca el lugar donde los frutos del mar se fusionan con el fuego de la tierra. Donde el arte del sabor encuentra su máxima expresión en la costa del este."</div>
-                    </div>
-                    <div class="sec-row">
-                        <div class="sec-icon reto">🧠</div>
-                        <div class="sec-content"><span class="sec-label reto">Reto de Sabiduría — El Banquete del Cacique</span>Probar un plato que nunca antes hayas ordenado en ese restaurante. <span class="pts-badge">🏅 30 pts</span></div>
-                    </div>
-                    <div class="sec-row">
-                        <div class="sec-icon registro">📸</div>
-                        <div class="sec-content"><span class="sec-label registro">El Registro</span>Foto del Cacique frente a su festín. <span class="pts-badge">🏅 25 pts</span></div>
-                    </div>
-                    <div class="sec-row">
-                        <div class="sec-icon ofrenda">🌿</div>
-                        <div class="sec-content"><span class="sec-label ofrenda">Ofrenda</span>Compartir una historia sobre cómo ese día ha ido bien hasta el momento con tu acompañante (Oráculo). <span class="pts-badge">🏅 25 pts</span></div>
-                    </div>
-                    <div class="subtotal-bar"><span>🌅 Subtotal Paradas Jueves</span><span>250 pts</span></div>
-                </div>
-            </div>
-            <div id="lock-jueves-p3" class="locked-overlay">
-                <span class="lock-icon">🔒</span>
-                <span class="lock-badge">Misión Bloqueada</span>
-                <span class="lock-pts">Requiere 105 puntos</span>
-            </div>
-        </div>
-
-        <!-- VIERNES -->
-        <div class="parada-wrapper">
-            <div id="viernes" class="parada locked">
-                <div class="parada-header" style="background:var(--taino-dark); padding:0; border-radius:0;">
-                    <div class="sol-banner" style="margin:0; border-radius:0; box-shadow:none;">
-                        <div class="sol-banner-icon">🌿</div>
-                        <div class="sol-banner-info">
-                            <div class="sol-banner-title">Sol 2 · Viernes</div>
-                            <div class="sol-banner-subtitle">El Reposo de Anacaona</div>
-                        </div>
-                        <div class="sol-banner-pts">300 pts</div>
-                    </div>
-                </div>
-                <div class="parada-body">
-                    <div class="bendicion-box">
-                        <p><strong>La Bendición de la Guaca:</strong><br>
-                        "Atabey, en su infinita calma, susurra hoy a tu oído. En el silencio del Viernes Santo, la agitación del mundo se detiene para dar paso al refugio sagrado. Hoy no hay rumbos externos, solo el camino hacia el corazón. Que el aroma de las flores y la calidez de la piel sean tu nueva brújula."</p>
-                        <div class="quote-line">"El amor no se mide por el tiempo que pasamos juntos, sino por la huella que dejamos el uno en el otro." — <strong>Anónimo</strong></div>
-                        <p>"Baby, en este primer año, agradezco cada minuto compartido; aunque el tiempo ha sido poco, ha sido hermoso y de una calidad invaluable. Mi único deseo hoy es permanecer en tu vida para seguir sumándonos: experiencias que nos hagan felices y momentos que nos transformen en mejores personas. Quiero que nos acompañemos en los tiempos difíciles y atesoremos los buenos. Aspiro a que sigamos conociéndonos y creciendo juntos, paso a paso, solidificando este lazo que nos une."</p>
-                        <span class="leyenda-label">🌿 Guía Espiritual</span>
-                        <p><strong>La Leyenda del Día: Anacaona y la Unión de los Espíritus</strong><br>
-                        Hoy caminas bajo el aura de Anacaona, la reina poeta. Mientras Guahayona representa la acción, Anacaona es el reposo y la conexión espiritual. Hoy el Yucayeque se detiene para que tú, nuestro Cacique, encuentres en la intimidad de tu refugio la fuerza que solo el amor compartido puede otorgar.</p>
-                    </div>
-                    <!-- Viernes P1 -->
-                    <div class="sub-parada-header"><h4>📍 Parada 1: El Saludo a Karaya (Picnic de Café en la Arena)</h4></div>
-                    <div class="sec-row">
-                        <div class="sec-icon umbral">🏛️</div>
-                        <div class="sec-content"><span class="sec-label umbral">Umbral del Yucayeque</span>El sol nace sobre las aguas frente a tu bohío. Como los antiguos que agradecían el nuevo día, tu primera misión es salir al encuentro del mar antes de que el mundo despierte.</div>
-                    </div>
-                    <div class="sec-row">
-                        <div class="sec-icon senal">🔮</div>
-                        <div class="sec-content"><span class="sec-label senal">La Señal</span>"Busca el lugar donde la espuma besa la tierra. Allí, sobre un manto tejido, el grano sagrado (café) te espera para despertar tus sentidos frente al horizonte infinito."</div>
-                    </div>
-                    <div class="sec-row">
-                        <div class="sec-icon reto">🧠</div>
-                        <div class="sec-content"><span class="sec-label reto">Reto de Sabiduría — Meditación del Guerrero</span>Identifica 3 sonidos distintos de la naturaleza que no sean el mar. Debes reportarlos al Oráculo para validar tu presencia en el presente. <span class="pts-badge">🏅 30 pts</span></div>
-                    </div>
-                    <div class="sec-row">
-                        <div class="sec-icon registro">📸</div>
-                        <div class="sec-content"><span class="sec-label registro">El Registro</span>Foto del Cacique mirando al horizonte con su cuenco de café, con los pies enterrados en la arena sagrada. <span class="pts-badge">🏅 20 pts</span></div>
-                    </div>
-                    <div class="sec-row">
-                        <div class="sec-icon ofrenda">🌿</div>
-                        <div class="sec-content"><span class="sec-label ofrenda">Ofrenda</span>Escribir en la arena un agradecimiento a Atabey por el Sol 45 y dejar que la marea se lo lleve. <span class="pts-badge">🏅 15 pts</span></div>
-                    </div>
-
-                    <!-- Viernes P2 -->
-                    <div class="sub-parada-header"><h4>📍 Parada 2: El Manjar del Bohío y la Caricia de la Guaca (Spa en Casa)</h4></div>
-                    <div class="sec-row">
-                        <div class="sec-icon umbral">🏛️</div>
-                        <div class="sec-content"><span class="sec-label umbral">Umbral del Yucayeque</span>Regresas al refugio donde el fuego de la cocina ya ha preparado el sustento. Tras el alimento, viene la purificación del cuerpo a través del tacto.</div>
-                    </div>
-                    <div class="sec-row">
-                        <div class="sec-icon senal">🔮</div>
-                        <div class="sec-content"><span class="sec-label senal">La Señal</span>"Busca el aroma a canela y frutas frescas en la mesa. Tras el banquete, el ambiente cambiará: aceites y esencias marcarán el inicio de la Ceremonia del Tacto."</div>
-                    </div>
-                    <div class="sec-row">
-                        <div class="sec-icon reto">🧠</div>
-                        <div class="sec-content"><span class="sec-label reto">Reto de Sabiduría — El Banquete de Atabey</span>Desayuno hecho en casa. El Cacique debe identificar el ingrediente "secreto" que la Cacica añadió para darle fuerza. <span class="pts-badge">🏅 30 pts</span><br><br>
-                        <strong>La Ceremonia del Tacto:</strong> Sesión de Masaje, Manicura y Pedicura. El reto es el Silencio Sagrado: durante el masaje, el Cacique no puede hablar, solo sentir la energía que fluye. <span class="pts-badge">🏅 40 pts</span></div>
-                    </div>
-                    <div class="sec-row">
-                        <div class="sec-icon registro">📸</div>
-                        <div class="sec-content"><span class="sec-label registro">El Registro</span>Foto de las manos/pies del Cacique tras la purificación o una imagen del ambiente del spa (velas/aceites). <span class="pts-badge">🏅 20 pts</span></div>
-                    </div>
-                    <div class="sec-row">
-                        <div class="sec-icon ofrenda">🌿</div>
-                        <div class="sec-content"><span class="sec-label ofrenda">Ofrenda</span>Un masaje recíproco de 5 minutos en las manos de la Cacica, honrando su labor de guía. <span class="pts-badge">🏅 20 pts</span></div>
-                    </div>
-
-                    <!-- Viernes P3 -->
-                    <div class="sub-parada-header"><h4>📍 Parada 3: El Areyto de los Cuerpos (Las 5 Estampas de la Pasión)</h4></div>
-                    <div class="sec-row">
-                        <div class="sec-icon umbral">🏛️</div>
-                        <div class="sec-content"><span class="sec-label umbral">Umbral del Yucayeque</span>Cuando las sombras se alargan y el bohío se ilumina solo con fuego tenue, comienza la danza prohibida de los sentidos. Es el momento de la unión total, donde Guahayona y Anacaona se funden en un solo espíritu. Ya no hay mapas externos, solo el relieve de la piel y el latido compartido.</div>
-                    </div>
-                    <div class="sec-row">
-                        <div class="sec-icon senal">🔮</div>
-                        <div class="sec-content"><span class="sec-label senal">La Señal</span>"Busca el rincón del deseo, donde la piel es el mapa y el susurro es la brújula. No busques respuestas en la mente, búscalas en el calor del encuentro. El conocimiento de tu pareja no se dice, se siente. La noche es vuestra y el tiempo se detiene en el año 45."</div>
-                    </div>
-                    <div class="sec-row">
-                        <div class="sec-icon reto">🧠</div>
-                        <div class="sec-content"><span class="sec-label reto">Reto de Sabiduría — Las 5 Estampas de la Pasión</span>Para ganar tus Puntos de Valor, el Cacique debe navegar y conquistar los 5 actos sagrados de la entrega. Cada estampa debe vivirse en total presencia:
-                            <ol style="margin-top:10px; padding-left:18px; list-style:decimal;">
-                                <li style="padding-left:0;"><strong>El Susurro de Atabey:</strong> Acercarse al oído de la Cacica y pronunciar tres verdades profundas que solo su corazón conozca, verdades que estremezcan el alma antes de tocar el cuerpo.</li>
-                                <li style="padding-left:0;"><strong>El Fluido Sagrado:</strong> Utilizando los aceites o néctares preparados en el spa, el Cacique realizará la unción. Debe recorrer con sus manos y el fluido cada camino de la piel de la Cacica.</li>
-                                <li style="padding-left:0;"><strong>El Abrazo de la Ceiba:</strong> Permanecer fundidos en un abrazo total durante 5 minutos de reloj, respirando al unísono, sintiendo cómo los dos pechos se vuelven un solo latido sin mediar palabra.</li>
-                                <li style="padding-left:0;"><strong>La Ofrenda de Cacao:</strong> El deleite del gusto. El Cacique alimentará a la Cacica con el fruto sagrado, explorando los sabores y la dulzura como preámbulo a la entrega final.</li>
-                                <li style="padding-left:0;"><strong>La Danza de Coaybay:</strong> La consagración definitiva. La entrega total bajo la ley del deseo puro, donde el Cacique Francisco reclama su derecho al deleite y la abundancia en los brazos de su Cacica.</li>
-                            </ol>
-                            <span class="pts-badge">🏅 100 pts</span>
-                        </div>
-                    </div>
-                    <div class="sec-row">
-                        <div class="sec-icon registro">📸</div>
-                        <div class="sec-content"><span class="sec-label registro">El Registro</span>Una foto sugerente de la atmósfera (juego de luces de velas, las copas brindando o las sombras proyectadas) que capture la esencia mística del ritual sin romper la privacidad sagrada de la Guaca. <span class="pts-badge">🏅 25 pts</span></div>
-                    </div>
-                    <div class="sec-row">
-                        <div class="sec-icon ofrenda">🌿</div>
-                        <div class="sec-content"><span class="sec-label ofrenda">Ofrenda Final — El Sello de la Alianza</span>Beso de victoria de 45 segundos exactos y un pacto de intimidad absoluta donde el Cacique, con voz de autoridad, declare una nueva "ley de placer" o un deseo secreto que regirá su relación durante este nuevo ciclo de vida. <span class="pts-badge">🏅 25 pts</span></div>
-                    </div>
-                    <div class="subtotal-bar"><span>🌿 Subtotal Viernes</span><span>300 pts</span></div>
-                </div>
-            </div>
-            <div id="lock-viernes" class="locked-overlay">
-                <span class="lock-icon">🔒</span>
-                <span class="lock-badge">Misión Bloqueada</span>
-                <span class="lock-pts">Requiere 250 puntos del Jueves</span>
-            </div>
-        </div>
-
-        <!-- SÁBADO -->
-        <div class="parada-wrapper">
-            <div id="sabado" class="parada locked">
-                <div class="parada-header" style="background:var(--taino-dark); padding:0; border-radius:0;">
-                    <div class="sol-banner" style="margin:0; border-radius:0; box-shadow:none;">
-                        <div class="sol-banner-icon">🔥</div>
-                        <div class="sol-banner-info">
-                            <div class="sol-banner-title">Sol 3 · Sábado</div>
-                            <div class="sol-banner-subtitle">La Consagración de Agüeybaná en Loíza</div>
-                        </div>
-                        <div class="sol-banner-pts">450 pts</div>
-                    </div>
-                </div>
-                <div class="parada-body">
-                    <!-- NUEVA INTRODUCCIÓN DEL SÁBADO -->
-                    <div class="bendicion-box" style="background: linear-gradient(135deg, rgba(237,28,36,0.08) 0%, rgba(212,175,55,0.08) 100%); border-left: 4px solid var(--primary-red);">
-                        <p><strong>La Bendición de Yúcahu:</strong><br>
-                        "En el día sagrado del Sábado, Yúcahu, señor de la yuca y protector de los guerreros, derrama su fuerza sobre ti. Hoy no solo celebras 45 soles de vida, sino la forja de un hombre íntegro, justo y valiente. Que cada paso que des hoy reafirme tu compromiso con la verdad, el honor y el amor."</p>
-                        
-                        <div class="quote-line" style="border-left-color: var(--primary-red);">
-                            "Quien mira hacia afuera, sueña; quien mira hacia adentro, despierta." — <strong>Herman Hesse</strong>
-                        </div>
-                        
-                        <p><strong>Mensaje a los 45 Años:</strong><br>
-                        Francisco, hoy llegas a una edad en la que la sabiduría y la experiencia se encuentran con la fuerza renovada del espíritu. Los 45 años no son un ocaso, sino un amanecer dorado donde todo lo vivido se convierte en cimiento para lo que está por venir. Has caminado con integridad, has protegido a los tuyos, has amado con pasión y has enfrentado cada reto con valentía.</p>
-                        
-                        <p>En este tercer sol de tu gesta, te consagras como Agüeybaná, el Gran Cacique que ilumina a su tribu no con conquistas externas, sino con la luz interior de sus valores. Hoy regresas a Loíza, tierra de tus raíces, no como visitante sino como señor de tu propio destino. Que el fuego que enciendas hoy sea testimonio de tu grandeza y que cada acto de servicio, generosidad y amor reafirme el legado que dejarás a las generaciones que vienen.</p>
-                        
-                        <span class="leyenda-label" style="background: var(--primary-red);">🔥 Guía Espiritual</span>
-                        <p><strong>La Leyenda del Día: Agüeybaná y el Fuego del Centro</strong><br>
-                        Agüeybaná, el Gran Cacique, no era el más fuerte ni el más rápido, pero era el sol del centro que irradiaba luz a toda su tribu. Su poder no residía en la espada sino en su integridad inquebrantable, en su palabra que era ley y en su capacidad de unir a los suyos bajo el manto del amor y la justicia.</p>
-                        
-                        <p>Hoy, Cacique Francisco, tú encarnas ese espíritu. Tras la exploración del Jueves y la purificación del Viernes, regresas fortalecido a la tierra de tus ancestros para demostrar que el mayor imperio es aquel que se construye con amor en los pequeños detalles, con servicio en los gestos cotidianos y con fuego en el corazón que nunca se apaga.</p>
-                    </div>
-
-                    <div class="sub-parada-header"><h4>📍 Parada 1: El Sustento del Guerrero (Desayuno en el Bohío)</h4></div>
-                    <div class="sec-row">
-                        <div class="sec-icon reto">🧠</div>
-                        <div class="sec-content"><span class="sec-label reto">Reto de Sabiduría</span>Mencionar tres momentos de los últimos dos días que te hayan hecho sentir más fuerte. <span class="pts-badge">🏅 50 pts</span></div>
-                    </div>
-                    <div class="sec-row">
-                        <div class="sec-icon registro">📸</div>
-                        <div class="sec-content"><span class="sec-label registro">El Registro</span>Foto del Cacique en su mesa, listo para la conquista de Loíza. <span class="pts-badge">🏅 25 pts</span></div>
-                    </div>
-                    <div class="sec-row">
-                        <div class="sec-icon ofrenda">🌿</div>
-                        <div class="sec-content"><span class="sec-label ofrenda">Ofrenda</span>Un gesto de servicio hacia la familia en la mesa. <span class="pts-badge">🏅 15 pts</span></div>
-                    </div>
-
-                    <div class="sub-parada-header"><h4>📍 Parada 2: El Batey de Vacia Talega (Ritual del Fuego y Sal)</h4></div>
-                    <div class="sec-row">
-                        <div class="sec-icon reto">🧠</div>
-                        <div class="sec-content"><span class="sec-label reto">Reto de Sabiduría — El Dominio del Fuego</span>Liderar el BBQ: Lograr el término perfecto en la ofrenda sagrada (la carne). <span class="pts-badge">🏅 100 pts</span></div>
-                    </div>
-                    <div class="sec-row">
-                        <div class="sec-icon registro">📸</div>
-                        <div class="sec-content"><span class="sec-label registro">El Registro</span>Foto frente a las brasas con el mar de Vacia Talega de fondo. <span class="pts-badge">🏅 50 pts</span></div>
-                    </div>
-                    <div class="sec-row">
-                        <div class="sec-icon ofrenda">🌿</div>
-                        <div class="sec-content"><span class="sec-label ofrenda">Ofrenda</span>Compartir el primer bocado con la Guaca. <span class="pts-badge">🏅 25 pts</span></div>
-                    </div>
-
-                    <div class="sub-parada-header"><h4>📍 Parada 3: El Remanso de la Guaca (Piscina y Visión Nocturna)</h4></div>
-                    <div class="sec-row">
-                        <div class="sec-icon reto">🧠</div>
-                        <div class="sec-content"><span class="sec-label reto">Reto de Sabiduría</span>Flotación silenciosa de 3 minutos en la piscina para disolver el peso de los 45 años. <span class="pts-badge">🏅 50 pts</span></div>
-                    </div>
-                    <div class="sec-row">
-                        <div class="sec-icon registro">📸</div>
-                        <div class="sec-content"><span class="sec-label registro">El Registro</span>Foto del brindis nocturno junto al agua o de la "fogata moderna" (Netflix). <span class="pts-badge">🏅 50 pts</span></div>
-                    </div>
-                    <div class="sec-row">
-                        <div class="sec-icon ofrenda">🌿</div>
-                        <div class="sec-content"><span class="sec-label ofrenda">Ofrenda Final</span>Entrega simbólica del mando a la Cacica. <span class="pts-badge">🏅 35 pts</span></div>
-                    </div>
-                    <div class="subtotal-bar"><span>🔥 Subtotal Sábado</span><span>450 pts</span></div>
-                </div>
-            </div>
-            <div id="lock-sabado" class="locked-overlay">
-                <span class="lock-icon">🔒</span>
-                <span class="lock-badge">Misión Bloqueada</span>
-                <span class="lock-pts">Requiere 550 puntos totales</span>
-            </div>
-        </div>
-
-        <!-- DECRETO FINAL -->
-        <div id="decreto-final" class="parada locked">
-            <div class="parada-header">
-                <h3>📜 El Decreto Final del Oráculo</h3>
-            </div>
-            <div class="parada-body">
-                <p>"Francisco, en lo simple, en lo cotidiano y en los pequeños detalles es que se demuestra el amor que sentimos. A través de estos 3 días, hemos recordado que nuestra historia no se escribe con grandes monumentos, sino con cada paso que damos. Gracias a la vida por el regalo de haberme cruzado contigo y por la oportunidad de redescubrir y crecer juntos. <strong>¡Felices 45 Soles, mi Cacique Eterno!</strong>"</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- ════════ GALERÍA (AHORA CON WIDGET ELFSIGHT) ════════ -->
-    <section id="galeria" class="page">
-        <h2>El Camino de los 45 Soles</h2>
         
-        <div class="galeria-intro">
-            Todo gran árbol necesita raíces fuertes. Estos años sembraron la nobleza en tu corazón. En la simpleza del campo y cobijado por el amor incondicional de tu mamá Andrea, tus abuelos, tu tía Reyna, tu tío Feliz y tu tía Rosa, aprendiste el verdadero valor de la familia, el respeto y el trabajo. Ellos forjaron los cimientos de amor y los profundos valores del gran hombre que eres hoy.
+        <div class="mensaje-inicial">
+            <h3>Bienvenidos al Areíto del Saber</h3>
+            <p>Este es un juego sagrado de 45 cartas divididas en tres categorías: **Intimidad**, **Conocimiento Mutuo** y **Reto del Cacique**. Cada carta es una invitación a explorar, compartir y fortalecer tu conexión. Toca la carta para revelar tu pregunta.</p>
         </div>
 
-        <!-- WIDGET DE ELFSIGHT -->
-        <div class="galeria-elfsight-container">
-            <script src="https://static.elfsight.com/platform/platform.js" async></script>
-            <div class="elfsight-app-5935e692-d6ab-4983-8e59-c55a5c607adb" data-elfsight-app-lazy></div>
+        <div id="carta-area" class="carta-area">
+            <div class="carta-contenido">
+                <div id="carta-categoria" class="carta-categoria"></div>
+                <div id="carta-pregunta" class="carta-pregunta"></div>
+                <div id="carta-puntos" class="carta-puntos"></div>
+            </div>
         </div>
-    </section>
-
-    <!-- ════════ JUEGO EL AREITO DE LOS ENAMORADOS ════════ -->
-    <section id="areito" class="page">
-        <h2>🎴 El Areito de los Enamorados</h2>
         
-        <div class="areito-container">
-            <div class="areito-header">
-                <h3 class="areito-title">El Juego de las 45 Cartas Sagradas</h3>
-                <p class="areito-subtitle">Bonificación de 500 puntos distribuidos en preguntas de intimidad y conocimiento mutuo</p>
-            </div>
+        <button class="shuffle-button" onclick="sacarCarta()">Sacar otra Carta</button>
 
-            <div id="carta-area" class="carta-display" style="background-image: url('image_0.png');">
-                <div class="mensaje-inicial">
-                    <h3>Bienvenidos al Areito de los Enamorados</h3>
-                    <p>Este es un juego sagrado de 45 cartas divididas en tres categorías:</p>
-                    <p><strong>🌺 Atabey</strong> - Preguntas sobre intimidad emocional y conexión profunda</p>
-                    <p><strong>⚔️ Guahayona</strong> - Preguntas sobre aventuras compartidas y sueños</p>
-                    <p><strong>🏆 Reto del Cacique</strong> - Desafíos creativos y divertidos</p>
-                    <p style="margin-top: 20px; font-weight: bold;">Presiona "Sacar Carta" para comenzar tu viaje de 500 puntos de bonificación.</p>
-                </div>
-            </div>
-
-            <div class="areito-controls">
-                <button class="areito-btn" onclick="sacarCarta()">🎴 Sacar Carta</button>
-                <button class="areito-btn secondary" onclick="reiniciarMazo()">🔄 Reiniciar Mazo</button>
-                <button class="areito-btn secondary" onclick="imprimirCartas()">🖨️ Imprimir Cartas</button>
-            </div>
-
-            <div class="areito-stats">
-                <div class="stat-item">
-                    <div class="stat-label">Cartas Restantes</div>
-                    <div class="stat-value" id="cartas-restantes">45</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-label">Puntos Ganados</div>
-                    <div class="stat-value" id="puntos-ganados">0</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-label">Progreso</div>
-                    <div class="stat-value" id="progreso-porcentaje">0%</div>
-                </div>
-            </div>
+        <div class="imprimir-container">
+            <button onclick="imprimirCartas()">Imprimir todas las Cartas</button>
         </div>
-    </section>
+    </div>
 
-    <!-- ════════ GLOSARIO ════════ -->
-    <section id="glosario" class="page">
-        <h2>Glosario del Yucayeque</h2>
-        <ul>
-            <li><strong>Atabey:</strong> Diosa Madre, entidad suprema de la fertilidad y las aguas dulces. Representa tu origen.</li>
-            <li><strong>Guahayona:</strong> El primer héroe mítico, símbolo de transformación, viaje y resiliencia.</li>
-            <li><strong>Yucayeque:</strong> Poblado o comunidad. Cada parada es un nuevo yucayeque por conquistar.</li>
-            <li><strong>Batey:</strong> Espacio sagrado de reunión y ceremonia.</li>
-            <li><strong>Areyto:</strong> Canto, baile y celebración épica de la tribu.</li>
-            <li><strong>Cemí:</strong> Deidad o espíritu ancestral que habita en objetos y lugares.</li>
-            <li><strong>Guaca:</strong> Tesoro sagrado o lugar de gran poder espiritual.</li>
-            <li><strong>Karaya:</strong> El mar / La luna. El elemento de purificación.</li>
-            <li><strong>Bohío:</strong> El hogar, el refugio sagrado del Cacique.</li>
-            <li><strong>Anacaona:</strong> "Flor de Oro", símbolo de belleza, paz y arte.</li>
-            <li><strong>Agüeybaná:</strong> "El Gran Cacique", símbolo de mando y sol del centro.</li>
-        </ul>
-    </section>
+    <div id="rutas" class="page rutas-alternas-section">
+        <h2>🗺️ Rutas Alternas del Romance</h2>
+        <p>Explora estas fascinantes rutas para avivar la llama del amor y la aventura.</p>
 
-    <!-- ════════ BÓVEDA & ADMIN ════════ -->
-    <section id="boveda-admin" class="page">
-        <h2>Herramientas y Panel de Control</h2>
-
-        <div id="content-boveda" style="padding-bottom:30px; border-bottom:2px solid var(--taino-gold);">
-            <h3>🗺️ Navegación y Evidencias</h3>
-            <p>Cacique, utiliza estas herramientas para subir tus evidencias y abrir tu mapa cuando el Oráculo te revele tu próximo destino.</p>
-            <a href="https://drive.google.com/drive/folders/1o1qTpO5G13CM8vzafOngWgpVtjZxBPBx?usp=sharing" target="_blank" class="btn-drive">☁️ Nube de Evidencias (Subir fotos/videos)</a>
-            <a href="https://maps.google.com" target="_blank" class="btn-drive" style="background:var(--primary-blue);">📍 Abrir Google Maps</a>
-        </div>
-
-        <div id="login-admin" class="password-box" style="margin-top:40px; border-color:var(--primary-red);">
-            <h3 style="color:var(--primary-red);">👑 Acceso de la Cacica (Oráculo)</h3>
-            <p>Panel maestro para ver las rutas secretas y asignar puntos.</p>
-            <input type="password" id="pass-admin" placeholder="Contraseña de la Cacica...">
-            <br>
-            <button class="btn-submit" onclick="checkAdmin()" style="background:var(--primary-red);">Ingresar al Panel</button>
-            <p id="error-admin" class="error-msg">Acceso denegado.</p>
-        </div>
-
-        <div id="content-admin" style="display:none;" class="admin-panel">
-            <h2>Panel de Control Maestro</h2>
-
-            <div style="background:white; padding:20px; border-radius:15px; margin-bottom:30px; border:1px solid #ccc;">
-                <h3 style="color:var(--primary-blue); margin-top:0;">🗺️ Rutas Secretas (Oráculo)</h3>
-                <p><em>Estas son las direcciones para dictarle al Cacique cuando sea el momento:</em></p>
+        <div class="parada">
+            <div class="parada-header" onclick="toggleParada(this)">
+                <h3>Parada 1: El Susurro de las Cascadas</h3>
+                <span class="arrow">▶</span>
+            </div>
+            <div class="parada-content">
+                <div class="sub-parada-header">
+                    <h4>Descripción de la Ruta</h4>
+                </div>
+                <p>Una caminata guiada por senderos ocultos que te llevarán a cascadas cristalinas. Ideal para una tarde de tranquilidad y conexión con la naturaleza.</p>
+                <div class="sub-parada-header">
+                    <h4>Actividades</h4>
+                </div>
                 <ul>
-                    <li><strong>Parada 1: RICO PAN BAKERY 2 (Palmer)</strong> <a href="https://maps.app.goo.gl/198S5Nj7GLL6oU53A" target="_blank" class="btn-maps">📍 Abrir Ruta</a></li><br>
-                    <li><strong>Parada 2: Playa Los Machos, Ceiba.</strong> <a href="https://maps.app.goo.gl/tsdLthiZpy4XnPdcA" target="_blank" class="btn-maps">📍 Abrir Ruta</a></li><br>
-                    <li><strong>Parada 3: Broadway Gastro Bar, Fajardo.</strong> <a href="https://maps.app.goo.gl/ossfGS31HX5SNEpE8" target="_blank" class="btn-maps">📍 Abrir Ruta</a></li><br>
-                    <li><strong>OBJETIVO 4: Villas del Mar, Loiza</strong> <a href="https://maps.app.goo.gl/tGoJVgGQjUTtqNbe" target="_blank" class="btn-maps">📍 Abrir Ruta</a></li>
+                    <li>Baño en pozas naturales</li>
+                    <li>Sesión de fotos en el puente de los deseos</li>
+                    <li>Picnic romántico con productos locales</li>
                 </ul>
             </div>
-
-            <div class="admin-controls">
-                <h3>Asignar Puntos a Francisco:</h3>
-                <button onclick="addPoints(40)">Jueves P1 (+40)</button>
-                <button onclick="addPoints(65)">Jueves P2 (+65)</button>
-                <button onclick="addPoints(80)">Jueves P3 (+80)</button>
-                <button onclick="addPoints(65)">Jueves P4 (+65)</button>
-                <button onclick="addPoints(300)">Viernes (+300)</button>
-                <button onclick="addPoints(450)">Sábado (+450)</button>
-                <button onclick="addPoints(500)">Areito Completo (+500)</button>
-            </div>
-            <button class="btn-reset" onclick="resetGesta()">⚠️ RESETEAR PUNTOS A 0</button>
         </div>
-    </section>
 
-</main>
-
-<!-- MODAL -->
-<div id="imageModal" class="modal" onclick="closeModal()">
-    <span class="close-modal">×</span>
-    <img class="modal-content" id="img01">
-</div>
-
-<script>
-    /* ── VIDEO SPLASH ─────────────────────── */
-    function enterApp() {
-        const splash = document.getElementById('video-splash');
-        splash.classList.add('fade-out');
-        setTimeout(() => { splash.style.display = 'none'; }, 850);
-    }
-    // Auto-skip after 3 minutes max
-    setTimeout(enterApp, 180000);
-
-    /* ── NAV & PAGES ──────────────────────── */
-    function showPage(pageId) {
-        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-        document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
-        document.getElementById(pageId).classList.add('active');
-        document.getElementById('nav-' + pageId).classList.add('active');
-        window.scrollTo(0, 0);
-    }
-
-    /* ── MODAL ────────────────────────────── */
-    function openModal(el) {
-        document.getElementById('imageModal').style.display = 'block';
-        document.getElementById('img01').src = el.querySelector('img').src;
-    }
-    function closeModal() {
-        document.getElementById('imageModal').style.display = 'none';
-    }
-
-    /* ── POINTS & STATE ───────────────────── */
-    let totalPuntos = parseInt(localStorage.getItem('caciquePuntos')) || 0;
-
-    function updateUI() {
-        // Progress bar fill
-        const pct = Math.min((totalPuntos / 1000) * 100, 100);
-        document.getElementById('progressBar').style.width = pct + '%';
-        document.getElementById('ptsCurrent').textContent = totalPuntos;
-
-        // Milestone highlights
-        if (totalPuntos >= 40)   document.getElementById('ms-jp1').classList.add('reached');
-        if (totalPuntos >= 105)  document.getElementById('ms-jp2').classList.add('reached');
-        if (totalPuntos >= 250)  document.getElementById('ms-vie').classList.add('reached');
-        if (totalPuntos >= 550)  document.getElementById('ms-sab').classList.add('reached');
-        if (totalPuntos >= 1000) document.getElementById('ms-fin').classList.add('reached');
-
-        // Paradas unlock
-        if (totalPuntos >= 40)   unlock('jueves-p2', 'lock-jueves-p2'); else lock('jueves-p2', 'lock-jueves-p2');
-        if (totalPuntos >= 105)  unlock('jueves-p3', 'lock-jueves-p3'); else lock('jueves-p3', 'lock-jueves-p3');
-        if (totalPuntos >= 250)  unlock('viernes',   'lock-viernes');   else lock('viernes',   'lock-viernes');
-        if (totalPuntos >= 550)  unlock('sabado',    'lock-sabado');    else lock('sabado',    'lock-sabado');
-        if (totalPuntos >= 1000) unlock('decreto-final'); else lock('decreto-final');
-
-        // Timeline 3 soles
-        updateTimeline();
-    }
-
-    function updateTimeline() {
-        const tlItems = [
-            { dot: 'tl-dot-jueves',  status: 'tl-status-jueves',  pts: 0,   doneAt: 250 },
-            { dot: 'tl-dot-viernes', status: 'tl-status-viernes', pts: 250, doneAt: 550 },
-            { dot: 'tl-dot-sabado',  status: 'tl-status-sabado',  pts: 550, doneAt: 1000 },
-        ];
-        tlItems.forEach((item, i) => {
-            const dot    = document.getElementById(item.dot);
-            const status = document.getElementById(item.status);
-            dot.className = 'sol-dot';
-            status.className = 'sol-status';
-            if (totalPuntos >= item.doneAt) {
-                dot.classList.add('done');
-                status.classList.add('done');
-                status.textContent = 'Completado ✓';
-            } else if (totalPuntos >= item.pts) {
-                dot.classList.add('active');
-                status.classList.add('active');
-                status.textContent = 'Activo · En curso';
-            } else {
-                dot.classList.add('locked');
-                status.classList.add('locked');
-                status.textContent = 'Bloqueado · ' + item.pts + ' pts';
-            }
-        });
-        // Connectors
-        const c1 = document.getElementById('tl-conn-1');
-        const c2 = document.getElementById('tl-conn-2');
-        if (totalPuntos >= 250) c1.classList.add('filled'); else c1.classList.remove('filled');
-        if (totalPuntos >= 550) c2.classList.add('filled'); else c2.classList.remove('filled');
-    }
-
-    function lock(elementId, lockId) {
-        const el = document.getElementById(elementId);
-        if (el) el.classList.add('locked');
-        if (lockId) { const lk = document.getElementById(lockId); if(lk) lk.style.display = 'flex'; }
-    }
-
-    function unlock(elementId, lockId) {
-        const el = document.getElementById(elementId);
-        if (el && el.classList.contains('locked')) {
-            el.classList.remove('locked');
-            // Flash animation on unlock
-            el.classList.add('just-unlocked');
-            setTimeout(() => el.classList.remove('just-unlocked'), 1000);
-        }
-        if (lockId) { const lk = document.getElementById(lockId); if(lk) lk.style.display = 'none'; }
-    }
-
-    function addPoints(pts) {
-        totalPuntos += pts;
-        if (totalPuntos > 1500) totalPuntos = 1500; // Ahora permitimos hasta 1500 (1000 + 500 bonificación)
-        localStorage.setItem('caciquePuntos', totalPuntos);
-        updateUI();
-        alert('¡Puntos asignados! Total: ' + totalPuntos);
-    }
-
-    function resetGesta() {
-        if (confirm('¿Segura que quieres borrar el progreso?')) {
-            totalPuntos = 0;
-            localStorage.setItem('caciquePuntos', totalPuntos);
-            localStorage.removeItem('areito-mazo');
-            localStorage.removeItem('areito-puntos');
-            // Reset milestones
-            ['ms-jp1','ms-jp2','ms-vie','ms-sab','ms-fin'].forEach(id => {
-                document.getElementById(id).classList.remove('reached');
-            });
-            updateUI();
-            reiniciarMazo();
-        }
-    }
-
-    const PASSWORD_ADMIN = "oraculo2026";
-    function checkAdmin() {
-        if (document.getElementById('pass-admin').value === PASSWORD_ADMIN) {
-            document.getElementById('login-admin').style.display = 'none';
-            document.getElementById('content-admin').style.display = 'block';
-        } else {
-            document.getElementById('error-admin').style.display = 'block';
-        }
-    }
-
-    /* ── COUNTDOWN ────────────────────────── */
-    const targetDate = new Date(2026, 3, 2, 8, 0, 0).getTime();
-    setInterval(function() {
-        const distance = targetDate - new Date().getTime();
-        if (distance < 0) { document.getElementById('countdown').innerHTML = '¡LA GESTA HA COMENZADO!'; return; }
-        const d = Math.floor(distance / 86400000);
-        const h = Math.floor((distance % 86400000) / 3600000);
-        const m = Math.floor((distance % 3600000) / 60000);
-        const s = Math.floor((distance % 60000) / 1000);
-        document.getElementById('countdown').innerHTML = d + 'd ' + h + 'h ' + m + 'm ' + s + 's';
-    }, 1000);
-
-    /* ══════════════════════════════════════════════════════
-       JUEGO DE CARTAS - EL AREITO DE LOS ENAMORADOS
-    ══════════════════════════════════════════════════════ */
-
-    const cartasAreito = [
-        // ATABEY - 15 cartas (10 pts cada una = 150 pts)
-        { categoria: "Atabey", pregunta: "¿Cuál es el momento más vulnerable que has compartido conmigo?", puntos: 10, fondo: "image_0.png" },
-        { categoria: "Atabey", pregunta: "¿Qué es lo que más te gusta de cómo te hago sentir?", puntos: 10, fondo: "image_0.png" },
-        { categoria: "Atabey", pregunta: "¿Cuál ha sido el gesto más pequeño pero significativo que he tenido contigo?", puntos: 10, fondo: "image_0.png" },
-        { categoria: "Atabey", pregunta: "¿En qué momento supiste que querías que yo formara parte de tu vida?", puntos: 10, fondo: "image_0.png" },
-        { categoria: "Atabey", pregunta: "¿Qué miedo tuyo te gustaría que yo conociera más profundamente?", puntos: 10, fondo: "image_0.png" },
-        { categoria: "Atabey", pregunta: "¿Cómo crees que hemos crecido como pareja en este tiempo?", puntos: 10, fondo: "image_0.png" },
-        { categoria: "Atabey", pregunta: "¿Qué palabra o frase mía llevas siempre en tu corazón?", puntos: 10, fondo: "image_0.png" },
-        { categoria: "Atabey", pregunta: "¿Cuál es tu mayor sueño para nosotros como pareja?", puntos: 10, fondo: "image_0.png" },
-        { categoria: "Atabey", pregunta: "¿Qué cualidad mía admiras en secreto pero nunca me has dicho?", puntos: 10, fondo: "image_0.png" },
-        { categoria: "Atabey", pregunta: "¿Cuál es la canción que mejor describe nuestro amor?", puntos: 10, fondo: "image_0.png" },
-        { categoria: "Atabey", pregunta: "¿Qué te hace sentir más amado/a cuando estamos juntos?", puntos: 10, fondo: "image_0.png" },
-        { categoria: "Atabey", pregunta: "¿En qué momento del día piensas más en mí?", puntos: 10, fondo: "image_0.png" },
-        { categoria: "Atabey", pregunta: "¿Qué tradición te gustaría crear solo para nosotros dos?", puntos: 10, fondo: "image_0.png" },
-        { categoria: "Atabey", pregunta: "¿Cuál es el recuerdo más íntimo y precioso que guardas de nosotros?", puntos: 10, fondo: "image_0.png" },
-        { categoria: "Atabey", pregunta: "¿Qué aspecto de mi personalidad te sorprendió gratamente al conocerme mejor?", puntos: 10, fondo: "image_0.png" },
-
-        // GUAHAYONA - 15 cartas (12 pts cada una = 180 pts)
-        { categoria: "Guahayona", pregunta: "¿Cuál es el viaje o aventura que más deseas vivir conmigo?", puntos: 12, fondo: "image_2.png" },
-        { categoria: "Guahayona", pregunta: "Si pudieras revivir un día completo de nuestra relación, ¿cuál sería?", puntos: 12, fondo: "image_2.png" },
-        { categoria: "Guahayona", pregunta: "¿Qué nueva experiencia te gustaría explorar juntos?", puntos: 12, fondo: "image_2.png" },
-        { categoria: "Guahayona", pregunta: "¿Cuál ha sido nuestro momento más espontáneo y divertido?", puntos: 12, fondo: "image_2.png" },
-        { categoria: "Guahayona", pregunta: "¿Qué actividad compartida nos hace más felices?", puntos: 12, fondo: "image_2.png" },
-        { categoria: "Guahayona", pregunta: "Si tuviéramos un día completamente libre, ¿cómo lo pasarías conmigo?", puntos: 12, fondo: "image_2.png" },
-        { categoria: "Guahayona", pregunta: "¿Qué reto o desafío te gustaría que superáramos juntos?", puntos: 12, fondo: "image_2.png" },
-        { categoria: "Guahayona", pregunta: "¿Cuál es el lugar más especial donde hemos estado juntos?", puntos: 12, fondo: "image_2.png" },
-        { categoria: "Guahayona", pregunta: "¿Qué proyecto o meta compartida te emociona más?", puntos: 12, fondo: "image_2.png" },
-        { categoria: "Guahayona", pregunta: "¿Cuál ha sido nuestra aventura más memorable hasta ahora?", puntos: 12, fondo: "image_2.png" },
-        { categoria: "Guahayona", pregunta: "¿Qué tradición familiar te gustaría comenzar conmigo?", puntos: 12, fondo: "image_2.png" },
-        { categoria: "Guahayona", pregunta: "Si pudieras planear una sorpresa perfecta para nosotros, ¿qué sería?", puntos: 12, fondo: "image_2.png" },
-        { categoria: "Guahayona", pregunta: "¿Qué habilidad nueva te gustaría aprender junto a mí?", puntos: 12, fondo: "image_2.png" },
-        { categoria: "Guahayona", pregunta: "¿Cuál es el sueño más loco que tenemos en común?", puntos: 12, fondo: "image_2.png" },
-        { categoria: "Guahayona", pregunta: "¿Qué aventura cotidiana disfrutas más cuando estamos juntos?", puntos: 12, fondo: "image_2.png" },
-
-        // RETO DEL CACIQUE - 15 cartas (variados para totalizar 170 pts)
-        { categoria: "Reto del Cacique", pregunta: "Imita mi expresión favorita o mi gesto característico", puntos: 8, fondo: "image_4.png" },
-        { categoria: "Reto del Cacique", pregunta: "Di tres cumplidos genuinos mirándome a los ojos sin reírte", puntos: 10, fondo: "image_4.png" },
-        { categoria: "Reto del Cacique", pregunta: "Canta una canción que te recuerde a nosotros", puntos: 12, fondo: "image_4.png" },
-        { categoria: "Reto del Cacique", pregunta: "Describe nuestro primer beso en tres palabras", puntos: 8, fondo: "image_4.png" },
-        { categoria: "Reto del Cacique", pregunta: "Baila conmigo durante 2 minutos sin música", puntos: 15, fondo: "image_4.png" },
-        { categoria: "Reto del Cacique", pregunta: "Cuenta un chiste o algo gracioso que solo yo entendería", puntos: 10, fondo: "image_4.png" },
-        { categoria: "Reto del Cacique", pregunta: "Dibuja nuestro futuro ideal en 1 minuto", puntos: 12, fondo: "image_4.png" },
-        { categoria: "Reto del Cacique", pregunta: "Recrea nuestra foto favorita juntos", puntos: 15, fondo: "image_4.png" },
-        { categoria: "Reto del Cacique", pregunta: "Escribe un haiku sobre nuestro amor en 30 segundos", puntos: 12, fondo: "image_4.png" },
-        { categoria: "Reto del Cacique", pregunta: "Cuenta la historia de cómo nos conocimos como si fuera un cuento de hadas", puntos: 15, fondo: "image_4.png" },
-        { categoria: "Reto del Cacique", pregunta: "Haz una promesa romántica para los próximos 45 días", puntos: 10, fondo: "image_4.png" },
-        { categoria: "Reto del Cacique", pregunta: "Inventa un apodo nuevo y único para mí", puntos: 8, fondo: "image_4.png" },
-        { categoria: "Reto del Cacique", pregunta: "Da un masaje de 3 minutos en las manos mientras dices cosas que amas de mí", puntos: 15, fondo: "image_4.png" },
-        { categoria: "Reto del Cacique", pregunta: "Menciona 5 razones por las que eres la mejor pareja para mí", puntos: 10, fondo: "image_4.png" },
-        { categoria: "Reto del Cacique", pregunta: "Crea una regla nueva y divertida para nuestra relación", puntos: 10, fondo: "image_4.png" }
-    ];
-
-    let mazoActual = [];
-    let puntosAreito = 0;
-
-    function inicializarMazo() {
-        // Cargar estado guardado
-        const savedMazo = localStorage.getItem('areito-mazo');
-        const savedPuntos = localStorage.getItem('areito-puntos');
-        
-        if (savedMazo) {
-            mazoActual = JSON.parse(savedMazo);
-        } else {
-            // Barajar cartas
-            mazoActual = [...cartasAreito].sort(() => Math.random() - 0.5);
-            localStorage.setItem('areito-mazo', JSON.stringify(mazoActual));
-        }
-        
-        if (savedPuntos) {
-            puntosAreito = parseInt(savedPuntos);
-        }
-        
-        actualizarEstadisticas();
-    }
-
-    function sacarCarta() {
-        if (mazoActual.length === 0) {
-            alert('¡Felicidades! Has completado todas las cartas del Areito. Puntos ganados: ' + puntosAreito);
-            return;
-        }
-        
-        const carta = mazoActual.pop();
-        puntosAreito += carta.puntos;
-        
-        // Guardar estado
-        localStorage.setItem('areito-mazo', JSON.stringify(mazoActual));
-        localStorage.setItem('areito-puntos', puntosAreito);
-        
-        // Mostrar carta
-        const cartaArea = document.getElementById('carta-area');
-        cartaArea.style.backgroundImage = `url('${carta.fondo}')`;
-        cartaArea.innerHTML = `
-            <div class="carta-content">
-                <div class="carta-categoria">${carta.categoria}</div>
-                <div class="carta-pregunta">${carta.pregunta}</div>
-                <div class="carta-puntos">+${carta.puntos} puntos</div>
+        <div class="parada">
+            <div class="parada-header" onclick="toggleParada(this)">
+                <h3>Parada 2: Bajo las Estrellas Taínas</h3>
+                <span class="arrow">▶</span>
             </div>
-        `;
-        
-        actualizarEstadisticas();
-        
-        // Si completó todas las cartas, ofrecer añadir puntos
-        if (mazoActual.length === 0) {
-            setTimeout(() => {
-                if (confirm('¡Has completado el Areito de los Enamorados! ¿Deseas agregar los ' + puntosAreito + ' puntos de bonificación a tu total de la Gesta?')) {
-                    addPoints(puntosAreito);
-                }
-            }, 2000);
-        }
-    }
-
-    function actualizarEstadisticas() {
-        document.getElementById('cartas-restantes').textContent = mazoActual.length;
-        document.getElementById('puntos-ganados').textContent = puntosAreito;
-        const progreso = Math.round(((45 - mazoActual.length) / 45) * 100);
-        document.getElementById('progreso-porcentaje').textContent = progreso + '%';
-    }
-
-    function reiniciarMazo() {
-        if (confirm('¿Estás seguro de que quieres reiniciar el juego de cartas? Perderás el progreso actual.')) {
-            localStorage.removeItem('areito-mazo');
-            localStorage.removeItem('areito-puntos');
-            mazoActual = [...cartasAreito].sort(() => Math.random() - 0.5);
-            puntosAreito = 0;
-            localStorage.setItem('areito-mazo', JSON.stringify(mazoActual));
-            
-            // Restaurar mensaje inicial
-            const cartaArea = document.getElementById('carta-area');
-            cartaArea.style.backgroundImage = "url('image_0.png')";
-            cartaArea.innerHTML = `
-                <div class="mensaje-inicial">
-                    <h3>Bienvenidos al Areito de los Enamorados</h3>
-                    <p>Este es un juego sagrado de 45 cartas divididas en tres categorías:</p>
-                    <p><strong>🌺 Atabey</strong> - Preguntas sobre intimidad emocional y conexión profunda</p>
-                    <p><strong>⚔️ Guahayona</strong> - Preguntas sobre aventuras compartidas y sueños</p>
-                    <p><strong>🏆 Reto del Cacique</strong> - Desafíos creativos y divertidos</p>
-                    <p style="margin-top: 20px; font-weight: bold;">Presiona "Sacar Carta" para comenzar tu viaje de 500 puntos de bonificación.</p>
+            <div class="parada-content">
+                <div class="sub-parada-header">
+                    <h4>Descripción de la Ruta</h4>
                 </div>
-            `;
-            
-            actualizarEstadisticas();
-        }
-    }
+                <p>Una experiencia nocturna para observar las estrellas, guiados por un experto en astronomía ancestral. Incluye historias taínas bajo el cielo abierto.</p>
+                <div class="sub-parada-header">
+                    <h4>Actividades</h4>
+                </div>
+                <ul>
+                    <li>Observación con telescopio</li>
+                    <li>Narración de mitos y leyendas</li>
+                    <li>Cena ligera a la luz de las velas</li>
+                </ul>
+            </div>
+        </div>
 
-    function imprimirCartas() {
-        // Crear ventana de impresión
-        const ventanaImpresion = window.open('', '_blank', 'width=800,height=600');
-        
-        let htmlImpresion = `
-            <!DOCTYPE html>
-            <html>
-            <head>
-                <title>El Areito de los Enamorados - Todas las Cartas</title>
-                <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Cinzel:wght@600;700&family=Philosopher:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
-                <style>
-                    body {
-                        font-family: 'Philosopher', sans-serif;
-                        padding: 20px;
-                        max-width: 900px;
-                        margin: 0 auto;
-                    }
-                    h1 {
-                        font-family: 'Cinzel Decorative', serif;
-                        color: #005697;
-                        text-align: center;
-                        margin-bottom: 30px;
-                    }
-                    .categoria-section {
-                        margin-bottom: 40px;
-                        page-break-inside: avoid;
-                    }
-                    .categoria-title {
-                        font-family: 'Cinzel', serif;
-                        color: #D4AF37;
-                        font-size: 20px;
-                        margin-bottom: 15px;
-                        padding-bottom: 10px;
-                        border-bottom: 2px solid #D4AF37;
-                    }
-                    .carta-item {
-                        margin-bottom: 15px;
-                        padding: 15px;
-                        background: #f4f1ea;
-                        border-radius: 10px;
-                        border-left: 4px solid #D4AF37;
-                        page-break-inside: avoid;
-                    }
-                    .carta-numero {
-                        font-family: 'Cinzel', serif;
-                        font-weight: bold;
-                        color: #005697;
-                        margin-bottom: 5px;
-                    }
-                    .carta-texto {
-                        font-size: 16px;
-                        line-height: 1.6;
-                        margin-bottom: 5px;
-                    }
-                    .carta-puntos {
-                        font-family: 'Cinzel', serif;
-                        color: #D4AF37;
-                        font-size: 14px;
-                        font-weight: bold;
-                    }
-                    @media print {
-                        .no-print { display: none; }
-                    }
-                </style>
-            </head>
-            <body>
-                <h1>🎴 El Areito de los Enamorados</h1>
-                <p style="text-align: center; font-style: italic; margin-bottom: 30px;">45 Cartas Sagradas - 500 Puntos de Bonificación</p>
-                <button class="no-print" onclick="window.print()" style="display: block; margin: 0 auto 30px; padding: 15px 30px; background: #005697; color: white; border: none; border-radius: 30px; font-family: 'Cinzel', serif; font-size: 16px; cursor: pointer;">🖨️ Imprimir</button>
-        `;
-        
-        // Agrupar por categoría
-        const categorias = {
-            'Atabey': [],
-            'Guahayona': [],
-            'Reto del Cacique': []
-        };
-        
-        cartasAreito.forEach(carta => {
-            categorias[carta.categoria].push(carta);
-        });
-        
-        // Generar HTML para cada categoría
-        for (const [categoria, cartas] of Object.entries(categorias)) {
-            htmlImpresion += `
-                <div class="categoria-section">
-                    <h2 class="categoria-title">${categoria}</h2>
+        <!-- Nueva Sección de BONIFICACIÓN -->
+        <div class="bonificacion-section">
+            <div class="bonificacion-header" onclick="toggleBonificacion(this)">
+                <h3>🎁 Bonificación: Rituales de Conexión</h3>
+                <span class="arrow">▶</span>
+            </div>
+            <div class="bonificacion-content">
+                <p>Estas actividades extra están diseñadas para profundizar aún más su vínculo y crear recuerdos inolvidables. ¡Son el regalo perfecto para su relación!</p>
+                
+                <div class="sub-parada-header">
+                    <h4>Ritual 1: El Árbol de los Deseos Mutuos</h4>
+                </div>
+                <p>Planten juntos un pequeño árbol o una planta, simbolizando el crecimiento de su relación. Cada uno escribirá un deseo para el otro y lo enterrará junto a las raíces del árbol.</p>
+                <ul>
+                    <li>Elección de la planta</li>
+                    <li>Ceremonia de siembra</li>
+                    <li>Intercambio de deseos</li>
+                </ul>
+
+                <div class="sub-parada-header">
+                    <h4>Ritual 2: Masaje con Aceites Esenciales</h4>
+                </div>
+                <p>Aprendan técnicas básicas de masaje en pareja utilizando aceites esenciales aromáticos. Una experiencia sensorial para relajar y conectar.</p>
+                <ul>
+                    <li>Preparación del ambiente</li>
+                    <li>Guía de técnicas de masaje</li>
+                    <li>Selección de aceites (lavanda, sándalo)</li>
+                </ul>
+
+                <p style="margin-top: 20px; font-style: italic; color: #555;">¡Recuerden que lo más importante es la intención y el tiempo de calidad que compartan!</p>
+            </div>
+        </div>
+        <!-- Fin Nueva Sección de BONIFICACIÓN -->
+
+    </div>
+
+    <script>
+        // Manejo de la navegación entre páginas
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            document.getElementById(pageId).classList.add('active');
+
+            document.querySelectorAll('nav button').forEach(button => {
+                button.classList.remove('active');
+            });
+            document.getElementById('nav-' + pageId).classList.add('active');
+        }
+
+        // Manejo de los acordeones en "Rutas Alternas"
+        function toggleParada(header) {
+            header.classList.toggle('active');
+            const content = header.nextElementSibling;
+            if (content.style.display === 'block') {
+                content.style.display = 'none';
+            } else {
+                content.style.display = 'block';
+            }
+        }
+
+        // Manejo del acordeón en "Bonificación"
+        function toggleBonificacion(header) {
+            header.classList.toggle('active');
+            const content = header.nextElementSibling;
+            if (content.style.display === 'block') {
+                content.style.display = 'none';
+            } else {
+                content.style.display = 'block';
+            }
+        }
+
+
+        // ══════════════════════════════════════
+        // Lógica del Areíto del Saber (Juego de Cartas)
+        // ══════════════════════════════════════
+
+        // Definición del mazo de cartas (ejemplo, expandir con tus 45 cartas)
+        let mazo = [
+            { id: 1, categoria: "Intimidad", pregunta: "¿Cuál es tu recuerdo más preciado de nuestra relación?", puntos: 10, imagen: "carta-1.jpg" },
+            { id: 2, categoria: "Conocimiento Mutuo", pregunta: "¿Qué tres cosas crees que me preocupan más ahora mismo?", puntos: 15, imagen: "carta-2.jpg" },
+            { id: 3, categoria: "Reto del Cacique", pregunta: "Inventen una canción corta sobre su amor y cántenla juntos.", puntos: 20, imagen: "carta-3.jpg" },
+            { id: 4, categoria: "Intimidad", pregunta: "¿Cuál es la cualidad que más admiras de mí y por qué?", puntos: 10, imagen: "carta-4.jpg" },
+            { id: 5, categoria: "Conocimiento Mutuo", pregunta: "¿Qué aventura te gustaría que viviéramos juntos este año?", puntos: 15, imagen: "carta-5.jpg" },
+            // ... (AQUÍ DEBES AÑADIR TUS 45 CARTAS CON SU PROPIEDAD 'imagen') ...
+            // EJEMPLO: { id: 45, categoria: "Intimidad", pregunta: "¿Qué sueño oculto tienes para nuestro futuro?", puntos: 10, imagen: "carta-45.jpg" }
+        ];
+
+        let mazoOriginal = [...mazo]; // Guarda una copia del mazo original
+        let mazoActual = []; // Mazo para jugar, se rellenará al inicio
+        let cartaActual = null;
+        let cartasSacadas = []; // Para llevar un registro de las cartas ya mostradas
+
+        function inicializarMazo() {
+            mazoActual = [...mazoOriginal]; // Copia el mazo original para jugar
+            barajarMazo(); // Baraja las cartas al inicio
+            sacarCarta(); // Muestra la primera carta al cargar la página
+        }
+
+        function barajarMazo() {
+            for (let i = mazoActual.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [mazoActual[i], mazoActual[j]] = [mazoActual[j], mazoActual[i]]; // Intercambio de elementos
+            }
+        }
+
+        function sacarCarta() {
+            const cartaArea = document.getElementById('carta-area');
+            const cartaCategoria = document.getElementById('carta-categoria');
+            const cartaPregunta = document.getElementById('carta-pregunta');
+            const cartaPuntos = document.getElementById('carta-puntos');
+
+            if (mazoActual.length === 0) {
+                cartaCategoria.textContent = "¡Mazo Agotado!";
+                cartaPregunta.textContent = "Han explorado todas las cartas. ¡Felicidades! Reinicia la página para jugar de nuevo.";
+                cartaPuntos.textContent = "";
+                cartaArea.style.backgroundImage = 'none'; // Quita la imagen cuando se agota el mazo
+                cartaArea.style.backgroundColor = var(--primary-blue);
+                return;
+            }
+
+            cartaActual = mazoActual.pop(); // Saca la última carta del mazo
+            cartasSacadas.push(cartaActual); // Añade la carta sacada al historial
+
+            cartaCategoria.textContent = cartaActual.categoria;
+            cartaPregunta.textContent = cartaActual.pregunta;
+            cartaPuntos.textContent = `+${cartaActual.puntos} puntos`;
+
+            // Establece la imagen de fondo de la carta
+            // Asegúrate de que la carpeta 'cartas' esté en el mismo nivel que tu index.html
+            cartaArea.style.backgroundImage = `url('cartas/${cartaActual.imagen}')`;
+        }
+
+        function imprimirCartas() {
+            const ventanaImpresion = window.open('', '_blank');
+            let htmlImpresion = `
+                <!DOCTYPE html>
+                <html lang="es">
+                <head>
+                    <meta charset="UTF-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <title>Cartas del Areíto del Saber</title>
+                    <link rel="preconnect" href="https://fonts.googleapis.com">
+                    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+                    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
+                    <style>
+                        body {
+                            font-family: 'Montserrat', sans-serif;
+                            line-height: 1.6;
+                            color: #333;
+                            margin: 20px;
+                            background-color: #f4f1ea;
+                        }
+                        h1 {
+                            font-family: 'Cinzel', serif;
+                            color: #005697;
+                            text-align: center;
+                            margin-bottom: 20px;
+                        }
+                        p {
+                            text-align: center;
+                            font-style: italic;
+                            margin-bottom: 30px;
+                        }
+                        .categoria-section {
+                            margin-bottom: 40px;
+                            page-break-inside: avoid; /* Evita que una categoría se rompa en dos páginas */
+                        }
+                        .categoria-title {
+                            font-family: 'Cinzel', serif;
+                            font-size: 1.8em;
+                            color: #D4AF37;
+                            text-align: center;
+                            margin-bottom: 25px;
+                            border-bottom: 2px solid #D4AF37;
+                            padding-bottom: 10px;
+                            page-break-after: avoid;
+                        }
+                        .carta-item {
+                            background: #fdfdfd;
+                            margin-bottom: 20px;
+                            padding: 15px 20px;
+                            border-radius: 10px;
+                            border-left: 4px solid #005697;
+                            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+                            page-break-inside: avoid;
+                        }
+                        .carta-numero {
+                            font-family: 'Cinzel', serif;
+                            font-weight: bold;
+                            color: #005697;
+                            margin-bottom: 5px;
+                        }
+                        .carta-texto {
+                            font-size: 16px;
+                            line-height: 1.6;
+                            margin-bottom: 5px;
+                        }
+                        .carta-puntos {
+                            font-family: 'Cinzel', serif;
+                            color: #D4AF37;
+                            font-size: 14px;
+                            font-weight: bold;
+                        }
+                        @media print {
+                            .no-print { display: none; }
+                            body {
+                                margin: 0;
+                                padding: 0;
+                                font-size: 10pt;
+                            }
+                            h1 {
+                                font-size: 20pt;
+                            }
+                            .categoria-title {
+                                font-size: 16pt;
+                            }
+                            .carta-item {
+                                font-size: 9pt;
+                            }
+                        }
+                    </style>
+                </head>
+                <body>
+                    <h1>🎴 El Areíto del Saber</h1>
+                    <p style="text-align: center; font-style: italic; margin-bottom: 30px;">45 Cartas Sagradas - 500 Puntos de Bonificación</p>
+                    <button class="no-print" onclick="window.print()" style="display: block; margin: 0 auto 30px; padding: 15px 30px; background: #005697; color: white; border: none; border-radius: 30px; font-family: 'Cinzel', serif; font-size: 16px; cursor: pointer;">🖨️ Imprimir</button>
             `;
             
-            cartas.forEach((carta, index) => {
-                htmlImpresion += `
-                    <div class="carta-item">
-                        <div class="carta-numero">Carta ${index + 1} de ${cartas.length}</div>
-                        <div class="carta-texto">${carta.pregunta}</div>
-                        <div class="carta-puntos">+${carta.puntos} puntos</div>
-                    </div>
-                `;
+            // Agrupar por categoría
+            const categorias = {
+                'Intimidad': [], // Asumiendo estos nombres de categoría basados en tu ejemplo
+                'Conocimiento Mutuo': [],
+                'Reto del Cacique': []
+            };
+            
+            // Usamos el mazo original para imprimir todas las cartas
+            mazoOriginal.forEach(carta => {
+                // Asegúrate de que las categorías aquí coincidan con las de tus cartas
+                if (categorias[carta.categoria]) {
+                    categorias[carta.categoria].push(carta);
+                }
             });
             
-            htmlImpresion += `</div>`;
+            // Generar HTML para cada categoría
+            for (const [categoria, cartas] of Object.entries(categorias)) {
+                htmlImpresion += `
+                    <div class="categoria-section">
+                        <h2 class="categoria-title">${categoria}</h2>
+                `;
+                
+                cartas.forEach((carta, index) => {
+                    htmlImpresion += `
+                        <div class="carta-item">
+                            <div class="carta-numero">Carta ${carta.id}</div> <!-- Usamos el ID de la carta para el número -->
+                            <div class="carta-texto">${carta.pregunta}</div>
+                            <div class="carta-puntos">+${carta.puntos} puntos</div>
+                        </div>
+                    `;
+                });
+                
+                htmlImpresion += `</div>`;
+            }
+            
+            htmlImpresion += `
+                </body>
+                </html>
+            `;
+            
+            ventanaImpresion.document.write(htmlImpresion);
+            ventanaImpresion.document.close();
+            ventanaImpresion.print(); // Abre la ventana de impresión automáticamente
         }
-        
-        htmlImpresion += `
-            </body>
-            </html>
-        `;
-        
-        ventanaImpresion.document.write(htmlImpresion);
-        ventanaImpresion.document.close();
-    }
 
-    // Inicializar el mazo al cargar la página
-    inicializarMazo();
-    updateUI();
-</script>
+        // Inicializar el mazo al cargar la página
+        window.onload = inicializarMazo;
+    </script>
+    <!-- Elfsight Apps Universal Code (Mantener si lo usas en otras partes o si el video es de Elfsight) -->
+    <!-- <script src="https://static.elfsight.com/apps/platform.js" defer></script> -->
+    <!-- <div class="elfsight-app-5935e692-d6ab-4983-8e59-c55a5c607adb" data-elfsight-app-lazy></div> -->
 </body>
 </html>
