@@ -375,6 +375,10 @@ function ocultarSpinner() {
   const sp = document.getElementById('spinner');
   if (sp) sp.classList.add('hidden');
 }
+function ocultarSpinner() {
+  const sp = document.getElementById('spinner');
+  if (sp) sp.classList.add('hidden');
+}
 function toast(mensaje, tipo = 'info') {
   const container = document.getElementById('toast-container');
   const t = document.createElement('div');
@@ -825,5 +829,11 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 </script>
+  // Activar menú horizontal
+document.querySelectorAll('.nav-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const seccion = btn.getAttribute('data-seccion');
+    if (seccion) irASeccion(seccion);
+  });
 </body>
 </html>
