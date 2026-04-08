@@ -4,301 +4,323 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
   <title>La Gesta de los 45 Soles</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
-    /* Reset y estilos mínimos (solo para que funcione, tú lo personalizarás después) */
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    /* ========== VARIABLES Y RESET ========== */
+    :root {
+      --verde: #2E7D32;
+      --verde-claro: #43A047;
+      --verde-oscuro: #1B5E20;
+      --amarillo: #FFC107;
+      --amarillo-claro: #FFD54F;
+      --marron: #5D4037;
+      --marron-claro: #8D6E63;
+      --marron-oscuro: #3E2723;
+      --crema: #FFF8E1;
+      --crema-oscuro: #F3E5AB;
+      --blanco: #FFFFFF;
+      --texto: #2C1810;
+      --texto-suave: #5D4037;
+      --sombra: rgba(62,39,35,0.15);
+      --radio: 14px;
+      --radio-grande: 22px;
+      --transicion: 0.25s ease;
+      --nav-h: 68px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; scroll-behavior: smooth; }
     body {
       font-family: 'Poppins', sans-serif;
-      background: #F9F0D9;
+      background-color: #F9F0D9;
+      background-image: radial-gradient(ellipse at 20% 10%, rgba(255,193,7,0.12) 0%, transparent 50%),
+                        radial-gradient(ellipse at 80% 90%, rgba(46,125,50,0.10) 0%, transparent 50%),
+                        url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%235D4037' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      color: var(--texto);
       min-height: 100vh;
+      overflow-x: hidden;
     }
+    h1,h2,h3,h4 { font-family: 'Playfair Display', serif; line-height: 1.25; }
+    p, span, li, label { line-height: 1.6; }
+    a { color: var(--verde); text-decoration: none; }
+    img { max-width: 100%; height: auto; display: block; object-fit: cover; }
+    button { font-family: 'Poppins', sans-serif; cursor: pointer; border: none; outline: none; }
+    input, select, textarea { font-family: 'Poppins', sans-serif; font-size: 1rem; }
     .hidden { display: none !important; }
-    .spinner-overlay {
-      position: fixed; inset: 0; background: rgba(0,0,0,0.5);
-      display: flex; align-items: center; justify-content: center; z-index: 9999;
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      min-height: 44px; padding: 10px 20px; border-radius: var(--radio);
+      font-size: 0.9rem; font-weight: 600; transition: transform var(--transicion), box-shadow var(--transicion);
     }
-    .spinner { width: 48px; height: 48px; border: 4px solid #fff; border-top-color: #2E7D32; border-radius: 50%; animation: spin 0.8s linear infinite; }
+    .btn:active { transform: scale(0.96); }
+    .btn-primary { background: linear-gradient(135deg, var(--verde-claro), var(--verde-oscuro)); color: #fff; box-shadow: 0 4px 14px rgba(46,125,50,0.4); }
+    .btn-amarillo { background: linear-gradient(135deg, var(--amarillo-claro), var(--amarillo)); color: var(--marron-oscuro); }
+    .btn-marron { background: linear-gradient(135deg, var(--marron-claro), var(--marron)); color: #fff; }
+    .btn-outline { background: transparent; border: 2px solid var(--verde); color: var(--verde); }
+    .btn-danger { background: linear-gradient(135deg, #e57373, #c62828); color: #fff; }
+    .btn-block { width: 100%; }
+    .btn-sm { min-height: 36px; padding: 6px 14px; font-size: 0.8rem; }
+    .card { background: var(--blanco); border-radius: var(--radio-grande); box-shadow: 0 4px 20px var(--sombra); overflow: hidden; }
+    .badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 0.72rem; font-weight: 600; }
+    .badge-verde { background: rgba(46,125,50,0.15); color: var(--verde-oscuro); }
+    .badge-amarillo { background: rgba(255,193,7,0.2); color: #7B6000; }
+    .badge-marron { background: rgba(93,64,55,0.15); color: var(--marron-oscuro); }
+    .spinner-overlay { position: fixed; inset: 0; background: rgba(249,240,217,0.88); display: flex; align-items: center; justify-content: center; z-index: 9999; }
+    .spinner { width: 48px; height: 48px; border: 4px solid rgba(46,125,50,0.2); border-top-color: var(--verde); border-radius: 50%; animation: spin 0.8s linear infinite; }
     @keyframes spin { to { transform: rotate(360deg); } }
-    #toast-container {
-      position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
-      z-index: 10000; width: 90%; max-width: 400px;
-    }
-    .toast {
-      background: #5D4037; color: white; padding: 12px 18px; border-radius: 12px;
-      margin-bottom: 8px; animation: slideDown 0.3s; display: flex; gap: 8px; align-items: center;
-    }
+    #toast-container { position: fixed; top: 16px; left: 50%; transform: translateX(-50%); z-index: 10000; width: 360px; max-width: 90vw; }
+    .toast { background: var(--marron); color: #fff; padding: 12px 18px; border-radius: 12px; margin-bottom: 8px; animation: slideDown 0.3s ease; display: flex; gap: 8px; align-items: center; }
     .toast-success { background: #1B5E20; }
     .toast-error { background: #B71C1C; }
-    @keyframes slideDown { from { opacity:0; transform:translateY(-20px); } to { opacity:1; transform:translateY(0); } }
-
-    /* Landing page */
-    .landing {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      padding: 2rem;
-      background: linear-gradient(135deg, #2E7D32 0%, #1B5E20 100%);
-      color: white;
+    @keyframes slideDown { from { opacity:0; transform:translateY(-16px); } to { opacity:1; transform:translateY(0); } }
+    #screen-login { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 24px 20px; }
+    .login-hero { text-align: center; margin-bottom: 28px; }
+    .login-hero .sol-icono { width: 90px; height: 90px; border-radius: 50%; background: radial-gradient(circle, var(--amarillo-claro), var(--amarillo)); display: flex; align-items: center; justify-content: center; margin: 0 auto 18px; font-size: 2.6rem; }
+    .login-card { width: 100%; max-width: 440px; padding: 28px 24px; }
+    .form-group { margin-bottom: 18px; }
+    .form-input { width: 100%; padding: 13px 16px; border: 2px solid #E8D5B0; border-radius: var(--radio); background: var(--crema); }
+    .top-bar { background: linear-gradient(135deg, var(--verde-oscuro), var(--verde)); color: #fff; padding: 12px 16px; display: flex; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+    .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; height: var(--nav-h); background: var(--blanco); display: flex; border-top: 1px solid rgba(93,64,55,0.15); z-index: 200; }
+    .nav-btn { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; background: transparent; color: var(--marron-claro); font-size: 0.62rem; }
+    .nav-btn.active { color: var(--verde); }
+    .main-content { flex: 1; padding: 16px 16px calc(var(--nav-h) + 16px); max-width: 900px; margin: 0 auto; width: 100%; }
+    .retos-grid, .cartas-grid, .leyendas-grid { display: grid; gap: 14px; grid-template-columns: 1fr; }
+    @media (min-width: 768px) {
+      .retos-grid { grid-template-columns: repeat(2,1fr); }
+      .cartas-grid { grid-template-columns: repeat(2,1fr); }
+      .leyendas-grid { grid-template-columns: repeat(2,1fr); }
+      .stats-grid { grid-template-columns: repeat(4,1fr); }
     }
-    .landing .contenido { max-width: 800px; }
-    .landing h1 { font-size: 3rem; font-family: 'Playfair Display', serif; margin-bottom: 1rem; }
-    .landing p { font-size: 1.2rem; margin-bottom: 2rem; }
-    .btn-acceder {
-      background: #FFC107; color: #1B5E20; border: none; padding: 12px 32px;
-      font-size: 1.2rem; font-weight: bold; border-radius: 50px; cursor: pointer;
+    @media (min-width: 1024px) {
+      .retos-grid { grid-template-columns: repeat(3,1fr); }
+      .cartas-grid { grid-template-columns: repeat(3,1fr); }
     }
-    .btn-acceder:hover { transform: scale(1.05); }
-
-    /* Modal login */
-    .modal-login {
-      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center;
-      z-index: 1000;
-    }
-    .modal-login .card {
-      background: white; max-width: 450px; width: 90%; padding: 2rem;
-      border-radius: 24px; position: relative;
-    }
-    .btn-cerrar {
-      position: absolute; top: 15px; right: 20px; background: transparent;
-      border: none; font-size: 1.8rem; cursor: pointer;
-    }
-    .form-group { margin-bottom: 1rem; }
-    .form-input {
-      width: 100%; padding: 12px; border: 1px solid #ccc;
-      border-radius: 12px; font-size: 1rem;
-    }
-    .btn-primary {
-      background: #2E7D32; color: white; border: none; padding: 12px;
-      width: 100%; border-radius: 40px; font-weight: bold; cursor: pointer;
-    }
-
-    /* App principal (menú arriba) */
-    .app-container { display: flex; flex-direction: column; min-height: 100vh; }
-    .top-bar {
-      background: #2E7D32; color: white; padding: 12px 20px;
-      display: flex; justify-content: space-between; align-items: center;
-    }
-    .puntos { background: #FFC107; color: #1B5E20; padding: 5px 12px; border-radius: 40px; font-weight: bold; }
-    .nav-horizontal {
-      background: #FFF8E1; display: flex; flex-wrap: wrap; justify-content: center;
-      gap: 5px; padding: 8px 12px; border-bottom: 1px solid #ddd;
-    }
-    .nav-btn {
-      background: transparent; border: none; padding: 8px 16px; border-radius: 40px;
-      font-family: 'Poppins', sans-serif; font-weight: 500; display: flex;
-      align-items: center; gap: 6px; cursor: pointer;
-    }
-    .nav-btn.active { background: #2E7D32; color: white; }
-    .main-content { flex: 1; padding: 20px; max-width: 1200px; margin: 0 auto; width: 100%; }
-    .seccion { animation: fade 0.3s; }
-    @keyframes fade { from { opacity:0; } to { opacity:1; } }
-
-    /* Estilos de tarjetas, retos, etc. (los mismos que funcionaban) */
-    .card { background: white; border-radius: 14px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); overflow: hidden; margin-bottom: 20px; }
-    .reto-head { background: #2E7D32; color: white; padding: 12px; display: flex; justify-content: space-between; }
-    .reto-pts { background: #FFC107; padding: 2px 8px; border-radius: 20px; color: #1B5E20; }
-    .reto-body { padding: 16px; }
-    .badge { display: inline-block; padding: 3px 8px; border-radius: 20px; font-size: 0.7rem; margin-right: 5px; background: #E8F5E9; color: #2E7D32; }
-    .btn { display: inline-flex; align-items: center; gap: 5px; padding: 8px 16px; border-radius: 40px; border: none; cursor: pointer; font-weight: 500; }
-    .btn-sm { padding: 4px 12px; font-size: 0.8rem; }
-    .btn-outline { background: transparent; border: 1px solid #2E7D32; color: #2E7D32; }
-    .retos-grid, .cartas-grid, .leyendas-grid { display: grid; gap: 16px; grid-template-columns: 1fr; }
-    @media (min-width: 768px) { .retos-grid, .cartas-grid { grid-template-columns: repeat(2,1fr); } }
-    @media (min-width: 1024px) { .retos-grid { grid-template-columns: repeat(3,1fr); } }
-    .empty-state { text-align: center; padding: 40px; color: #777; }
-    .fotos-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 12px; }
-    .historial-item { background: #f5f5f5; border-radius: 12px; padding: 12px; margin-bottom: 8px; display: flex; gap: 12px; }
-    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); display: flex; align-items: center; justify-content: center; z-index: 1000; }
-    .modal { background: white; max-width: 500px; width: 90%; padding: 20px; border-radius: 24px; }
+    .reto-card .reto-head { background: linear-gradient(135deg, var(--verde-oscuro), var(--verde)); color: #fff; padding: 14px 18px; display: flex; justify-content: space-between; }
+    .reto-pts { background: var(--amarillo); color: var(--marron-oscuro); border-radius: 20px; padding: 3px 10px; font-weight: 700; }
+    .reto-body { padding: 14px 18px 18px; }
+    .reto-meta { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+    .carta-card { border-left: 5px solid var(--amarillo); padding: 14px 16px; background: var(--blanco); margin-bottom: 8px; border-radius: var(--radio); }
+    .carta-card.completada-ok { border-left-color: var(--verde); }
+    .leyenda-card { background: var(--blanco); border-radius: var(--radio-grande); padding: 18px; cursor: pointer; transition: transform 0.2s; }
+    .leyenda-card:active { transform: scale(0.98); }
+    .empty-state { text-align: center; padding: 40px 20px; color: var(--marron-claro); }
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 500; display: flex; align-items: center; justify-content: center; }
+    .modal { background: var(--blanco); width: 90%; max-width: 500px; border-radius: var(--radio-grande); padding: 20px; max-height: 90vh; overflow-y: auto; }
+    .upload-zone { border: 2px dashed #C4A882; border-radius: var(--radio); padding: 20px; text-align: center; cursor: pointer; background: var(--crema); margin-bottom: 16px; }
+    .filtros-wrap { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
+    .filtro-select { flex: 1; padding: 8px 12px; border-radius: var(--radio); border: 2px solid #E8D5B0; background: var(--blanco); }
+    .seccion-header { margin-bottom: 20px; border-bottom: 2px solid var(--crema-oscuro); padding-bottom: 8px; }
+    .stats-grid { display: grid; gap: 12px; margin-bottom: 20px; }
+    .stat-card { padding: 16px; text-align: center; }
+    .progress-card { padding: 20px; margin-bottom: 16px; }
+    .progress-bar-wrap { background: var(--crema-oscuro); border-radius: 20px; height: 14px; overflow: hidden; }
+    .progress-bar-fill { height: 100%; background: linear-gradient(90deg, var(--verde), var(--amarillo)); width: 0%; transition: width 1s; }
+    .fotos-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 8px; }
+    .foto-thumb { aspect-ratio: 1; border-radius: var(--radio); overflow: hidden; background: var(--crema-oscuro); position: relative; }
+    .foto-thumb img { width: 100%; height: 100%; object-fit: cover; }
+    .historial-list { display: flex; flex-direction: column; gap: 8px; }
+    .historial-item { background: var(--blanco); border-radius: var(--radio); padding: 12px; display: flex; align-items: center; gap: 12px; }
+    .glosario-list { display: flex; flex-direction: column; gap: 8px; }
+    .glosario-item { background: var(--blanco); border-radius: var(--radio); padding: 12px 16px; }
+    .busqueda-input { width: 100%; padding: 12px 12px 12px 42px; border-radius: var(--radio); border: 2px solid #E8D5B0; }
+    .config-item { display: flex; justify-content: space-between; align-items: center; background: var(--blanco); border-radius: var(--radio); padding: 14px 16px; margin-bottom: 8px; }
+    .fade-in { animation: fadeInUp 0.4s ease both; }
+    @keyframes fadeInUp { from { opacity:0; transform: translateY(16px); } to { opacity:1; transform:translateY(0); } }
   </style>
 </head>
 <body>
 
-<div id="spinner" class="spinner-overlay hidden"><div class="spinner"></div></div>
+<div id="spinner" class="spinner-overlay hidden"><div class="spinner"></div><p>Cargando...</p></div>
 <div id="toast-container"></div>
 
-<!-- LANDING PAGE -->
-<div id="landing-page" class="landing">
-  <div class="contenido">
+<!-- PANTALLA LOGIN -->
+<div id="screen-login">
+  <div class="login-hero">
+    <div class="sol-icono">☀️</div>
     <h1>La Gesta de los 45 Soles</h1>
-    <p>Un viaje a las raíces taínas de Borínquen</p>
-    <button class="btn-acceder" id="btn-abrir-login">Acceder a mi gesta →</button>
+    <p class="subtitulo">Un viaje a las raíces taínas de Borínquen</p>
+  </div>
+  <div class="card login-card">
+    <div class="form-group">
+      <label><i class="fas fa-envelope"></i> Correo electrónico</label>
+      <input type="email" id="input-email" class="form-input" placeholder="tu@correo.com">
+    </div>
+    <div class="form-group">
+      <label><i class="fas fa-key"></i> Código de acceso</label>
+      <input type="text" id="input-codigo" class="form-input" placeholder="G45-XXXXXX" style="text-transform:uppercase">
+    </div>
+    <div class="form-group">
+      <label><i class="fas fa-user"></i> Nombre (opcional)</label>
+      <input type="text" id="input-nombre" class="form-input" placeholder="¿Cómo te llamamos?">
+    </div>
+    <button class="btn btn-primary btn-block" onclick="loginUsuario()"><i class="fas fa-sun"></i> Iniciar mi gesta</button>
   </div>
 </div>
 
-<!-- MODAL LOGIN (oculto al inicio) -->
-<div id="modal-login" class="modal-login hidden">
-  <div class="card">
-    <button class="btn-cerrar" id="btn-cerrar-modal">&times;</button>
-    <h2 style="margin-bottom: 1rem;">Iniciar sesión</h2>
-    <div class="form-group">
-      <input type="email" id="input-email" class="form-input" placeholder="Correo electrónico">
-    </div>
-    <div class="form-group">
-      <input type="text" id="input-codigo" class="form-input" placeholder="Código de acceso" style="text-transform:uppercase">
-    </div>
-    <div class="form-group">
-      <input type="text" id="input-nombre" class="form-input" placeholder="Nombre (opcional)">
-    </div>
-    <button class="btn-primary" id="btn-login">Iniciar mi gesta</button>
-  </div>
-</div>
-
-<!-- APP PRINCIPAL (oculta hasta login) -->
+<!-- APP PRINCIPAL -->
 <div id="app-main" class="hidden">
-  <div class="app-container">
-    <header class="top-bar">
-      <div><h2>La Gesta de los 45 Soles</h2></div>
-      <div class="puntos">⭐ <span id="puntos-display">0</span> pts</div>
-    </header>
-    <nav class="nav-horizontal">
-      <button class="nav-btn" data-seccion="inicio"><i class="fas fa-home"></i> Inicio</button>
-      <button class="nav-btn" data-seccion="retos"><i class="fas fa-map-marked-alt"></i> Retos</button>
-      <button class="nav-btn" data-seccion="cartas"><i class="fas fa-scroll"></i> Cartas</button>
-      <button class="nav-btn" data-seccion="progreso"><i class="fas fa-chart-line"></i> Progreso</button>
-      <button class="nav-btn" data-seccion="glosario"><i class="fas fa-book"></i> Glosario</button>
-      <button class="nav-btn" data-seccion="leyendas"><i class="fas fa-book-open"></i> Leyendas</button>
-      <button class="nav-btn" data-seccion="config"><i class="fas fa-cog"></i> Config.</button>
-    </nav>
-    <main class="main-content">
-      <!-- INICIO -->
-      <section id="seccion-inicio" class="seccion hidden">
-        <div style="background: linear-gradient(135deg, #1B5E20, #2E7D32); border-radius: 22px; padding: 20px; color:#fff; margin-bottom:20px;">
-          <h2>¡Bienvenido, <span id="nombre-usuario-display">Peregrino</span>!</h2>
-          <p>Tu aventura por los 45 soles ha comenzado.</p>
-        </div>
-        <div class="card" style="padding:20px">
-          <div style="display:flex; justify-content:space-between;"><span>Progreso hacia 1000 puntos</span><span id="prog-pct">0%</span></div>
-          <div style="background:#ddd; border-radius:20px; height:12px; margin:10px 0;"><div id="prog-fill" style="width:0%; background:#FFC107; border-radius:20px; height:12px;"></div></div>
-          <p><span id="prog-puntos">0</span> / 1000 puntos</p>
-        </div>
-        <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:20px;">
-          <div class="card" style="padding:16px; text-align:center;"><div id="stat-retos">0</div><div>Retos completados</div></div>
-          <div class="card" style="padding:16px; text-align:center;"><div id="stat-cartas">0</div><div>Cartas obtenidas</div></div>
-          <div class="card" style="padding:16px; text-align:center;"><div id="stat-fotos">0</div><div>Fotos subidas</div></div>
-          <div class="card" style="padding:16px; text-align:center;"><div id="stat-puntos">0</div><div>Puntos totales</div></div>
-        </div>
-        <div style="background:#FFF8E1; border-left:4px solid #FFC107; padding:16px; margin-bottom:20px;">
-          <h4><i class="fas fa-feather-alt"></i> Bendición de Yúcahu</h4>
-          <p id="texto-yucahu">"Que el espíritu de Yúcahu, señor de la yuca y del mar sin fondo, guíe tus pasos..."</p>
-        </div>
-        <div style="display:flex; gap:12px;">
-          <button class="btn btn-primary" onclick="irASeccion('retos')"><i class="fas fa-map-marked-alt"></i> Retos</button>
-          <button class="btn btn-primary" onclick="irASeccion('cartas')"><i class="fas fa-scroll"></i> Cartas</button>
-        </div>
-      </section>
+  <header class="top-bar">
+    <div class="top-bar-titulo"><i class="fas fa-sun" style="color:var(--amarillo);margin-right:6px"></i>La Gesta de los 45 Soles</div>
+    <div class="top-bar-puntos"><i class="fas fa-star"></i> <span id="puntos-display">0</span> pts</div>
+  </header>
+  <main class="main-content">
+    <!-- INICIO -->
+    <section id="seccion-inicio" class="seccion hidden">
+      <div class="bienvenida-banner" style="background: linear-gradient(135deg, var(--verde-oscuro), var(--verde)); border-radius: var(--radio-grande); padding: 20px; color:#fff; margin-bottom:20px;">
+        <h2>¡Bienvenido, <span id="nombre-usuario-display">Peregrino</span>!</h2>
+        <p>Tu aventura por los 45 soles ha comenzado.</p>
+      </div>
+      <div class="card progress-card">
+        <div class="progress-header"><span>Progreso hacia 1000 puntos</span><span id="prog-pct">0%</span></div>
+        <div class="progress-bar-wrap"><div class="progress-bar-fill" id="prog-fill" style="width:0%"></div></div>
+        <p class="progress-meta"><span id="prog-puntos">0</span> / 1000 puntos</p>
+      </div>
+      <div class="stats-grid" style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+        <div class="card stat-card"><div class="stat-num" id="stat-retos">0</div><div class="stat-lbl">Retos completados</div></div>
+        <div class="card stat-card"><div class="stat-num" id="stat-cartas">0</div><div class="stat-lbl">Cartas obtenidas</div></div>
+        <div class="card stat-card"><div class="stat-num" id="stat-fotos">0</div><div class="stat-lbl">Fotos subidas</div></div>
+        <div class="card stat-card"><div class="stat-num" id="stat-puntos">0</div><div class="stat-lbl">Puntos totales</div></div>
+      </div>
+      <div class="leyenda-box" style="background:var(--crema); border-left:4px solid var(--amarillo); padding:16px; margin-bottom:20px;">
+        <h4><i class="fas fa-feather-alt"></i> Bendición de Yúcahu</h4>
+        <p id="texto-yucahu">"Que el espíritu de Yúcahu, señor de la yuca y del mar sin fondo, guíe tus pasos..."</p>
+      </div>
+      <div class="accesos-grid" style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+        <button class="acceso-btn" onclick="irASeccion('retos')"><i class="fas fa-map-marked-alt"></i> Retos</button>
+        <button class="acceso-btn" onclick="irASeccion('cartas')"><i class="fas fa-scroll"></i> Cartas</button>
+        <button class="acceso-btn" onclick="irASeccion('progreso')"><i class="fas fa-chart-line"></i> Progreso</button>
+        <button class="acceso-btn" onclick="irASeccion('leyendas')"><i class="fas fa-book-open"></i> Leyendas</button>
+      </div>
+    </section>
 
-      <!-- RETOS -->
-      <section id="seccion-retos" class="seccion hidden">
-        <div><h2><i class="fas fa-map-marked-alt"></i> Retos</h2><p>Explora y completa los desafíos de Borínquen</p></div>
-        <div style="display:flex; gap:8px; margin-bottom:20px;">
-          <select id="filtro-tema" style="padding:8px; border-radius:40px;"><option value="">Todos los temas</option></select>
-          <select id="filtro-area" style="padding:8px; border-radius:40px;"><option value="">Todas las áreas</option></select>
-        </div>
-        <div id="retos-grid" class="retos-grid"><div class="empty-state">Cargando retos...</div></div>
-      </section>
+    <!-- RETOS -->
+    <section id="seccion-retos" class="seccion hidden">
+      <div class="seccion-header"><h2><i class="fas fa-map-marked-alt"></i> Retos</h2><p>Explora y completa los desafíos de Borínquen</p></div>
+      <div class="filtros-wrap">
+        <select id="filtro-tema" class="filtro-select" onchange="filtrarRetos()"><option value="">Todos los temas</option></select>
+        <select id="filtro-area" class="filtro-select" onchange="filtrarRetos()"><option value="">Todas las áreas</option></select>
+      </div>
+      <div id="retos-grid" class="retos-grid"><div class="empty-state">Cargando retos...</div></div>
+    </section>
 
-      <!-- CARTAS -->
-      <section id="seccion-cartas" class="seccion hidden">
-        <div><h2><i class="fas fa-scroll"></i> Cartas Místicas</h2><p>Descubre el poder de las cartas sagradas</p></div>
-        <div id="cartas-mensaje-fisico" class="hidden"><div class="empty-state"><i class="fas fa-lock"></i><p>Las cartas están disponibles solo en tu mazo físico.</p></div></div>
-        <div id="cartas-contenido">
-          <div id="cartas-tabs" style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:20px;"></div>
-          <div id="cartas-grid" class="cartas-grid"><div class="empty-state">Cargando cartas...</div></div>
-        </div>
-      </section>
+    <!-- CARTAS -->
+    <section id="seccion-cartas" class="seccion hidden">
+      <div class="seccion-header"><h2><i class="fas fa-scroll"></i> Cartas Místicas</h2><p>Descubre el poder de las cartas sagradas</p></div>
+      <div id="cartas-mensaje-fisico" class="hidden"><div class="empty-state"><i class="fas fa-lock"></i><p>Las cartas están disponibles solo en tu mazo físico.</p></div></div>
+      <div id="cartas-contenido">
+        <div class="cartas-tabs" id="cartas-tabs"></div>
+        <div id="cartas-grid" class="cartas-grid"><div class="empty-state">Cargando cartas...</div></div>
+      </div>
+    </section>
 
-      <!-- PROGRESO -->
-      <section id="seccion-progreso" class="seccion hidden">
-        <div><h2><i class="fas fa-chart-line"></i> Mi Progreso</h2><p>Tus logros en la gesta</p></div>
-        <h3>Mis fotos</h3><div id="fotos-galeria" class="fotos-grid"></div>
-        <h3>Historial de completados</h3><div id="historial-list" class="historial-list"></div>
-      </section>
+    <!-- MI PROGRESO -->
+    <section id="seccion-progreso" class="seccion hidden">
+      <div class="seccion-header"><h2><i class="fas fa-chart-line"></i> Mi Progreso</h2><p>Tus logros en la gesta</p></div>
+      <h3>Mis fotos</h3><div id="fotos-galeria" class="fotos-grid"></div>
+      <h3>Historial de completados</h3><div id="historial-list" class="historial-list"></div>
+    </section>
 
-      <!-- GLOSARIO -->
-      <section id="seccion-glosario" class="seccion hidden">
-        <div><h2><i class="fas fa-book"></i> Glosario Taíno</h2><p>Vocabulario de nuestra cultura ancestral</p></div>
-        <div><i class="fas fa-search"></i><input type="text" id="busqueda-glosario" class="form-input" placeholder="Buscar término..." oninput="filtrarGlosario()"></div>
-        <dl id="glosario-list" class="glosario-list"></dl>
-      </section>
+    <!-- GLOSARIO -->
+    <section id="seccion-glosario" class="seccion hidden">
+      <div class="seccion-header"><h2><i class="fas fa-book"></i> Glosario Taíno</h2><p>Vocabulario de nuestra cultura ancestral</p></div>
+      <div class="busqueda-wrap"><i class="fas fa-search"></i><input type="text" id="busqueda-glosario" class="busqueda-input" placeholder="Buscar término..." oninput="filtrarGlosario()"></div>
+      <dl id="glosario-list" class="glosario-list"></dl>
+    </section>
 
-      <!-- LEYENDAS -->
-      <section id="seccion-leyendas" class="seccion hidden">
-        <div><h2><i class="fas fa-book-open"></i> Leyendas</h2><p>Historias del pueblo taíno de Borínquen</p></div>
-        <div id="leyendas-grid" class="leyendas-grid"></div>
-      </section>
+    <!-- LEYENDAS -->
+    <section id="seccion-leyendas" class="seccion hidden">
+      <div class="seccion-header"><h2><i class="fas fa-book-open"></i> Leyendas</h2><p>Historias del pueblo taíno de Borínquen</p></div>
+      <div id="leyendas-grid" class="leyendas-grid"></div>
+    </section>
 
-      <!-- CONFIGURACIÓN -->
-      <section id="seccion-config" class="seccion hidden">
-        <div><h2><i class="fas fa-cog"></i> Configuración</h2></div>
-        <div class="card" style="padding:16px; margin-bottom:12px;"><i class="fas fa-user"></i> <span id="config-nombre"></span></div>
-        <div class="card" style="padding:16px; margin-bottom:12px;"><i class="fas fa-envelope"></i> <span id="config-email"></span></div>
-        <div class="card" style="padding:16px; margin-bottom:12px;"><i class="fas fa-gamepad"></i> Tipo de juego: <strong id="config-tipo"></strong></div>
-        <button class="btn" style="background:#c62828; color:white; width:100%;" onclick="cerrarSesion()"><i class="fas fa-sign-out-alt"></i> Cerrar sesión</button>
-      </section>
-    </main>
-  </div>
+    <!-- CONFIGURACIÓN -->
+    <section id="seccion-config" class="seccion hidden">
+      <div class="seccion-header"><h2><i class="fas fa-cog"></i> Configuración</h2></div>
+      <div class="config-item"><span><i class="fas fa-user"></i> <span id="config-nombre"></span></span></div>
+      <div class="config-item"><span><i class="fas fa-envelope"></i> <span id="config-email"></span></span></div>
+      <div class="config-item"><span><i class="fas fa-gamepad"></i> Tipo de juego: <strong id="config-tipo"></strong></span></div>
+      <button class="btn btn-danger btn-block" onclick="cerrarSesion()"><i class="fas fa-sign-out-alt"></i> Cerrar sesión</button>
+    </section>
+  </main>
+  <nav class="bottom-nav">
+    <button class="nav-btn" onclick="irASeccion('inicio')"><i class="fas fa-home"></i><span>Inicio</span></button>
+    <button class="nav-btn" onclick="irASeccion('retos')"><i class="fas fa-map-marked-alt"></i><span>Retos</span></button>
+    <button class="nav-btn" onclick="irASeccion('cartas')"><i class="fas fa-scroll"></i><span>Cartas</span></button>
+    <button class="nav-btn" onclick="irASeccion('progreso')"><i class="fas fa-chart-line"></i><span>Progreso</span></button>
+    <button class="nav-btn" onclick="irASeccion('glosario')"><i class="fas fa-book"></i><span>Glosario</span></button>
+    <button class="nav-btn" onclick="irASeccion('leyendas')"><i class="fas fa-book-open"></i><span>Leyendas</span></button>
+    <button class="nav-btn" onclick="irASeccion('config')"><i class="fas fa-cog"></i><span>Config.</span></button>
+  </nav>
 </div>
 
-<!-- MODALES PARA COMPLETAR RETO, CARTA, LEYENDA -->
+<!-- MODALES -->
 <div id="modal-reto" class="modal-overlay hidden">
   <div class="modal">
-    <h3><i class="fas fa-camera"></i> <span id="modal-reto-titulo"></span></h3>
+    <h3 class="modal-titulo"><i class="fas fa-camera"></i> <span id="modal-reto-titulo">Completar reto</span></h3>
     <p id="modal-reto-desc"></p>
-    <div class="upload-zone" onclick="document.getElementById('foto-file-input').click()" style="border:2px dashed #aaa; padding:20px; text-align:center; margin:10px 0; cursor:pointer;">
-      <i class="fas fa-cloud-upload-alt"></i> Seleccionar foto
+    <div class="upload-zone" onclick="document.getElementById('foto-file-input').click()">
+      <i class="fas fa-cloud-upload-alt"></i><p><strong>Toca para seleccionar una foto</strong></p>
     </div>
-    <img id="foto-preview" class="hidden" style="max-width:100%; margin:10px 0;">
+    <img id="foto-preview" class="upload-preview hidden" style="max-width:100%; margin-bottom:12px;">
     <input type="file" id="foto-file-input" accept="image/*" capture="environment" class="hidden" onchange="previsualizarFoto(event)">
-    <button class="btn btn-primary" onclick="submitReto()">Enviar</button>
-    <button class="btn btn-outline" onclick="cerrarModal('modal-reto')">Cancelar</button>
+    <button class="btn btn-primary btn-block" onclick="submitReto()">Enviar y completar</button>
+    <button class="btn btn-outline btn-block" onclick="cerrarModal('modal-reto')">Cancelar</button>
   </div>
 </div>
+
 <div id="modal-carta" class="modal-overlay hidden">
   <div class="modal">
-    <h3><i class="fas fa-scroll"></i> <span id="modal-carta-titulo"></span></h3>
+    <h3 class="modal-titulo"><i class="fas fa-scroll"></i> <span id="modal-carta-titulo">Completar carta</span></h3>
     <p id="modal-carta-desc"></p>
-    <button class="btn btn-primary" onclick="submitCarta()">Completar carta</button>
-    <button class="btn btn-outline" onclick="cerrarModal('modal-carta')">Cancelar</button>
+    <button class="btn btn-amarillo btn-block" onclick="submitCarta()">Sí, completé esta carta</button>
+    <button class="btn btn-outline btn-block" onclick="cerrarModal('modal-carta')">Cancelar</button>
   </div>
 </div>
+
 <div id="modal-leyenda" class="modal-overlay hidden">
   <div class="modal">
-    <h3 id="modal-leyenda-titulo"></h3>
+    <h3 class="modal-titulo" id="modal-leyenda-titulo"><i class="fas fa-feather-alt"></i> Leyenda</h3>
     <div id="modal-leyenda-texto" style="white-space:pre-wrap;"></div>
-    <button class="btn btn-primary" onclick="cerrarModal('modal-leyenda')">Cerrar</button>
+    <button class="btn btn-marron btn-block" onclick="cerrarModal('modal-leyenda')">Volver</button>
   </div>
 </div>
 
 <script>
-// ==================== CONFIGURACIÓN (tus URLs reales) ====================
-const API_URL = 'https://script.google.com/macros/s/AKfycbxcJZlDKUk4iNnruitifJM7cAumZa9Awh91t-403AaypoN_kJoQ5TxoetQNiScuDxVapQ/exec';
-const SPREADSHEET_ID = '1w5IegwChoc8GI2VTCK9btN1Z29Jj1O-j0xo8xjN7hTo';
-const URL_RETOS    = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/export?format=csv&gid=1340299651`;
-const URL_CARTAS   = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/export?format=csv&gid=1112041512`;
-const URL_GLOSARIO = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/export?format=csv&gid=575913279`;
-const URL_LEYENDAS = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/export?format=csv&gid=1794593283`;
-const URL_LEYENDAS_DETALLE = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/export?format=csv&gid=466301604`;
+// ====================================================
+// CONFIGURACIÓN - ¡CAMBIAR POR TUS URLs REALES!
+// ====================================================
+const API_URL      = 'https://script.google.com/macros/s/TU_URL_AQUI/exec';
+const URL_RETOS    = 'https://docs.google.com/spreadsheets/d/TU_ID/export?format=csv&gid=ID_RETOS';
+const URL_CARTAS   = 'https://docs.google.com/spreadsheets/d/TU_ID/export?format=csv&gid=ID_CARTAS';
+const URL_GLOSARIO = 'https://docs.google.com/spreadsheets/d/TU_ID/export?format=csv&gid=ID_GLOSARIO';
+const URL_LEYENDAS = 'https://docs.google.com/spreadsheets/d/TU_ID/export?format=csv&gid=ID_LEYENDAS';
+const URL_LEYENDAS_DETALLE = 'https://docs.google.com/spreadsheets/d/TU_ID/export?format=csv&gid=ID_LEYENDAS_DETALLE';
 
 // ========== ESTADO GLOBAL ==========
 let sesion = {};
-let todosLosRetos = [], todasLasCartas = [], todosGlosario = [], todasLeyendas = [], todasLeyendasDetalle = [];
+let todosLosRetos = [];
+let todasLasCartas = [];
+let todosGlosario = [];
+let todasLeyendas = [];
+let todasLeyendasDetalle = [];
 let retoActual = null, cartaActual = null, fotoBase64 = null;
 
 // ========== UTILIDADES ==========
-function mostrarSpinner() { document.getElementById('spinner').classList.remove('hidden'); }
-function ocultarSpinner() { document.getElementById('spinner').classList.add('hidden'); }
-function toast(mensaje, tipo) {
+function mostrarSpinner(texto = 'Cargando...') {
+  const sp = document.getElementById('spinner');
+  if (sp) sp.classList.remove('hidden');
+}
+function ocultarSpinner() {
+  const sp = document.getElementById('spinner');
+  if (sp) sp.classList.add('hidden');
+}
+function toast(mensaje, tipo = 'info') {
   const container = document.getElementById('toast-container');
   const t = document.createElement('div');
   t.className = `toast toast-${tipo}`;
-  t.innerHTML = `<i class="fas ${tipo==='success'?'fa-check-circle':'fa-exclamation-circle'}"></i><span>${mensaje}</span>`;
+  t.innerHTML = `<i class="fas ${tipo === 'success' ? 'fa-check-circle' : tipo === 'error' ? 'fa-exclamation-circle' : 'fa-info-circle'}"></i><span>${mensaje}</span>`;
   container.appendChild(t);
   setTimeout(() => t.remove(), 3600);
 }
@@ -307,7 +329,8 @@ function parsearCSV(texto) {
   if (lineas.length < 2) return [];
   const encabezados = lineas[0].split(',').map(h => h.trim().replace(/^"|"$/g, ''));
   return lineas.slice(1).map(linea => {
-    const valores = []; let dentro = false, actual = '';
+    const valores = [];
+    let dentro = false, actual = '';
     for (let c of linea) {
       if (c === '"') dentro = !dentro;
       else if (c === ',' && !dentro) { valores.push(actual); actual = ''; }
@@ -315,78 +338,65 @@ function parsearCSV(texto) {
     }
     valores.push(actual);
     const obj = {};
-    encabezados.forEach((k,i) => { obj[k] = (valores[i] || '').trim().replace(/^"|"$/g, ''); });
+    encabezados.forEach((k, i) => { obj[k] = (valores[i] || '').trim().replace(/^"|"$/g, ''); });
     return obj;
   });
 }
-async function cargarCSV(url) { const resp = await fetch(url); if (!resp.ok) throw new Error(`Error ${url}`); return parsearCSV(await resp.text()); }
-async function apiGET(params) { const qs = new URLSearchParams(params).toString(); const resp = await fetch(`${API_URL}?${qs}`); return resp.json(); }
-async function apiPOST(cuerpo) { const resp = await fetch(API_URL, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(cuerpo) }); return resp.json(); }
-
-// ========== LOGIN (exactamente la misma lógica que funcionaba) ==========
-function guardarSesion() { localStorage.setItem('gesta_sesion', JSON.stringify(sesion)); }
-
-async function loginUsuario(email, codigo, nombre) {
-  mostrarSpinner();
-  try {
-    const res = await apiGET({ accion: 'validar', codigo, email });
-    // Si el código no existe
-    if (!res.success && res.message === 'Código de acceso inválido.') {
-      const reg = await apiGET({ accion: 'registrar', codigo, email, nombre });
-      if (!reg.success) {
-        toast(reg.message, 'error');
-        return false;
-      }
-      sesion = {
-        email: email,
-        nombre: nombre || email.split('@')[0],
-        codigo: codigo,
-        tipo_juego: 'digital',
-        puntos: 0,
-        completados: [],
-        fotos: []
-      };
-      guardarSesion();
-      return true;
-    }
-    // Otro error (correo no coincide, etc.)
-    if (!res.success) {
-      toast(res.message, 'error');
-      return false;
-    }
-    // Código existe y correo coincide
-    if (res.data && res.data.existe === true) {
-      sesion = {
-        email: email,
-        nombre: nombre || res.data.nombre,
-        codigo: codigo,
-        tipo_juego: res.data.tipo_juego || 'digital',
-        puntos: res.data.puntos || 0,
-        completados: [],
-        fotos: []
-      };
-      const prog = await apiGET({ accion: 'obtener_progreso', email });
-      if (prog.success) {
-        sesion.completados = prog.data.completados || [];
-        sesion.fotos = prog.data.fotos || [];
-      }
-      guardarSesion();
-      return true;
-    }
-    toast('No se pudo iniciar sesión.', 'error');
-    return false;
-  } catch(e) {
-    console.error(e);
-    toast('Error de conexión con el servidor', 'error');
-    return false;
-  } finally {
-    ocultarSpinner();
-  }
+async function cargarCSV(url) {
+  const resp = await fetch(url);
+  if (!resp.ok) throw new Error(`Error cargando ${url}`);
+  return parsearCSV(await resp.text());
+}
+async function apiGET(params) {
+  const qs = new URLSearchParams(params).toString();
+  const resp = await fetch(`${API_URL}?${qs}`);
+  return resp.json();
+}
+async function apiPOST(cuerpo) {
+  const resp = await fetch(API_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(cuerpo)
+  });
+  return resp.json();
 }
 
+// ========== SESIÓN Y LOGIN ==========
+function guardarSesion() { localStorage.setItem('gesta_sesion', JSON.stringify(sesion)); }
+async function loginUsuario() {
+  const email = document.getElementById('input-email').value.trim();
+  const codigo = document.getElementById('input-codigo').value.trim();
+  const nombre = document.getElementById('input-nombre').value.trim();
+  if (!email || !codigo) { toast('Completa correo y código.', 'error'); return; }
+  mostrarSpinner('Verificando...');
+  try {
+    const res = await apiGET({ accion: 'validar', codigo, email });
+    if (!res.success) { toast(res.message, 'error'); return; }
+    if (res.data && res.data.existe === false) {
+      await apiGET({ accion: 'registrar', codigo, email, nombre });
+    }
+    sesion = {
+      email,
+      nombre: nombre || res.data.nombre || email.split('@')[0],
+      codigo,
+      tipo_juego: res.data.tipo_juego || 'digital',
+      puntos: res.data.puntos || 0,
+      completados: [],
+      fotos: []
+    };
+    // Cargar progreso histórico
+    const prog = await apiGET({ accion: 'obtener_progreso', email });
+    if (prog.success) {
+      sesion.completados = prog.data.completados || [];
+      sesion.fotos = prog.data.fotos || [];
+    }
+    guardarSesion();
+    iniciarApp();
+  } catch(e) { toast('Error de conexión', 'error'); console.error(e); }
+  finally { ocultarSpinner(); }
+}
 function iniciarApp() {
-  document.getElementById('landing-page').classList.add('hidden');
-  document.getElementById('modal-login').classList.add('hidden');
+  document.getElementById('screen-login').classList.add('hidden');
   document.getElementById('app-main').classList.remove('hidden');
   actualizarPuntosUI();
   document.getElementById('nombre-usuario-display').textContent = sesion.nombre;
@@ -396,116 +406,314 @@ function iniciarApp() {
   cargarDatosIniciales();
   irASeccion('inicio');
 }
-
 function cerrarSesion() {
-  if (confirm('¿Cerrar sesión?')) {
+  if (confirm('¿Cerrar sesión? Se perderán datos locales no sincronizados.')) {
     localStorage.removeItem('gesta_sesion');
     location.reload();
   }
 }
-
 function actualizarPuntosUI() {
   const pts = sesion.puntos || 0;
   document.getElementById('puntos-display').textContent = pts;
   document.getElementById('prog-puntos').textContent = pts;
   document.getElementById('stat-puntos').textContent = pts;
-  const pct = Math.min(100, Math.round((pts/1000)*100));
-  document.getElementById('prog-fill').style.width = pct+'%';
-  document.getElementById('prog-pct').textContent = pct+'%';
-  document.getElementById('stat-retos').textContent = (sesion.completados||[]).filter(c=>c.item_tipo==='reto').length;
-  document.getElementById('stat-cartas').textContent = (sesion.completados||[]).filter(c=>c.item_tipo==='carta').length;
-  document.getElementById('stat-fotos').textContent = (sesion.fotos||[]).length;
+  const pct = Math.min(100, Math.round((pts / 1000) * 100));
+  document.getElementById('prog-fill').style.width = pct + '%';
+  document.getElementById('prog-pct').textContent = pct + '%';
+  document.getElementById('stat-retos').textContent = (sesion.completados || []).filter(c => c.item_tipo === 'reto').length;
+  document.getElementById('stat-cartas').textContent = (sesion.completados || []).filter(c => c.item_tipo === 'carta').length;
+  document.getElementById('stat-fotos').textContent = (sesion.fotos || []).length;
+}
+function sumarPuntos(pts) {
+  sesion.puntos = (sesion.puntos || 0) + pts;
+  guardarSesion();
+  actualizarPuntosUI();
+}
+function agregarCompletado(item) {
+  if (!sesion.completados) sesion.completados = [];
+  sesion.completados.push({ ...item, fecha: new Date().toLocaleDateString('es-PR') });
+  guardarSesion();
+}
+function esItemCompletado(id, tipo) {
+  return (sesion.completados || []).some(c => String(c.item_id) === String(id) && c.item_tipo === tipo);
 }
 
-function sumarPuntos(pts) { sesion.puntos += pts; guardarSesion(); actualizarPuntosUI(); }
-function agregarCompletado(item) { if(!sesion.completados) sesion.completados=[]; sesion.completados.push({...item, fecha: new Date().toLocaleDateString('es-PR')}); guardarSesion(); }
-function esItemCompletado(id,tipo) { return (sesion.completados||[]).some(c=>String(c.item_id)===String(id) && c.item_tipo===tipo); }
-
+// ========== NAVEGACIÓN SPA ==========
 function irASeccion(id) {
   const secciones = ['inicio','retos','cartas','progreso','glosario','leyendas','config'];
   secciones.forEach(s => {
     document.getElementById(`seccion-${s}`)?.classList.add('hidden');
-    document.querySelector(`.nav-btn[data-seccion="${s}"]`)?.classList.remove('active');
+    document.querySelector(`.nav-btn[onclick*="'${s}'"]`)?.classList.remove('active');
   });
   document.getElementById(`seccion-${id}`)?.classList.remove('hidden');
-  document.querySelector(`.nav-btn[data-seccion="${id}"]`)?.classList.add('active');
-  if(id === 'progreso') renderizarProgreso();
-  window.scrollTo({top:0, behavior:'smooth'});
+  const btn = document.querySelector(`.nav-btn[onclick*="'${id}'"]`);
+  if (btn) btn.classList.add('active');
+  if (id === 'progreso') renderizarProgreso();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// ========== RENDERIZAR RETOS (exactamente igual a tu original) ==========
+// ========== RENDERIZAR RETOS ==========
 function renderizarRetos() {
-  const temas = [...new Set(todosLosRetos.map(r=>r.tema).filter(Boolean))];
-  const areas = [...new Set(todosLosRetos.map(r=>r.area).filter(Boolean))];
+  const temas = [...new Set(todosLosRetos.map(r => r.tema).filter(Boolean))];
+  const areas = [...new Set(todosLosRetos.map(r => r.area).filter(Boolean))];
   const fTema = document.getElementById('filtro-tema');
   const fArea = document.getElementById('filtro-area');
-  if(fTema) fTema.innerHTML = '<option value="">Todos los temas</option>'+temas.map(t=>`<option value="${t}">${t}</option>`).join('');
-  if(fArea) fArea.innerHTML = '<option value="">Todas las áreas</option>'+areas.map(a=>`<option value="${a}">${a}</option>`).join('');
+  if (fTema) fTema.innerHTML = '<option value="">Todos los temas</option>' + temas.map(t => `<option value="${t}">${t}</option>`).join('');
+  if (fArea) fArea.innerHTML = '<option value="">Todas las áreas</option>' + areas.map(a => `<option value="${a}">${a}</option>`).join('');
   filtrarRetos();
 }
 function filtrarRetos() {
-  const tema = document.getElementById('filtro-tema')?.value||'';
-  const area = document.getElementById('filtro-area')?.value||'';
+  const tema = document.getElementById('filtro-tema')?.value || '';
+  const area = document.getElementById('filtro-area')?.value || '';
   let filtrados = todosLosRetos;
-  if(tema) filtrados = filtrados.filter(r=>r.tema===tema);
-  if(area) filtrados = filtrados.filter(r=>r.area===area);
+  if (tema) filtrados = filtrados.filter(r => r.tema === tema);
+  if (area) filtrados = filtrados.filter(r => r.area === area);
   mostrarRetos(filtrados);
 }
 function mostrarRetos(lista) {
   const grid = document.getElementById('retos-grid');
-  if(!grid) return;
-  if(!lista.length) { grid.innerHTML = '<div class="empty-state">No hay retos que coincidan.</div>'; return; }
-  grid.innerHTML = lista.map((r,i)=>{
-    const completado = esItemCompletado(r.id,'reto');
+  if (!grid) return;
+  if (!lista.length) { grid.innerHTML = '<div class="empty-state">No hay retos que coincidan.</div>'; return; }
+  grid.innerHTML = lista.map((r, i) => {
+    const completado = esItemCompletado(r.id, 'reto');
     const tieneMap = r.enlace_maps && r.enlace_maps.startsWith('http');
-    return `<div class="card reto-card"><div class="reto-head"><h3>${r.nombre_reto||'Reto'}</h3><span class="reto-pts">⭐ ${r.puntos||0} pts</span></div><div class="reto-body"><div>${r.tema?`<span class="badge">${r.tema}</span>`:''}${r.area?`<span class="badge">${r.area}</span>`:''}${r.duracion_estimada?`<span class="badge">${r.duracion_estimada}</span>`:''}</div>${r.descripcion_corta?`<p>${r.descripcion_corta}</p>`:''}${completado?`<div>✅ Completado</div>`:`<div style="display:flex; gap:8px;">${tieneMap?`<a href="${r.enlace_maps}" target="_blank" class="btn btn-outline btn-sm">📍 Ver mapa</a>`:''}<button class="btn btn-primary btn-sm" onclick='abrirModalReto(${JSON.stringify(r).replace(/'/g,"&#39;")})'>📸 Completar</button></div>`}</div></div>`;
+    return `
+    <div class="card reto-card fade-in" style="animation-delay:${i*0.04}s">
+      <div class="reto-head">
+        <h3>${r.nombre_reto || 'Reto sin nombre'}</h3>
+        <span class="reto-pts">⭐ ${r.puntos || 0} pts</span>
+      </div>
+      <div class="reto-body">
+        <div class="reto-meta">
+          ${r.tema ? `<span class="badge badge-verde"><i class="fas fa-tag"></i> ${r.tema}</span>` : ''}
+          ${r.area ? `<span class="badge badge-marron"><i class="fas fa-map-pin"></i> ${r.area}</span>` : ''}
+          ${r.duracion_estimada ? `<span class="badge badge-amarillo"><i class="fas fa-clock"></i> ${r.duracion_estimada}</span>` : ''}
+        </div>
+        ${r.descripcion_corta ? `<p style="font-size:0.83rem;color:var(--texto-suave);margin-bottom:12px">${r.descripcion_corta}</p>` : ''}
+        ${completado ? `<div><i class="fas fa-check-circle"></i> ¡Reto completado!</div>`
+          : `<div class="reto-actions" style="display:flex; gap:8px; flex-wrap:wrap;">
+              ${tieneMap ? `<a class="btn btn-outline btn-sm" href="${r.enlace_maps}" target="_blank"><i class="fas fa-map-pin"></i> Ver ubicación</a>` : ''}
+              <button class="btn btn-primary btn-sm" onclick='abrirModalReto(${JSON.stringify(r).replace(/'/g, "&#39;")})'><i class="fas fa-camera"></i> Completar</button>
+            </div>`
+        }
+      </div>
+    </div>`;
   }).join('');
 }
-function abrirModalReto(reto) { retoActual=reto; fotoBase64=null; document.getElementById('modal-reto-titulo').textContent=reto.nombre_reto; document.getElementById('modal-reto-desc').textContent=`${reto.puntos} puntos · ${reto.tema||''} · ${reto.area||''}`; document.getElementById('foto-preview').classList.add('hidden'); document.getElementById('foto-file-input').value=''; document.getElementById('modal-reto').classList.remove('hidden'); document.body.style.overflow='hidden'; }
-function previsualizarFoto(e) { const file=e.target.files[0]; if(!file) return; const reader=new FileReader(); reader.onload=ev=>{ document.getElementById('foto-preview').src=ev.target.result; document.getElementById('foto-preview').classList.remove('hidden'); fotoBase64=ev.target.result.split(',')[1]; }; reader.readAsDataURL(file); }
-async function submitReto() { if(!retoActual||!fotoBase64){toast('Selecciona una foto','error');return;} mostrarSpinner(); cerrarModal('modal-reto'); try{ const resFoto=await apiPOST({accion:'subir_foto',foto_base64:fotoBase64,email:sesion.email,nombre_reto:retoActual.nombre_reto}); if(!resFoto.success) throw new Error('Error foto'); const fotoUrl=resFoto.data.foto_url; const resComp=await apiPOST({accion:'completar_reto',email:sesion.email,item_id:retoActual.id,item_tipo:'reto',puntos:retoActual.puntos,nombre_item:retoActual.nombre_reto,foto_url:fotoUrl}); if(!resComp.success) throw new Error(resComp.message); sumarPuntos(parseInt(retoActual.puntos)); agregarCompletado({item_id:retoActual.id,item_tipo:'reto',nombre:retoActual.nombre_reto,puntos:retoActual.puntos}); if(fotoUrl){ if(!sesion.fotos) sesion.fotos=[]; sesion.fotos.push({url:fotoUrl,nombre:retoActual.nombre_reto,fecha:new Date().toLocaleDateString()}); guardarSesion(); } toast(`¡Reto completado! +${retoActual.puntos} puntos`,'success'); filtrarRetos(); renderizarProgreso(); }catch(e){toast(e.message,'error');} finally{ocultarSpinner(); retoActual=null; fotoBase64=null;} }
-function renderizarCartas() { if(sesion.tipo_juego==='fisico'){ document.getElementById('cartas-contenido')?.classList.add('hidden'); document.getElementById('cartas-mensaje-fisico')?.classList.remove('hidden'); return; } const categorias=[...new Set(todasLasCartas.map(c=>c.categoria).filter(Boolean))]; const tabs=document.getElementById('cartas-tabs'); if(tabs){ tabs.innerHTML=`<button class="tab-btn active" onclick="filtrarCartas(this,'')">Todas</button>`+categorias.map(cat=>`<button class="tab-btn" onclick="filtrarCartas(this,'${cat.replace(/'/g,"\\'")}')">${cat}</button>`).join(''); } mostrarCartas(todasLasCartas); }
-function filtrarCartas(btnEl,categoria){ document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active')); if(btnEl) btnEl.classList.add('active'); mostrarCartas(categoria?todasLasCartas.filter(c=>c.categoria===categoria):todasLasCartas); }
-function mostrarCartas(lista){ const grid=document.getElementById('cartas-grid'); if(!grid) return; if(!lista.length){grid.innerHTML='<div class="empty-state">No hay cartas.</div>';return;} grid.innerHTML=lista.map((c,i)=>{ const completada=esItemCompletado(c.id,'carta'); const esHibrido=sesion.tipo_juego==='hibrido'; return `<div class="card carta-card"><div><h3>${c.titulo||c.nombre_carta||'Carta'}</h3><p>${c.texto_reto||c.descripcion||''}</p><span>⭐ ${c.puntos||0} pts</span>${completada?`<div>✅ Completada</div>`:esHibrido?`<p>🔒 Usa tu mazo físico</p>`:`<button class="btn btn-primary btn-sm" onclick='abrirModalCarta(${JSON.stringify(c).replace(/'/g,"&#39;")})'>⭐ Completar</button>`}</div></div>`; }).join(''); }
-function abrirModalCarta(carta){ cartaActual=carta; document.getElementById('modal-carta-titulo').textContent=carta.titulo||carta.nombre_carta; document.getElementById('modal-carta-desc').textContent=carta.texto_reto||''; document.getElementById('modal-carta').classList.remove('hidden'); document.body.style.overflow='hidden'; }
-async function submitCarta(){ if(!cartaActual) return; mostrarSpinner(); cerrarModal('modal-carta'); try{ const res=await apiPOST({accion:'completar_reto',email:sesion.email,item_id:cartaActual.id,item_tipo:'carta',puntos:cartaActual.puntos,nombre_item:cartaActual.titulo||cartaActual.nombre_carta}); if(!res.success) throw new Error(res.message); sumarPuntos(parseInt(cartaActual.puntos)); agregarCompletado({item_id:cartaActual.id,item_tipo:'carta',nombre:cartaActual.titulo,puntos:cartaActual.puntos}); toast(`¡Carta completada! +${cartaActual.puntos} puntos`,'success'); mostrarCartas(todasLasCartas); renderizarProgreso(); }catch(e){toast(e.message,'error');} finally{ocultarSpinner(); cartaActual=null;} }
-function renderizarProgreso(){ const galeria=document.getElementById('fotos-galeria'); const fotos=sesion.fotos||[]; if(fotos.length){ galeria.innerHTML=fotos.map(f=>`<div class="foto-thumb"><img src="${f.url}" alt="${f.nombre}"></div>`).join(''); }else{ galeria.innerHTML='<div class="empty-state">No has subido fotos.</div>'; } const historial=document.getElementById('historial-list'); const completados=(sesion.completados||[]).slice().reverse(); if(completados.length){ historial.innerHTML=completados.map(c=>`<div class="historial-item"><div><i class="fas ${c.item_tipo==='carta'?'fa-scroll':'fa-map-marked-alt'}"></i></div><div><div>${c.nombre||c.item_id}</div><div>${c.fecha||''}</div></div><div>+${c.puntos} pts</div></div>`).join(''); }else{ historial.innerHTML='<div class="empty-state">Aún no has completado nada.</div>'; } actualizarPuntosUI(); }
-function renderizarGlosario(){ filtrarGlosario(); }
-function filtrarGlosario(){ const q=(document.getElementById('busqueda-glosario')?.value||'').toLowerCase(); const lista=q?todosGlosario.filter(g=>(g.término||g.termino||'').toLowerCase().includes(q)||(g.definición||g.definicion||'').toLowerCase().includes(q)):todosGlosario; const cont=document.getElementById('glosario-list'); if(!cont) return; if(!lista.length){cont.innerHTML='<div class="empty-state">No se encontraron términos.</div>';return;} cont.innerHTML=lista.map(g=>`<div class="glosario-item"><dt>${g.término||g.termino}</dt><dd>${g.definición||g.definicion}</dd></div>`).join(''); }
-function renderizarLeyendas(){ const grid=document.getElementById('leyendas-grid'); if(!grid) return; if(!todasLeyendas.length){grid.innerHTML='<div class="empty-state">No hay leyendas.</div>';return;} grid.innerHTML=todasLeyendas.map((l,i)=>`<div class="leyenda-card card" onclick="abrirLeyenda('${l.id}')"><h3>${l.nombre||l.titulo}</h3><p>${(l.texto_leyenda||l.texto_corto||'').slice(0,120)}...</p><p><i class="fas fa-chevron-right"></i> Leer más</p></div>`).join(''); }
-function abrirLeyenda(id){ const leyenda=todasLeyendas.find(l=>String(l.id)===String(id)); if(!leyenda){toast('Leyenda no encontrada','error');return;} const detalle=todasLeyendasDetalle.find(d=>String(d.id)===String(id)); document.getElementById('modal-leyenda-titulo').innerHTML=`<i class="fas fa-feather-alt"></i> ${leyenda.nombre||leyenda.titulo}`; document.getElementById('modal-leyenda-texto').textContent=detalle?(detalle.texto_completo||detalle.texto_leyenda||''):(leyenda.texto_leyenda||''); document.getElementById('modal-leyenda').classList.remove('hidden'); document.body.style.overflow='hidden'; }
-async function cargarDatosIniciales(){ mostrarSpinner(); try{ const [retos,cartas,glosario,leyendas,leyendasDetalle]=await Promise.allSettled([cargarCSV(URL_RETOS),cargarCSV(URL_CARTAS),cargarCSV(URL_GLOSARIO),cargarCSV(URL_LEYENDAS),cargarCSV(URL_LEYENDAS_DETALLE)]); if(retos.status==='fulfilled'){todosLosRetos=retos.value;renderizarRetos();} if(cartas.status==='fulfilled'){todasLasCartas=cartas.value;renderizarCartas();} if(glosario.status==='fulfilled'){todosGlosario=glosario.value;renderizarGlosario();} if(leyendas.status==='fulfilled'){todasLeyendas=leyendas.value;renderizarLeyendas();} if(leyendasDetalle.status==='fulfilled'){todasLeyendasDetalle=leyendasDetalle.value;} }catch(e){console.error(e);toast('Error al cargar datos','error');} finally{ocultarSpinner();} }
-function cerrarModal(id){ document.getElementById(id).classList.add('hidden'); document.body.style.overflow=''; }
-document.querySelectorAll('.modal-overlay').forEach(overlay=>{ overlay.addEventListener('click',e=>{if(e.target===overlay) cerrarModal(overlay.id);}); });
-document.addEventListener('keydown',e=>{if(e.key==='Escape') document.querySelectorAll('.modal-overlay:not(.hidden)').forEach(m=>cerrarModal(m.id));});
 
-// ========== EVENTOS ==========
-document.getElementById('btn-abrir-login').addEventListener('click', ()=> {
-  document.getElementById('modal-login').classList.remove('hidden');
-});
-document.getElementById('btn-cerrar-modal').addEventListener('click', ()=> {
-  document.getElementById('modal-login').classList.add('hidden');
-});
-document.getElementById('btn-login').addEventListener('click', async () => {
-  const email = document.getElementById('input-email').value.trim();
-  const codigo = document.getElementById('input-codigo').value.trim();
-  const nombre = document.getElementById('input-nombre').value.trim();
-  if (!email || !codigo) {
-    toast('Completa correo y código.', 'error');
+// ========== MODAL RETO ==========
+function abrirModalReto(reto) {
+  retoActual = reto;
+  fotoBase64 = null;
+  document.getElementById('modal-reto-titulo').textContent = reto.nombre_reto;
+  document.getElementById('modal-reto-desc').textContent = `${reto.puntos} puntos · ${reto.tema || ''} · ${reto.area || ''}`;
+  document.getElementById('foto-preview').classList.add('hidden');
+  document.getElementById('foto-file-input').value = '';
+  document.getElementById('modal-reto').classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+}
+function previsualizarFoto(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    const img = document.getElementById('foto-preview');
+    img.src = ev.target.result;
+    img.classList.remove('hidden');
+    fotoBase64 = ev.target.result.split(',')[1];
+  };
+  reader.readAsDataURL(file);
+}
+async function submitReto() {
+  if (!retoActual || !fotoBase64) { toast('Selecciona una foto', 'error'); return; }
+  mostrarSpinner('Subiendo foto...');
+  cerrarModal('modal-reto');
+  try {
+    const resFoto = await apiPOST({ accion: 'subir_foto', foto_base64: fotoBase64, email: sesion.email, nombre_reto: retoActual.nombre_reto });
+    if (!resFoto.success) throw new Error('Error al subir foto');
+    const fotoUrl = resFoto.data.foto_url;
+    const resCompletar = await apiPOST({
+      accion: 'completar_reto',
+      email: sesion.email,
+      item_id: retoActual.id,
+      item_tipo: 'reto',
+      puntos: retoActual.puntos,
+      nombre_item: retoActual.nombre_reto,
+      foto_url: fotoUrl
+    });
+    if (!resCompletar.success) throw new Error(resCompletar.message);
+    sumarPuntos(parseInt(retoActual.puntos));
+    agregarCompletado({ item_id: retoActual.id, item_tipo: 'reto', nombre: retoActual.nombre_reto, puntos: retoActual.puntos });
+    if (fotoUrl) {
+      if (!sesion.fotos) sesion.fotos = [];
+      sesion.fotos.push({ url: fotoUrl, nombre: retoActual.nombre_reto, fecha: new Date().toLocaleDateString() });
+      guardarSesion();
+    }
+    toast(`¡Reto completado! +${retoActual.puntos} puntos`, 'success');
+    filtrarRetos();
+    renderizarProgreso();
+  } catch(e) { toast(e.message, 'error'); }
+  finally { ocultarSpinner(); retoActual = null; fotoBase64 = null; }
+}
+
+// ========== CARTAS ==========
+function renderizarCartas() {
+  if (sesion.tipo_juego === 'fisico') {
+    document.getElementById('cartas-contenido')?.classList.add('hidden');
+    document.getElementById('cartas-mensaje-fisico')?.classList.remove('hidden');
     return;
   }
-  const ok = await loginUsuario(email, codigo, nombre);
-  if (ok) iniciarApp();
-});
+  const categorias = [...new Set(todasLasCartas.map(c => c.categoria).filter(Boolean))];
+  const tabs = document.getElementById('cartas-tabs');
+  if (tabs) {
+    tabs.innerHTML = `<button class="tab-btn active" data-cat="" onclick="filtrarCartas(this,'')">Todas</button>` +
+      categorias.map(cat => `<button class="tab-btn" data-cat="${cat}" onclick="filtrarCartas(this,'${cat.replace(/'/g,"\\'")}')">${cat}</button>`).join('');
+  }
+  mostrarCartas(todasLasCartas);
+}
+function filtrarCartas(btnEl, categoria) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  if (btnEl) btnEl.classList.add('active');
+  mostrarCartas(categoria ? todasLasCartas.filter(c => c.categoria === categoria) : todasLasCartas);
+}
+function mostrarCartas(lista) {
+  const grid = document.getElementById('cartas-grid');
+  if (!grid) return;
+  if (!lista.length) { grid.innerHTML = '<div class="empty-state">No hay cartas disponibles.</div>'; return; }
+  grid.innerHTML = lista.map((c, i) => {
+    const completada = esItemCompletado(c.id, 'carta');
+    const esHibrido = sesion.tipo_juego === 'hibrido';
+    return `
+    <div class="card carta-card ${completada ? 'completada-ok' : ''} ${esHibrido ? 'bloqueada' : ''} fade-in">
+      <div class="carta-info">
+        <h3>${c.titulo || c.nombre_carta || 'Carta'}</h3>
+        <p class="carta-desc">${c.texto_reto || c.descripcion || ''}</p>
+        <span class="carta-pts">⭐ ${c.puntos || 0} pts</span>
+        ${completada ? `<div><i class="fas fa-check-circle"></i> ¡Completada!</div>`
+          : esHibrido ? `<p><i class="fas fa-lock"></i> Usa tu mazo físico</p>`
+          : `<button class="btn btn-amarillo btn-sm" onclick='abrirModalCarta(${JSON.stringify(c).replace(/'/g, "&#39;")})'><i class="fas fa-star"></i> Completar carta</button>`}
+      </div>
+    </div>`;
+  }).join('');
+}
+function abrirModalCarta(carta) {
+  cartaActual = carta;
+  document.getElementById('modal-carta-titulo').textContent = carta.titulo || carta.nombre_carta;
+  document.getElementById('modal-carta-desc').textContent = carta.texto_reto || '';
+  document.getElementById('modal-carta').classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+}
+async function submitCarta() {
+  if (!cartaActual) return;
+  mostrarSpinner('Registrando carta...');
+  cerrarModal('modal-carta');
+  try {
+    const res = await apiPOST({
+      accion: 'completar_reto',
+      email: sesion.email,
+      item_id: cartaActual.id,
+      item_tipo: 'carta',
+      puntos: cartaActual.puntos,
+      nombre_item: cartaActual.titulo || cartaActual.nombre_carta
+    });
+    if (!res.success) throw new Error(res.message);
+    sumarPuntos(parseInt(cartaActual.puntos));
+    agregarCompletado({ item_id: cartaActual.id, item_tipo: 'carta', nombre: cartaActual.titulo, puntos: cartaActual.puntos });
+    toast(`¡Carta completada! +${cartaActual.puntos} puntos`, 'success');
+    mostrarCartas(todasLasCartas);
+    renderizarProgreso();
+  } catch(e) { toast(e.message, 'error'); }
+  finally { ocultarSpinner(); cartaActual = null; }
+}
 
-// Si ya hay sesión guardada, ir directo a la app
+// ========== PROGRESO ==========
+function renderizarProgreso() {
+  const galeria = document.getElementById('fotos-galeria');
+  const fotos = sesion.fotos || [];
+  if (fotos.length) {
+    galeria.innerHTML = fotos.map(f => `<div class="foto-thumb"><img src="${f.url}" alt="${f.nombre}"><div class="foto-overlay">${f.nombre}</div></div>`).join('');
+  } else {
+    galeria.innerHTML = '<div class="empty-state">No has subido fotos aún.</div>';
+  }
+  const historial = document.getElementById('historial-list');
+  const completados = (sesion.completados || []).slice().reverse();
+  if (completados.length) {
+    historial.innerHTML = completados.map(c => `
+      <div class="historial-item">
+        <div class="hist-icono"><i class="fas ${c.item_tipo === 'carta' ? 'fa-scroll' : 'fa-map-marked-alt'}"></i></div>
+        <div class="hist-info"><div class="hist-nombre">${c.nombre || c.item_id}</div><div class="hist-fecha">${c.fecha || ''}</div></div>
+        <div class="hist-pts">+${c.puntos} pts</div>
+      </div>`).join('');
+  } else {
+    historial.innerHTML = '<div class="empty-state">Aún no has completado nada.</div>';
+  }
+  actualizarPuntosUI();
+}
+
+// ========== GLOSARIO ==========
+function renderizarGlosario() { filtrarGlosario(); }
+function filtrarGlosario() {
+  const q = (document.getElementById('busqueda-glosario')?.value || '').toLowerCase();
+  const lista = q ? todosGlosario.filter(g => (g.término || g.termino || '').toLowerCase().includes(q) || (g.definición || g.definicion || '').toLowerCase().includes(q)) : todosGlosario;
+  const cont = document.getElementById('glosario-list');
+  if (!cont) return;
+  if (!lista.length) { cont.innerHTML = '<div class="empty-state">No se encontraron términos.</div>'; return; }
+  cont.innerHTML = lista.map(g => `<div class="glosario-item"><dt>${g.término || g.termino}</dt><dd>${g.definición || g.definicion}</dd></div>`).join('');
+}
+
+// ========== LEYENDAS ==========
+function renderizarLeyendas() {
+  const grid = document.getElementById('leyendas-grid');
+  if (!grid) return;
+  if (!todasLeyendas.length) { grid.innerHTML = '<div class="empty-state">No hay leyendas disponibles.</div>'; return; }
+  grid.innerHTML = todasLeyendas.map((l, i) => `
+    <div class="leyenda-card fade-in" style="animation-delay:${i*0.06}s" onclick="abrirLeyenda('${l.id}')">
+      <h3>${l.nombre || l.titulo}</h3>
+      <p class="leyenda-preview">${(l.texto_leyenda || l.texto_corto || '').slice(0,120)}...</p>
+      <p class="leer-mas"><i class="fas fa-chevron-right"></i> Leer leyenda completa</p>
+    </div>`).join('');
+}
+function abrirLeyenda(id) {
+  const leyenda = todasLeyendas.find(l => String(l.id) === String(id));
+  if (!leyenda) { toast('Leyenda no encontrada', 'error'); return; }
+  const detalle = todasLeyendasDetalle.find(d => String(d.id) === String(id));
+  document.getElementById('modal-leyenda-titulo').innerHTML = `<i class="fas fa-feather-alt"></i> ${leyenda.nombre || leyenda.titulo}`;
+  document.getElementById('modal-leyenda-texto').textContent = detalle ? (detalle.texto_completo || detalle.texto_leyenda || '') : (leyenda.texto_leyenda || '');
+  document.getElementById('modal-leyenda').classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+}
+
+// ========== CARGA INICIAL DE DATOS ==========
+async function cargarDatosIniciales() {
+  mostrarSpinner('Cargando retos, cartas...');
+  try {
+    const [retos, cartas, glosario, leyendas, leyendasDetalle] = await Promise.allSettled([
+      cargarCSV(URL_RETOS), cargarCSV(URL_CARTAS), cargarCSV(URL_GLOSARIO), cargarCSV(URL_LEYENDAS), cargarCSV(URL_LEYENDAS_DETALLE)
+    ]);
+    if (retos.status === 'fulfilled') { todosLosRetos = retos.value; renderizarRetos(); }
+    if (cartas.status === 'fulfilled') { todasLasCartas = cartas.value; renderizarCartas(); }
+    if (glosario.status === 'fulfilled') { todosGlosario = glosario.value; renderizarGlosario(); }
+    if (leyendas.status === 'fulfilled') { todasLeyendas = leyendas.value; renderizarLeyendas(); }
+    if (leyendasDetalle.status === 'fulfilled') { todasLeyendasDetalle = leyendasDetalle.value; }
+  } catch(e) { console.error(e); toast('Error al cargar datos', 'error'); }
+  finally { ocultarSpinner(); }
+}
+
+// ========== MODALES Y CIERRE ==========
+function cerrarModal(id) {
+  document.getElementById(id).classList.add('hidden');
+  document.body.style.overflow = '';
+}
+document.querySelectorAll('.modal-overlay').forEach(overlay => {
+  overlay.addEventListener('click', e => { if (e.target === overlay) cerrarModal(overlay.id); });
+});
+document.addEventListener('keydown', e => { if (e.key === 'Escape') document.querySelectorAll('.modal-overlay:not(.hidden)').forEach(m => cerrarModal(m.id)); });
+
+// ========== INICIALIZAR ==========
 document.addEventListener('DOMContentLoaded', () => {
   const saved = localStorage.getItem('gesta_sesion');
   if (saved) {
-    try {
-      sesion = JSON.parse(saved);
-      iniciarApp();
-    } catch(e) {}
+    try { sesion = JSON.parse(saved); iniciarApp(); } catch(e) {}
   }
 });
 </script>
