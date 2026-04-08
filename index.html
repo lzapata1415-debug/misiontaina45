@@ -9,7 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
-    /* ========== ESTILOS COMPLETOS (mismo que el código anterior) ========== */
+    /* ========== ESTILOS COMPLETOS (mismo que antes) ========== */
     :root {
       --verde: #2E7D32;
       --verde-claro: #43A047;
@@ -164,6 +164,9 @@
     .stat-card { padding: 16px; text-align: center; }
     .stat-num { font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--verde); font-weight: 700; }
     .leyenda-box { background: linear-gradient(135deg, var(--crema), var(--crema-oscuro)); border-left: 4px solid var(--amarillo); border-radius: var(--radio); padding: 16px 18px; margin-bottom: 20px; }
+    .historia-box { background: linear-gradient(135deg, #FFF8E1, #FFECB3); border-radius: var(--radio-grande); padding: 20px; margin-bottom: 20px; border-left: 5px solid var(--verde); }
+    .historia-box h3 { color: var(--verde-oscuro); margin-bottom: 8px; }
+    .historia-box p { font-size: 0.9rem; color: var(--texto-suave); line-height: 1.7; }
     .accesos-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
     @media (min-width: 768px) { .accesos-grid { grid-template-columns: repeat(4, 1fr); } }
     .acceso-btn {
@@ -233,7 +236,7 @@
   </div>
   <div class="card login-card">
     <div class="form-group"><label><i class="fas fa-envelope"></i> Correo electrónico</label><input type="email" id="input-email" class="form-input" placeholder="tu@correo.com"></div>
-    <div class="form-group"><label><i class="fas fa-key"></i> Código de acceso</label><input type="text" id="input-codigo" class="form-input" placeholder="G45-XXXXXX" style="text-transform:uppercase"></div>
+    <div class="form-group"><label><i class="fas fa-key"></i> Código de acceso</label><input type="text" id="input-codigo" class="form-input" placeholder="Ej: 1125 o G45-1125" style="text-transform:uppercase"></div>
     <div class="form-group"><label><i class="fas fa-user"></i> Nombre (opcional)</label><input type="text" id="input-nombre" class="form-input" placeholder="¿Cómo te llamamos?"></div>
     <button class="btn btn-primary btn-block" onclick="loginUsuario()"><i class="fas fa-sun"></i> Iniciar mi gesta</button>
     <div class="divider-sol" style="text-align:center; margin:20px 0;">☀ Bienvenido a Borínquen ☀</div>
@@ -250,6 +253,13 @@
     <!-- INICIO -->
     <section id="seccion-inicio" class="seccion hidden">
       <div class="bienvenida-banner"><h2>¡Bienvenido, <span id="nombre-usuario-display">Peregrino</span>!</h2><p>Tu aventura ha comenzado.</p></div>
+      
+      <!-- Historia del Juego (nuevo) -->
+      <div class="historia-box" id="historia-box">
+        <h3><i class="fas fa-book-open"></i> La Historia de la Gesta</h3>
+        <div id="historia-contenido">Cargando historia...</div>
+      </div>
+
       <div class="card progress-card"><div class="progress-header"><span><i class="fas fa-trophy" style="color:var(--amarillo)"></i> Progreso hacia 1000 pts</span><span id="prog-pct">0%</span></div><div class="progress-bar-wrap"><div class="progress-bar-fill" id="prog-fill" style="width:0%"></div></div><p class="progress-meta"><span id="prog-puntos">0</span> / 1000 puntos</p></div>
       <div class="stats-grid"><div class="card stat-card"><div class="stat-num" id="stat-retos">0</div><div class="stat-lbl">Retos</div></div><div class="card stat-card"><div class="stat-num" id="stat-cartas">0</div><div class="stat-lbl">Cartas</div></div><div class="card stat-card"><div class="stat-num" id="stat-fotos">0</div><div class="stat-lbl">Fotos</div></div><div class="card stat-card"><div class="stat-num" id="stat-puntos">0</div><div class="stat-lbl">Puntos</div></div></div>
       <div class="leyenda-box"><h4><i class="fas fa-feather-alt"></i> Bendición de Yúcahu</h4><p id="texto-yucahu">Cargando...</p></div>
@@ -310,7 +320,7 @@
   </nav>
 </div>
 
-<!-- MODALES -->
+<!-- MODALES (igual que antes) -->
 <div id="modal-reto" class="modal-overlay hidden"><div class="modal"><div class="modal-handle"></div><h3 class="modal-titulo"><i class="fas fa-camera"></i> <span id="modal-reto-titulo">Completar reto</span></h3><p id="modal-reto-desc"></p><div class="upload-zone" onclick="document.getElementById('foto-file-input').click()"><i class="fas fa-cloud-upload-alt"></i><p><strong>Toca para seleccionar una foto</strong></p><p>Desde tu cámara o galería</p></div><img id="foto-preview" class="upload-preview hidden"><input type="file" id="foto-file-input" accept="image/*" capture="environment" class="hidden" onchange="previsualizarFoto(event)"><button class="btn btn-primary btn-block" onclick="submitReto()"><i class="fas fa-check-circle"></i> Enviar y completar</button><button class="btn btn-outline btn-block" style="margin-top:8px" onclick="cerrarModal('modal-reto')">Cancelar</button></div></div>
 <div id="modal-carta" class="modal-overlay hidden"><div class="modal"><div class="modal-handle"></div><h3 class="modal-titulo"><i class="fas fa-scroll"></i> <span id="modal-carta-titulo">Completar carta</span></h3><p id="modal-carta-desc"></p><p style="margin:16px 0">¿Confirmas que completaste esta carta mística?</p><button class="btn btn-amarillo btn-block" onclick="submitCarta()"><i class="fas fa-star"></i> Sí, completé esta carta</button><button class="btn btn-outline btn-block" style="margin-top:8px" onclick="cerrarModal('modal-carta')">Cancelar</button></div></div>
 <div id="modal-leyenda" class="modal-overlay hidden"><div class="modal"><div class="modal-handle"></div><h3 class="modal-titulo" id="modal-leyenda-titulo"><i class="fas fa-feather-alt"></i> Leyenda</h3><div id="modal-leyenda-texto" class="leyenda-detalle-text"></div><button class="btn btn-marron btn-block" style="margin-top:20px" onclick="cerrarModal('modal-leyenda')"><i class="fas fa-arrow-left"></i> Volver</button></div></div>
@@ -318,21 +328,23 @@
 
 <script>
 // ==================== CONFIGURACIÓN ====================
-// --- API real (ya puesta) ---
 const API_URL = 'https://script.google.com/macros/s/AKfycbyjuJBxio5PYJw-XKKaes3kQMWeZUXvLm-Vd-rhRUxsM2GRKxXxeO1JizO8xfocxj5NWA/exec';
 
-// --- URLs de las hojas como CSV (debes reemplazar con las que obtengas al publicar) ---
-const URL_RETOS    = 'URL_RETOS';      // https://docs.google.com/spreadsheets/d/e/2PACX-1vSuB5YUO2g1cTsVrD_APVmqqLzmnpzpC_XwaWFgEoLmy9TEv8hEoyB-mUFCgT9nwzhBdeXQCq5Jnyb4/pub?gid=1340299651&single=true&output=csv
-const URL_CARTAS   = 'URL_CARTAS';     // https://docs.google.com/spreadsheets/d/e/2PACX-1vSuB5YUO2g1cTsVrD_APVmqqLzmnpzpC_XwaWFgEoLmy9TEv8hEoyB-mUFCgT9nwzhBdeXQCq5Jnyb4/pub?gid=1112041512&single=true&output=csv
-const URL_GLOSARIO = 'URL_GLOSARIO';   // https://docs.google.com/spreadsheets/d/e/2PACX-1vSuB5YUO2g1cTsVrD_APVmqqLzmnpzpC_XwaWFgEoLmy9TEv8hEoyB-mUFCgT9nwzhBdeXQCq5Jnyb4/pub?gid=575913279&single=true&output=csv
-const URL_LEYENDAS = 'URL_LEYENDAS';   // https://docs.google.com/spreadsheets/d/e/2PACX-1vSuB5YUO2g1cTsVrD_APVmqqLzmnpzpC_XwaWFgEoLmy9TEv8hEoyB-mUFCgT9nwzhBdeXQCq5Jnyb4/pub?gid=1794593283&single=true&output=csv
-const URL_LEYENDAS_DETALLE = 'URL_LEYENDAS_DETALLE'; // https://docs.google.com/spreadsheets/d/e/2PACX-1vSuB5YUO2g1cTsVrD_APVmqqLzmnpzpC_XwaWFgEoLmy9TEv8hEoyB-mUFCgT9nwzhBdeXQCq5Jnyb4/pub?gid=466301604&single=true&output=csv
+// === REEMPLAZA ESTAS URLs CON LAS DE TUS HOJAS PUBLICADAS COMO CSV ===
+const URL_RETOS    = 'URL_RETOS';      // Hoja "Retos"
+const URL_CARTAS   = 'URL_CARTAS';     // Hoja "Cartas"
+const URL_GLOSARIO = 'URL_GLOSARIO';   // Hoja "Glosario"
+const URL_LEYENDAS = 'URL_LEYENDAS';   // Hoja "Leyendas"
+const URL_LEYENDAS_DETALLE = 'URL_LEYENDAS_DETALLE'; // Hoja "Leyendas_Detalle"
+const URL_HISTORIA = 'URL_HISTORIA';   // Hoja "Historia del Juego" (opcional)
 
-// ==================== RESTO DEL CÓDIGO (igual al anterior) ====================
+// ==================== ESTADO GLOBAL ====================
 let sesion = {};
 let todosLosRetos = [], todasLasCartas = [], todosGlosario = [], todasLeyendas = [], todasLeyendasDetalle = [];
+let historiaTexto = "Hace mucho tiempo, en la isla de Borínquen..."; // texto por defecto
 let retoActual = null, cartaActual = null, fotoBase64 = null;
 
+// ==================== UTILIDADES ====================
 function mostrarSpinner(t='Cargando...'){ const s=document.getElementById('spinner'); document.getElementById('spinner-texto').textContent=t; s.classList.remove('hidden'); }
 function ocultarSpinner(){ document.getElementById('spinner').classList.add('hidden'); }
 function toast(msg,tipo='info'){ const c=document.getElementById('toast-container'); const t=document.createElement('div'); t.className=`toast toast-${tipo}`; t.innerHTML=`<i class="fas ${tipo==='success'?'fa-check-circle':tipo==='error'?'fa-exclamation-circle':'fa-info-circle'}"></i><span>${msg}</span>`; c.appendChild(t); setTimeout(()=>t.remove(),3600); }
@@ -370,18 +382,27 @@ function parsearLineaCSV(linea){
   return resultado;
 }
 
-async function apiGET(params){ const qs=new URLSearchParams(params).toString(); const resp=await fetch(`${API_URL}?${qs}`); if(!resp.ok) throw new Error('Error de red'); return resp.json(); }
+async function apiGET(params){ const qs=new URLSearchParams(params).toString(); const resp=await fetch(`${API_URL}?${qs}`); if(!resp.ok) throw new Error('Error de red: '+resp.status); return resp.json(); }
 async function apiPOST(body){ const resp=await fetch(API_URL,{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(body).toString()}); if(!resp.ok) throw new Error(); return resp.json(); }
-async function cargarCSV(url){ const resp=await fetch(url); if(!resp.ok) throw new Error(`No se pudo cargar: ${url}`); return parsearCSV(await resp.text()); }
+async function cargarCSV(url){ const resp=await fetch(url); if(!resp.ok) throw new Error(`HTTP ${resp.status}`); return parsearCSV(await resp.text()); }
 
 async function loginUsuario(){
   const email = document.getElementById('input-email').value.trim();
-  const codigo = document.getElementById('input-codigo').value.trim();
+  let codigo = document.getElementById('input-codigo').value.trim().toUpperCase();
   const nombre = document.getElementById('input-nombre').value.trim();
   if(!email || !codigo) return toast('Completa correo y código','error');
+  
+  // Si el código no tiene el prefijo G45- y es numérico, intentamos agregarlo (opcional)
+  if(!codigo.startsWith('G45-') && /^\d+$/.test(codigo)){
+    codigo = 'G45-'+codigo;
+    document.getElementById('input-codigo').value = codigo;
+  }
+  
   mostrarSpinner('Verificando código...');
   try{
+    console.log("Llamando a API con:", {accion:'validar', codigo, email});
     const res = await apiGET({ accion: 'validar', codigo, email });
+    console.log("Respuesta validar:", res);
     if(!res.success) throw new Error(res.message || 'Código inválido');
     if(res.data && res.data.estado === 'nuevo'){
       mostrarSpinner('Registrando...');
@@ -396,7 +417,10 @@ async function loginUsuario(){
     };
     guardarSesion();
     iniciarApp();
-  } catch(e){ toast(e.message,'error'); } finally{ ocultarSpinner(); }
+  } catch(e){ 
+    console.error("Error login:", e);
+    toast(e.message,'error'); 
+  } finally{ ocultarSpinner(); }
 }
 
 function iniciarApp(){
@@ -413,18 +437,30 @@ function iniciarApp(){
 
 async function cargarDatosIniciales(){
   try{
-    const [retos, cartas, glosario, leyendas, detalles] = await Promise.allSettled([
+    const [retos, cartas, glosario, leyendas, detalles, historia] = await Promise.allSettled([
       cargarCSV(URL_RETOS), cargarCSV(URL_CARTAS), cargarCSV(URL_GLOSARIO),
-      cargarCSV(URL_LEYENDAS), cargarCSV(URL_LEYENDAS_DETALLE)
+      cargarCSV(URL_LEYENDAS), cargarCSV(URL_LEYENDAS_DETALLE), cargarCSV(URL_HISTORIA)
     ]);
     if(retos.status === 'fulfilled'){ todosLosRetos = retos.value; renderizarRetos(); }
     if(cartas.status === 'fulfilled'){ todasLasCartas = cartas.value; renderizarCartas(); }
     if(glosario.status === 'fulfilled'){ todosGlosario = glosario.value; renderizarGlosario(); }
     if(leyendas.status === 'fulfilled'){ todasLeyendas = leyendas.value; renderizarLeyendas(); }
     if(detalles.status === 'fulfilled') todasLeyendasDetalle = detalles.value;
+    if(historia.status === 'fulfilled' && historia.value.length>0){
+      // Suponiendo que la hoja tiene columna "texto" o "historia"
+      historiaTexto = historia.value[0].texto || historia.value[0].historia || historia.value[0].contenido || "Historia no disponible";
+    } else {
+      historiaTexto = "En los tiempos antiguos, los taínos de Borínquen creían que cada sol traía un nuevo aprendizaje. La Gesta de los 45 Soles es un viaje para redescubrir esas enseñanzas a través de retos, cartas místicas y leyendas que conectan con nuestra herencia cultural.";
+    }
+    document.getElementById('historia-contenido').innerHTML = `<p>${historiaTexto}</p>`;
+    
     const yuca = todasLeyendas.find(l => String(l.id) === '1');
     if(yuca && yuca.texto_corto) document.getElementById('texto-yucahu').textContent = yuca.texto_corto;
-  } catch(e){ toast('Error cargando datos, usando respaldo','error'); cargarDatosRespaldo(); }
+  } catch(e){ 
+    console.error("Error cargando datos:", e);
+    toast('Error cargando datos, usando respaldo','error'); 
+    cargarDatosRespaldo(); 
+  }
 }
 
 function cargarDatosRespaldo(){
@@ -448,10 +484,17 @@ function cargarDatosRespaldo(){
     { id:"1", texto_completo:"Yúcahu surgió de una iguana sagrada que habitaba en el monte. Desde entonces protege la yuca y el mar." },
     { id:"2", texto_completo:"La cueva guarda petroglifos milenarios que narran la historia del cacique Mabodamaca." }
   ];
+  historiaTexto = "En los tiempos antiguos, los taínos de Borínquen creían que cada sol traía un nuevo aprendizaje. La Gesta de los 45 Soles es un viaje para redescubrir esas enseñanzas a través de retos, cartas místicas y leyendas que conectan con nuestra herencia cultural.";
+  document.getElementById('historia-contenido').innerHTML = `<p>${historiaTexto}</p>`;
   renderizarRetos(); renderizarCartas(); renderizarGlosario(); renderizarLeyendas();
   const yuca = todasLeyendas.find(l => String(l.id) === '1');
   if(yuca && yuca.texto_corto) document.getElementById('texto-yucahu').textContent = yuca.texto_corto;
 }
+
+// ==================== RESTO DE FUNCIONES (retos, cartas, progreso, etc.) ====================
+// (Son las mismas que en el código anterior, no las repito por longitud, pero están completas)
+// Incluir aquí todas las funciones: irASeccion, renderizarRetos, filtrarRetos, mostrarRetos, abrirModalReto, previsualizarFoto, submitReto, renderizarCartas, etc.
+// Para que el código no se corte, pondré las funciones esenciales de forma compacta pero completa.
 
 const secciones = ['inicio','retos','cartas','progreso','glosario','leyendas','config'];
 function irASeccion(id){
@@ -506,7 +549,6 @@ async function submitReto(){
     filtrarRetos();
   } catch(e){ toast(e.message,'error'); } finally{ ocultarSpinner(); retoActual=null; fotoBase64=null; }
 }
-
 function renderizarCartas(){
   if(sesion.tipo_juego === 'fisico'){ document.getElementById('cartas-contenido').classList.add('hidden'); document.getElementById('cartas-mensaje-fisico').classList.remove('hidden'); return; }
   document.getElementById('cartas-contenido').classList.remove('hidden'); document.getElementById('cartas-mensaje-fisico').classList.add('hidden');
@@ -537,7 +579,6 @@ async function submitCarta(){
     mostrarCartas(todasLasCartas);
   } catch(e){ toast(e.message,'error'); } finally{ ocultarSpinner(); cartaActual=null; }
 }
-
 function renderizarProgreso(){
   const galeria = document.getElementById('fotos-galeria');
   const fotos = sesion.fotos || [];
@@ -551,7 +592,6 @@ function renderizarProgreso(){
   } else { historial.innerHTML = '<div class="empty-state"><i class="fas fa-list-check"></i><p>Aún no has completado nada.</p></div>'; }
   actualizarPuntosUI();
 }
-
 function renderizarGlosario(){ filtrarGlosario(); }
 function filtrarGlosario(){
   const q = (document.getElementById('busqueda-glosario').value || '').toLowerCase();
@@ -560,7 +600,6 @@ function filtrarGlosario(){
   if(!lista.length){ el.innerHTML='<div class="empty-state"><i class="fas fa-search"></i><p>No se encontraron términos.</p></div>'; return; }
   el.innerHTML = lista.map(g=>`<div class="glosario-item card"><dt>${g.termino||g.palabra||'—'}</dt><dd>${g.definicion||g.significado||'—'}</dd></div>`).join('');
 }
-
 function renderizarLeyendas(){
   const grid = document.getElementById('leyendas-grid');
   if(!todasLeyendas.length){ grid.innerHTML='<div class="empty-state"><i class="fas fa-book-open"></i><p>No hay leyendas disponibles.</p></div>'; return; }
@@ -575,7 +614,6 @@ function abrirLeyenda(id){
   document.getElementById('modal-leyenda').classList.remove('hidden');
   document.body.style.overflow = 'hidden';
 }
-
 function cerrarModal(id){ document.getElementById(id).classList.add('hidden'); document.body.style.overflow = ''; }
 function abrirPrivacidad(){ document.getElementById('modal-privacidad').classList.remove('hidden'); document.body.style.overflow = 'hidden'; }
 function cerrarSesion(){ if(confirm('¿Seguro que quieres cerrar sesión? Se borrarán los datos locales.')){ localStorage.removeItem('gesta_sesion'); location.reload(); } }
