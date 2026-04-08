@@ -289,14 +289,16 @@
 
 <script>
 // ====================================================
-// CONFIGURACIÓN - ¡CAMBIAR POR TUS URLs REALES!
+// CONFIGURACIÓN - URLs REALES (YA ACTUALIZADAS)
 // ====================================================
-const API_URL      = 'https://script.google.com/macros/s/TU_URL_AQUI/exec';
-const URL_RETOS    = 'https://docs.google.com/spreadsheets/d/TU_ID/export?format=csv&gid=ID_RETOS';
-const URL_CARTAS   = 'https://docs.google.com/spreadsheets/d/TU_ID/export?format=csv&gid=ID_CARTAS';
-const URL_GLOSARIO = 'https://docs.google.com/spreadsheets/d/TU_ID/export?format=csv&gid=ID_GLOSARIO';
-const URL_LEYENDAS = 'https://docs.google.com/spreadsheets/d/TU_ID/export?format=csv&gid=ID_LEYENDAS';
-const URL_LEYENDAS_DETALLE = 'https://docs.google.com/spreadsheets/d/TU_ID/export?format=csv&gid=ID_LEYENDAS_DETALLE';
+const API_URL = 'https://script.google.com/macros/s/AKfycbxcJZlDKUk4iNnruitifJM7cAumZa9Awh91t-403AaypoN_kJoQ5TxoetQNiScuDxVapQ/exec';
+const SPREADSHEET_ID = '1w5IegwChoc8GI2VTCK9btN1Z29Jj1O-j0xo8xjN7hTo';
+
+const URL_RETOS    = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/export?format=csv&gid=1340299651`;
+const URL_CARTAS   = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/export?format=csv&gid=1112041512`;
+const URL_GLOSARIO = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/export?format=csv&gid=575913279`;
+const URL_LEYENDAS = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/export?format=csv&gid=1794593283`;
+const URL_LEYENDAS_DETALLE = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/export?format=csv&gid=466301604`;
 
 // ========== ESTADO GLOBAL ==========
 let sesion = {};
@@ -384,7 +386,6 @@ async function loginUsuario() {
       completados: [],
       fotos: []
     };
-    // Cargar progreso histórico
     const prog = await apiGET({ accion: 'obtener_progreso', email });
     if (prog.success) {
       sesion.completados = prog.data.completados || [];
