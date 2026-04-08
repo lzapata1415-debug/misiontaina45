@@ -363,8 +363,9 @@ async function apiPOST(cuerpo) {
   return resp.json();
 }
 
-// ========== SESIÓN Y LOGIN ==========
+// ========== SESIÓN Y LOGIN (CORREGIDO CON AUTO-REGISTRO) ==========
 function guardarSesion() { localStorage.setItem('gesta_sesion', JSON.stringify(sesion)); }
+
 async function loginUsuario() {
   const email = document.getElementById('input-email').value.trim();
   const codigo = document.getElementById('input-codigo').value.trim();
@@ -373,29 +374,60 @@ async function loginUsuario() {
   mostrarSpinner('Verificando...');
   try {
     const res = await apiGET({ accion: 'validar', codigo, email });
-    if (!res.success) { toast(res.message, 'error'); return; }
-    if (res.data && res.data.existe === false) {
-      await apiGET({ accion: 'registrar', codigo, email, nombre });
+    
+    // Si el código no existe → lo registramos automáticamente
+    if (!res.success && res.message === 'Código de acceso inválido.') {
+      const reg = await apiGET({ accion: 'registrar', codigo, email, nombre });
+      if (!reg.success) {
+        toast(reg.message, 'error');
+        return;
+      }
+      // Registro exitoso: creamos sesión con datos por defecto
+      sesion = {
+        email: email,
+        nombre: nombre || email.split('@')[0],
+        codigo: codigo,
+        tipo_juego: 'digital',
+        puntos: 0,
+        completados: [],
+        fotos: []
+      };
+      guardarSesion();
+      iniciarApp();
+      return;
     }
-    sesion = {
-      email,
-      nombre: nombre || res.data.nombre || email.split('@')[0],
-      codigo,
-      tipo_juego: res.data.tipo_juego || 'digital',
-      puntos: res.data.puntos || 0,
-      completados: [],
-      fotos: []
-    };
-    const prog = await apiGET({ accion: 'obtener_progreso', email });
-    if (prog.success) {
-      sesion.completados = prog.data.completados || [];
-      sesion.fotos = prog.data.fotos || [];
+    
+    // Si hay otro error (por ejemplo, correo no coincide)
+    if (!res.success) {
+      toast(res.message, 'error');
+      return;
     }
-    guardarSesion();
-    iniciarApp();
+    
+    // Código existe y correo coincide
+    if (res.data && res.data.existe === true) {
+      sesion = {
+        email,
+        nombre: nombre || res.data.nombre,
+        codigo,
+        tipo_juego: res.data.tipo_juego || 'digital',
+        puntos: res.data.puntos || 0,
+        completados: [],
+        fotos: []
+      };
+      const prog = await apiGET({ accion: 'obtener_progreso', email });
+      if (prog.success) {
+        sesion.completados = prog.data.completados || [];
+        sesion.fotos = prog.data.fotos || [];
+      }
+      guardarSesion();
+      iniciarApp();
+    } else {
+      toast('No se pudo iniciar sesión.', 'error');
+    }
   } catch(e) { toast('Error de conexión', 'error'); console.error(e); }
   finally { ocultarSpinner(); }
 }
+
 function iniciarApp() {
   document.getElementById('screen-login').classList.add('hidden');
   document.getElementById('app-main').classList.remove('hidden');
