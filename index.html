@@ -3,316 +3,36 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-  <title>La Gesta de los 45 Soles · Experiencia Taína</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <title>La Gesta de los 45 Soles</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
-    /* ---------- VARIABLES & RESET ---------- */
-    :root {
-      --verde:       #2E7D32;
-      --verde-claro: #43A047;
-      --verde-oscuro:#1B5E20;
-      --amarillo:    #FFC107;
-      --amarillo-claro: #FFD54F;
-      --marron:      #5D4037;
-      --marron-claro:#8D6E63;
-      --marron-oscuro:#3E2723;
-      --crema:       #FFF8E1;
-      --crema-oscuro:#F3E5AB;
-      --blanco:      #FFFFFF;
-      --texto:       #2C1810;
-      --texto-suave: #5D4037;
-      --sombra:      rgba(62,39,35,0.15);
-      --sombra-fuerte: rgba(62,39,35,0.3);
-      --radio:       14px;
-      --radio-grande:22px;
-      --transicion:  0.25s ease;
-      --nav-h:       68px;
-    }
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { font-size: 16px; scroll-behavior: smooth; }
-    body {
-      font-family: 'Poppins', sans-serif;
-      background-color: #F9F0D9;
-      background-image: radial-gradient(ellipse at 20% 10%, rgba(255,193,7,0.12) 0%, transparent 50%),
-                        radial-gradient(ellipse at 80% 90%, rgba(46,125,50,0.10) 0%, transparent 50%),
-                        url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%235D4037' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-      color: var(--texto);
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
-    h1, h2, h3, h4 { font-family: 'Playfair Display', serif; line-height: 1.25; }
-    p, span, li, label { line-height: 1.6; }
-
-    /* ---------- UTILIDADES ---------- */
-    .hidden { display: none !important; }
-    .btn {
-      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-      min-height: 44px; padding: 10px 20px; border-radius: var(--radio);
-      font-size: 0.9rem; font-weight: 600; transition: transform 0.2s, box-shadow 0.2s;
-      cursor: pointer; border: none; background: none;
-    }
-    .btn:active { transform: scale(0.96); }
-    .btn-primary { background: linear-gradient(135deg, var(--verde-claro), var(--verde-oscuro)); color: white; box-shadow: 0 4px 14px rgba(46,125,50,0.4); }
-    .btn-amarillo { background: linear-gradient(135deg, var(--amarillo-claro), var(--amarillo)); color: var(--marron-oscuro); box-shadow: 0 4px 14px rgba(255,193,7,0.4); }
-    .btn-marron { background: linear-gradient(135deg, var(--marron-claro), var(--marron)); color: white; }
-    .btn-outline { background: transparent; border: 2px solid var(--verde); color: var(--verde); }
-    .btn-danger { background: linear-gradient(135deg, #e57373, #c62828); color: white; }
-    .btn-block { width: 100%; }
-    .btn-sm { min-height: 36px; padding: 6px 14px; font-size: 0.8rem; }
-    .card { background: var(--blanco); border-radius: var(--radio-grande); box-shadow: 0 4px 20px var(--sombra); overflow: hidden; }
-    .badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 0.72rem; font-weight: 600; text-transform: uppercase; }
-    .badge-verde { background: rgba(46,125,50,0.15); color: var(--verde-oscuro); }
-    .badge-amarillo { background: rgba(255,193,7,0.2); color: #7B6000; }
-    .badge-marron { background: rgba(93,64,55,0.15); color: var(--marron-oscuro); }
-
-    /* ---------- SPINNER & TOAST ---------- */
-    .spinner-overlay {
-      position: fixed; inset: 0; background: rgba(249,240,217,0.9);
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      z-index: 9999; gap: 16px;
-    }
-    .spinner { width: 48px; height: 48px; border: 4px solid rgba(46,125,50,0.2); border-top-color: var(--verde); border-radius: 50%; animation: spin 0.8s linear infinite; }
-    @keyframes spin { to { transform: rotate(360deg); } }
-    #toast-container {
-      position: fixed; top: 16px; left: 50%; transform: translateX(-50%);
-      z-index: 10000; display: flex; flex-direction: column; gap: 8px; max-width: 90vw; width: 360px;
-    }
-    .toast {
-      display: flex; align-items: center; gap: 10px;
-      padding: 12px 18px; border-radius: 12px; font-size: 0.88rem; font-weight: 500;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.18); animation: slideDown 0.3s ease;
-    }
-    @keyframes slideDown { from { opacity:0; transform:translateY(-16px); } to { opacity:1; transform:translateY(0); } }
-    .toast-success { background: #1B5E20; color: white; }
-    .toast-error   { background: #B71C1C; color: white; }
-    .toast-info    { background: var(--marron); color: white; }
-
-    /* ---------- LOGIN ---------- */
-    #screen-login {
-      min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center;
-      padding: 24px 20px;
-    }
-    .login-hero { text-align: center; margin-bottom: 28px; }
-    .sol-icono {
-      width: 90px; height: 90px; border-radius: 50%;
-      background: radial-gradient(circle, var(--amarillo-claro), var(--amarillo));
-      box-shadow: 0 0 0 10px rgba(255,193,7,0.2), 0 0 0 20px rgba(255,193,7,0.1);
-      display: flex; align-items: center; justify-content: center; margin: 0 auto 18px;
-      font-size: 2.6rem; animation: pulso 3s infinite;
-    }
-    @keyframes pulso { 0%,100% { box-shadow: 0 0 0 10px rgba(255,193,7,0.2), 0 0 0 20px rgba(255,193,7,0.08); } 50% { box-shadow: 0 0 0 14px rgba(255,193,7,0.25), 0 0 0 28px rgba(255,193,7,0.12); } }
-    .login-card { width: 100%; max-width: 440px; padding: 28px 24px; }
-    .form-group { margin-bottom: 18px; }
-    .form-group label { display: block; font-size: 0.85rem; font-weight: 600; color: var(--marron); margin-bottom: 6px; }
-    .form-input {
-      width: 100%; padding: 13px 16px; border: 2px solid #E8D5B0;
-      border-radius: var(--radio); font-size: 0.95rem; background: var(--crema);
-      transition: border-color var(--transicion);
-    }
-    .form-input:focus { border-color: var(--verde); outline: none; box-shadow: 0 0 0 3px rgba(46,125,50,0.12); }
-
-    /* ---------- APP PRINCIPAL ---------- */
-    #app-main { display: flex; flex-direction: column; min-height: 100vh; }
-    .top-bar {
-      position: sticky; top: 0; z-index: 100;
-      background: linear-gradient(135deg, var(--verde-oscuro), var(--verde));
-      color: white; padding: 12px 16px;
-      display: flex; align-items: center; justify-content: space-between;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.25);
-    }
-    .top-bar-puntos { background: rgba(255,255,255,0.15); padding: 5px 12px; border-radius: 20px; font-size: 0.85rem; font-weight: 600; }
-    .main-content { flex: 1; padding: 16px 16px calc(var(--nav-h) + 16px); max-width: 900px; margin: 0 auto; width: 100%; }
-    .bottom-nav {
-      position: fixed; bottom: 0; left: 0; right: 0; height: var(--nav-h);
-      background: white; border-top: 1px solid rgba(93,64,55,0.15);
-      display: flex; align-items: stretch; z-index: 200;
-    }
-    .nav-btn {
-      flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
-      gap: 3px; background: transparent; color: var(--marron-claro);
-      font-size: 0.62rem; font-weight: 500; transition: color var(--transicion);
-    }
-    .nav-btn i { font-size: 1.3rem; }
-    .nav-btn.active { color: var(--verde); }
-    .nav-btn:active { background: rgba(46,125,50,0.06); }
-
-    /* ---------- DASHBOARD ---------- */
-    .bienvenida-banner {
-      background: linear-gradient(135deg, var(--verde-oscuro), var(--verde));
-      border-radius: var(--radio-grande); padding: 22px 20px; color: white; margin-bottom: 20px;
-      position: relative; overflow: hidden;
-    }
-    .bienvenida-banner::before { content: '☀'; position: absolute; right: 16px; top: 50%; transform: translateY(-50%); font-size: 5rem; opacity: 0.12; }
-    .progress-card { padding: 20px; margin-bottom: 16px; }
-    .progress-bar-wrap { background: var(--crema-oscuro); border-radius: 20px; height: 14px; overflow: hidden; }
-    .progress-bar-fill { height: 100%; background: linear-gradient(90deg, var(--verde), var(--amarillo)); transition: width 1s ease; }
-    .stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 20px; }
-    @media (min-width: 768px) { .stats-grid { grid-template-columns: repeat(4, 1fr); } }
-    .stat-card { padding: 16px; text-align: center; }
-    .stat-num { font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--verde); font-weight: 700; }
-    .leyenda-box { background: linear-gradient(135deg, var(--crema), var(--crema-oscuro)); border-left: 4px solid var(--amarillo); border-radius: var(--radio); padding: 16px 18px; margin-bottom: 20px; }
-    .accesos-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-    @media (min-width: 768px) { .accesos-grid { grid-template-columns: repeat(4, 1fr); } }
-    .acceso-btn {
-      display: flex; flex-direction: column; align-items: center; gap: 8px;
-      padding: 18px 12px; border-radius: var(--radio-grande); background: white;
-      box-shadow: 0 4px 16px var(--sombra); font-weight: 600; min-height: 90px;
-    }
-    .acceso-btn:active { transform: scale(0.95); }
-
-    /* ---------- RETOS & CARTAS ---------- */
-    .retos-grid, .cartas-grid, .leyendas-grid { display: grid; gap: 14px; grid-template-columns: 1fr; }
-    @media (min-width: 768px) { .retos-grid, .cartas-grid, .leyendas-grid { grid-template-columns: repeat(2, 1fr); } }
-    @media (min-width: 1024px) { .retos-grid, .cartas-grid { grid-template-columns: repeat(3, 1fr); } }
-    .reto-card .reto-head {
-      background: linear-gradient(135deg, var(--verde-oscuro), var(--verde));
-      color: white; padding: 14px 18px; display: flex; justify-content: space-between;
-    }
-    .reto-pts { background: var(--amarillo); color: var(--marron-oscuro); border-radius: 20px; padding: 3px 10px; font-weight: 700; }
-    .reto-body { padding: 14px 18px 18px; }
-    .reto-actions { display: flex; gap: 8px; flex-wrap: wrap; }
-    .carta-card { border-left: 5px solid var(--amarillo); }
-    .carta-card.bloqueada { border-left-color: var(--marron-claro); opacity: 0.75; }
-    .carta-info { padding: 14px 16px; }
-    .bloqueada-msg { font-size: 0.78rem; color: var(--marron-claro); margin-top: 6px; }
-
-    /* ---------- PROGRESO, GLOSARIO, MODALES ---------- */
-    .fotos-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 20px; }
-    @media (min-width: 768px) { .fotos-grid { grid-template-columns: repeat(3, 1fr); } }
-    .foto-thumb { aspect-ratio: 1; border-radius: var(--radio); overflow: hidden; background: var(--crema-oscuro); position: relative; }
-    .foto-thumb img { width: 100%; height: 100%; object-fit: cover; }
-    .historial-item { display: flex; align-items: center; gap: 12px; background: white; border-radius: var(--radio); padding: 12px 16px; margin-bottom: 8px; }
-    .glosario-list dt { font-weight: 700; color: var(--verde-oscuro); }
-    .modal-overlay {
-      position: fixed; inset: 0; background: rgba(39,28,18,0.8); z-index: 500;
-      display: flex; align-items: flex-end; justify-content: center;
-    }
-    @media (min-width: 768px) { .modal-overlay { align-items: center; } }
-    .modal {
-      background: white; width: 100%; max-width: 560px;
-      border-radius: var(--radio-grande) var(--radio-grande) 0 0;
-      padding: 24px 20px 32px; max-height: 90vh; overflow-y: auto;
-    }
-    @media (min-width: 768px) { .modal { border-radius: var(--radio-grande); margin-bottom: 5vh; } }
-    .upload-zone { border: 2px dashed #C4A882; border-radius: var(--radio); padding: 24px 20px; text-align: center; cursor: pointer; background: var(--crema); }
-    .empty-state { text-align: center; padding: 40px 20px; color: var(--marron-claro); }
+    *{margin:0;padding:0;box-sizing:border-box}body{font-family:'Poppins',sans-serif;background:#F9F0D9;color:#2C1810}.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:10px 20px;border-radius:14px;font-weight:600;cursor:pointer;border:none}.btn-primary{background:linear-gradient(135deg,#43A047,#1B5E20);color:#fff}.btn-amarillo{background:linear-gradient(135deg,#FFD54F,#FFC107);color:#3E2723}.btn-outline{background:0 0;border:2px solid #2E7D32;color:#2E7D32}.btn-danger{background:#c62828;color:#fff}.btn-block{width:100%}.card{background:#fff;border-radius:22px;box-shadow:0 4px 20px rgba(62,39,35,0.15);overflow:hidden}.hidden{display:none!important}.spinner-overlay{position:fixed;inset:0;background:rgba(249,240,217,0.9);display:flex;align-items:center;justify-content:center;z-index:9999}.spinner{width:48px;height:48px;border:4px solid rgba(46,125,50,0.2);border-top-color:#2E7D32;border-radius:50%;animation:spin .8s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}#toast-container{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:10000;display:flex;flex-direction:column;gap:8px;width:90%;max-width:360px}.toast{padding:12px 18px;border-radius:12px;background:#5D4037;color:#fff;animation:slideDown .3s ease}.toast-success{background:#1B5E20}.toast-error{background:#B71C1C}@keyframes slideDown{from{opacity:0;transform:translateY(-20px)}to{opacity:1;transform:translateY(0)}}#screen-login{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px 20px}.sol-icono{width:90px;height:90px;border-radius:50%;background:radial-gradient(circle,#FFD54F,#FFC107);display:flex;align-items:center;justify-content:center;margin:0 auto 18px;font-size:2.6rem;box-shadow:0 0 0 10px rgba(255,193,7,0.2),0 0 0 20px rgba(255,193,7,0.1);animation:pulso 3s infinite}@keyframes pulso{0%,100%{box-shadow:0 0 0 10px rgba(255,193,7,0.2),0 0 0 20px rgba(255,193,7,0.08)}50%{box-shadow:0 0 0 14px rgba(255,193,7,0.25),0 0 0 28px rgba(255,193,7,0.12)}}.login-card{width:100%;max-width:440px;padding:28px 24px}.form-group{margin-bottom:18px}.form-group label{display:block;font-size:.85rem;font-weight:600;color:#5D4037;margin-bottom:6px}.form-input{width:100%;padding:13px 16px;border:2px solid #E8D5B0;border-radius:14px;background:#FFF8E1}.form-input:focus{border-color:#2E7D32;outline:none}#app-main{display:flex;flex-direction:column;min-height:100vh}.top-bar{position:sticky;top:0;background:linear-gradient(135deg,#1B5E20,#2E7D32);color:#fff;padding:12px 16px;display:flex;justify-content:space-between}.main-content{flex:1;padding:16px 16px 84px;max-width:900px;margin:0 auto;width:100%}.bottom-nav{position:fixed;bottom:0;left:0;right:0;height:68px;background:#fff;display:flex;border-top:1px solid rgba(93,64,55,0.15)}.nav-btn{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:.62rem;color:#8D6E63;background:0 0}.nav-btn.active{color:#2E7D32}.nav-btn i{font-size:1.3rem}.retos-grid,.cartas-grid,.leyendas-grid{display:grid;gap:14px;grid-template-columns:1fr}@media(min-width:768px){.retos-grid,.cartas-grid{grid-template-columns:repeat(2,1fr)}}@media(min-width:1024px){.retos-grid,.cartas-grid{grid-template-columns:repeat(3,1fr)}}.reto-head{background:linear-gradient(135deg,#1B5E20,#2E7D32);color:#fff;padding:14px 18px;display:flex;justify-content:space-between}.reto-body{padding:14px 18px 18px}.reto-pts{background:#FFC107;color:#3E2723;border-radius:20px;padding:3px 10px;font-weight:700}.carta-card{border-left:5px solid #FFC107}.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:500;display:flex;align-items:flex-end;justify-content:center}@media(min-width:768px){.modal-overlay{align-items:center}}.modal{background:#fff;width:100%;max-width:560px;border-radius:22px 22px 0 0;padding:24px 20px 32px;max-height:90vh;overflow-y:auto}.upload-zone{border:2px dashed #C4A882;border-radius:14px;padding:24px;text-align:center;background:#FFF8E1;cursor:pointer}.empty-state{text-align:center;padding:40px 20px;color:#8D6E63}.stats-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:20px}@media(min-width:768px){.stats-grid{grid-template-columns:repeat(4,1fr)}}.stat-card{padding:16px;text-align:center}.stat-num{font-family:'Playfair Display',serif;font-size:2rem;color:#2E7D32;font-weight:700}.progress-bar-wrap{background:#F3E5AB;border-radius:20px;height:14px;overflow:hidden}.progress-bar-fill{height:100%;background:linear-gradient(90deg,#2E7D32,#FFC107);transition:width 1s ease}.accesos-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}@media(min-width:768px){.accesos-grid{grid-template-columns:repeat(4,1fr)}}.acceso-btn{display:flex;flex-direction:column;align-items:center;gap:8px;padding:18px 12px;border-radius:22px;background:#fff;box-shadow:0 4px 16px rgba(62,39,35,0.15);font-weight:600;min-height:90px}.fotos-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:20px}@media(min-width:768px){.fotos-grid{grid-template-columns:repeat(3,1fr)}}.foto-thumb{aspect-ratio:1;border-radius:14px;overflow:hidden;background:#F3E5AB}.foto-thumb img{width:100%;height:100%;object-fit:cover}
   </style>
 </head>
 <body>
-
-<div id="spinner" class="spinner-overlay hidden">
-  <div class="spinner"></div>
-  <p class="spinner-text">Cargando...</p>
-</div>
+<div id="spinner" class="spinner-overlay hidden"><div class="spinner"></div></div>
 <div id="toast-container"></div>
-
-<!-- PANTALLA LOGIN -->
 <div id="screen-login">
-  <div class="login-hero">
-    <div class="sol-icono">☀️</div>
-    <h1>La Gesta de los 45 Soles</h1>
-    <p class="subtitulo">Un viaje a las raíces taínas de Borínquen</p>
-  </div>
+  <div class="login-hero"><div class="sol-icono">☀️</div><h1>La Gesta de los 45 Soles</h1><p>Un viaje a las raíces taínas</p></div>
   <div class="card login-card">
-    <div class="form-group">
-      <label><i class="fas fa-envelope"></i> Correo electrónico</label>
-      <input type="email" id="input-email" class="form-input" placeholder="tu@correo.com">
-    </div>
-    <div class="form-group">
-      <label><i class="fas fa-key"></i> Código de acceso</label>
-      <input type="text" id="input-codigo" class="form-input" placeholder="G45-XXXXXX" style="text-transform:uppercase">
-      <p class="form-ayuda">Revisa tu kit de juego</p>
-    </div>
-    <div class="form-group">
-      <label><i class="fas fa-user"></i> Nombre (opcional)</label>
-      <input type="text" id="input-nombre" class="form-input" placeholder="¿Cómo te llamamos?">
-    </div>
-    <button class="btn btn-primary btn-block" onclick="loginUsuario()"><i class="fas fa-sun"></i> Iniciar mi gesta</button>
-    <div class="divider-sol" style="text-align:center; margin:20px 0;">☀ Bienvenido a Borínquen ☀</div>
+    <div class="form-group"><label><i class="fas fa-envelope"></i> Correo electrónico</label><input type="email" id="input-email" class="form-input" placeholder="tu@correo.com"></div>
+    <div class="form-group"><label><i class="fas fa-key"></i> Código de acceso</label><input type="text" id="input-codigo" class="form-input" placeholder="G45-XXXXXX" style="text-transform:uppercase"></div>
+    <div class="form-group"><label><i class="fas fa-user"></i> Nombre (opcional)</label><input type="text" id="input-nombre" class="form-input" placeholder="¿Cómo te llamamos?"></div>
+    <button class="btn btn-primary btn-block" onclick="login()"><i class="fas fa-sun"></i> Iniciar mi gesta</button>
   </div>
 </div>
-
-<!-- APP PRINCIPAL -->
 <div id="app-main" class="hidden">
-  <header class="top-bar">
-    <div><i class="fas fa-sun" style="color:var(--amarillo);margin-right:6px"></i> La Gesta de los 45 Soles</div>
-    <div class="top-bar-puntos"><i class="fas fa-star"></i> <span id="puntos-display">0</span> pts</div>
-  </header>
+  <header class="top-bar"><div><i class="fas fa-sun" style="color:#FFC107"></i> Gesta 45 Soles</div><div><i class="fas fa-star"></i> <span id="puntos-display">0</span> pts</div></header>
   <main class="main-content">
-    <!-- INICIO -->
-    <section id="seccion-inicio" class="seccion hidden">
-      <div class="bienvenida-banner"><h2>¡Bienvenido, <span id="nombre-usuario-display">Peregrino</span>!</h2><p>Tu aventura ha comenzado.</p></div>
-      <div class="card progress-card">
-        <div class="progress-header"><span><i class="fas fa-trophy" style="color:var(--amarillo)"></i> Progreso hacia 1000 pts</span><span id="prog-pct">0%</span></div>
-        <div class="progress-bar-wrap"><div class="progress-bar-fill" id="prog-fill" style="width:0%"></div></div>
-        <p class="progress-meta"><span id="prog-puntos">0</span> / 1000 puntos</p>
-      </div>
-      <div class="stats-grid">
-        <div class="card stat-card"><div class="stat-num" id="stat-retos">0</div><div class="stat-lbl">Retos</div></div>
-        <div class="card stat-card"><div class="stat-num" id="stat-cartas">0</div><div class="stat-lbl">Cartas</div></div>
-        <div class="card stat-card"><div class="stat-num" id="stat-fotos">0</div><div class="stat-lbl">Fotos</div></div>
-        <div class="card stat-card"><div class="stat-num" id="stat-puntos">0</div><div class="stat-lbl">Puntos</div></div>
-      </div>
-      <div class="leyenda-box"><h4><i class="fas fa-feather-alt"></i> Bendición de Yúcahu</h4><p id="texto-yucahu">Cargando...</p></div>
-      <div class="accesos-grid">
-        <button class="acceso-btn" onclick="irASeccion('retos')"><i class="fas fa-map-marked-alt" style="color:var(--verde)"></i> Retos</button>
-        <button class="acceso-btn" onclick="irASeccion('cartas')"><i class="fas fa-scroll"></i> Cartas</button>
-        <button class="acceso-btn" onclick="irASeccion('progreso')"><i class="fas fa-chart-line"></i> Progreso</button>
-        <button class="acceso-btn" onclick="irASeccion('leyendas')"><i class="fas fa-book-open"></i> Leyendas</button>
-      </div>
-    </section>
-
-    <!-- RETOS -->
-    <section id="seccion-retos" class="seccion hidden">
-      <div class="seccion-header"><h2><i class="fas fa-map-marked-alt"></i> Retos</h2></div>
-      <div class="filtros-wrap">
-        <select id="filtro-tema" class="filtro-select" onchange="filtrarRetos()"><option value="">Todos los temas</option></select>
-        <select id="filtro-area" class="filtro-select" onchange="filtrarRetos()"><option value="">Todas las áreas</option></select>
-      </div>
-      <div id="retos-grid" class="retos-grid"><div class="empty-state"><i class="fas fa-spinner fa-pulse"></i> Cargando...</div></div>
-    </section>
-
-    <!-- CARTAS -->
-    <section id="seccion-cartas" class="seccion hidden">
-      <div class="seccion-header"><h2><i class="fas fa-scroll"></i> Cartas Místicas</h2></div>
-      <div id="cartas-mensaje-fisico" class="hidden empty-state"><i class="fas fa-lock"></i><p>Las cartas están solo en tu mazo físico.</p></div>
-      <div id="cartas-contenido"><div class="cartas-tabs" id="cartas-tabs"></div><div id="cartas-grid" class="cartas-grid"></div></div>
-    </section>
-
-    <!-- MI PROGRESO -->
-    <section id="seccion-progreso" class="seccion hidden">
-      <div class="seccion-header"><h2><i class="fas fa-chart-line"></i> Mi Progreso</h2></div>
-      <h3><i class="fas fa-images"></i> Mis fotos</h3><div id="fotos-galeria" class="fotos-grid"></div>
-      <h3><i class="fas fa-list-check"></i> Historial</h3><div id="historial-list" class="historial-list"></div>
-    </section>
-
-    <!-- GLOSARIO -->
-    <section id="seccion-glosario" class="seccion hidden">
-      <div class="seccion-header"><h2><i class="fas fa-book"></i> Glosario Taíno</h2></div>
-      <div class="busqueda-wrap"><i class="fas fa-search"></i><input type="text" id="busqueda-glosario" class="busqueda-input" placeholder="Buscar..." oninput="filtrarGlosario()"></div>
-      <dl id="glosario-list" class="glosario-list"></dl>
-    </section>
-
-    <!-- LEYENDAS -->
-    <section id="seccion-leyendas" class="seccion hidden">
-      <div class="seccion-header"><h2><i class="fas fa-book-open"></i> Leyendas</h2></div>
-      <div id="leyendas-grid" class="leyendas-grid"></div>
-    </section>
-
-    <!-- CONFIGURACIÓN -->
-    <section id="seccion-config" class="seccion hidden">
-      <div class="seccion-header"><h2><i class="fas fa-cog"></i> Configuración</h2></div>
-      <div class="config-item"><div class="config-lbl"><i class="fas fa-user"></i> <span id="config-nombre"></span></div></div>
-      <div class="config-item"><div class="config-lbl"><i class="fas fa-envelope"></i> <span id="config-email"></span></div></div>
-      <div class="config-item"><div class="config-lbl"><i class="fas fa-gamepad"></i> Tipo: <strong id="config-tipo"></strong></div></div>
-      <button class="btn btn-marron btn-block" onclick="abrirPrivacidad()"><i class="fas fa-shield-alt"></i> Políticas de privacidad</button>
-      <button class="btn btn-danger btn-block" style="margin-top:16px" onclick="cerrarSesion()"><i class="fas fa-sign-out-alt"></i> Cerrar sesión</button>
-    </section>
+    <section id="seccion-inicio" class="seccion hidden"><div class="bienvenida-banner"><h2>¡Bienvenido, <span id="nombre-usuario-display">Peregrino</span>!</h2><p>Tu aventura ha comenzado.</p></div><div class="card progress-card"><div>Progreso a 1000 pts <span id="prog-pct">0%</span></div><div class="progress-bar-wrap"><div class="progress-bar-fill" id="prog-fill" style="width:0%"></div></div><p><span id="prog-puntos">0</span>/1000</p></div><div class="stats-grid"><div class="card stat-card"><div class="stat-num" id="stat-retos">0</div><div>Retos</div></div><div class="card stat-card"><div class="stat-num" id="stat-cartas">0</div><div>Cartas</div></div><div class="card stat-card"><div class="stat-num" id="stat-fotos">0</div><div>Fotos</div></div><div class="card stat-card"><div class="stat-num" id="stat-puntos">0</div><div>Puntos</div></div></div><div class="leyenda-box"><h4>Bendición de Yúcahu</h4><p id="texto-yucahu">Cargando...</p></div><div class="accesos-grid"><button class="acceso-btn" onclick="irASeccion('retos')"><i class="fas fa-map-marked-alt"></i> Retos</button><button class="acceso-btn" onclick="irASeccion('cartas')"><i class="fas fa-scroll"></i> Cartas</button><button class="acceso-btn" onclick="irASeccion('progreso')"><i class="fas fa-chart-line"></i> Progreso</button><button class="acceso-btn" onclick="irASeccion('leyendas')"><i class="fas fa-book-open"></i> Leyendas</button></div></section>
+    <section id="seccion-retos" class="seccion hidden"><h2>Retos</h2><div class="filtros-wrap"><select id="filtro-tema" onchange="filtrarRetos()"><option>Todos los temas</option></select><select id="filtro-area" onchange="filtrarRetos()"><option>Todas las áreas</option></select></div><div id="retos-grid" class="retos-grid"></div></section>
+    <section id="seccion-cartas" class="seccion hidden"><h2>Cartas Místicas</h2><div id="cartas-mensaje-fisico" class="hidden empty-state"><i class="fas fa-lock"></i><p>Solo en mazo físico</p></div><div id="cartas-contenido"><div class="cartas-tabs" id="cartas-tabs"></div><div id="cartas-grid" class="cartas-grid"></div></div></section>
+    <section id="seccion-progreso" class="seccion hidden"><h2>Mi Progreso</h2><h3>Mis fotos</h3><div id="fotos-galeria" class="fotos-grid"></div><h3>Historial</h3><div id="historial-list" class="historial-list"></div></section>
+    <section id="seccion-glosario" class="seccion hidden"><h2>Glosario Taíno</h2><input type="text" id="busqueda-glosario" placeholder="Buscar..." oninput="filtrarGlosario()"><dl id="glosario-list"></dl></section>
+    <section id="seccion-leyendas" class="seccion hidden"><h2>Leyendas</h2><div id="leyendas-grid" class="leyendas-grid"></div></section>
+    <section id="seccion-config" class="seccion hidden"><h2>Configuración</h2><div>Nombre: <span id="config-nombre"></span></div><div>Email: <span id="config-email"></span></div><div>Tipo: <span id="config-tipo"></span></div><button class="btn btn-marron" onclick="abrirPrivacidad()">Políticas de privacidad</button><button class="btn btn-danger" onclick="cerrarSesion()">Cerrar sesión</button></section>
   </main>
-
   <nav class="bottom-nav">
     <button class="nav-btn active" onclick="irASeccion('inicio')"><i class="fas fa-home"></i><span>Inicio</span></button>
     <button class="nav-btn" onclick="irASeccion('retos')"><i class="fas fa-map-marked-alt"></i><span>Retos</span></button>
@@ -320,212 +40,63 @@
     <button class="nav-btn" onclick="irASeccion('progreso')"><i class="fas fa-chart-line"></i><span>Progreso</span></button>
     <button class="nav-btn" onclick="irASeccion('glosario')"><i class="fas fa-book"></i><span>Glosario</span></button>
     <button class="nav-btn" onclick="irASeccion('leyendas')"><i class="fas fa-book-open"></i><span>Leyendas</span></button>
-    <button class="nav-btn" onclick="irASeccion('config')"><i class="fas fa-cog"></i><span>Config.</span></button>
+    <button class="nav-btn" onclick="irASeccion('config')"><i class="fas fa-cog"></i><span>Config</span></button>
   </nav>
 </div>
-
-<!-- MODALES -->
-<div id="modal-reto" class="modal-overlay hidden"><div class="modal"><div class="modal-handle"></div><h3 class="modal-titulo"><i class="fas fa-camera"></i> <span id="modal-reto-titulo">Completar reto</span></h3><p id="modal-reto-desc"></p><div class="upload-zone" onclick="document.getElementById('foto-file-input').click()"><i class="fas fa-cloud-upload-alt"></i><p><strong>Toca para seleccionar foto</strong></p></div><img id="foto-preview" class="upload-preview hidden"><input type="file" id="foto-file-input" accept="image/*" capture="environment" class="hidden" onchange="previsualizarFoto(event)"><button class="btn btn-primary btn-block" onclick="submitReto()"><i class="fas fa-check"></i> Enviar y completar</button><button class="btn btn-outline btn-block" onclick="cerrarModal('modal-reto')">Cancelar</button></div></div>
-<div id="modal-carta" class="modal-overlay hidden"><div class="modal"><div class="modal-handle"></div><h3 class="modal-titulo"><i class="fas fa-scroll"></i> <span id="modal-carta-titulo">Completar carta</span></h3><p id="modal-carta-desc"></p><p>¿Confirmas que completaste esta carta mística?</p><button class="btn btn-amarillo btn-block" onclick="submitCarta()">Sí, completé esta carta</button><button class="btn btn-outline btn-block" onclick="cerrarModal('modal-carta')">Cancelar</button></div></div>
-<div id="modal-leyenda" class="modal-overlay hidden"><div class="modal"><div class="modal-handle"></div><h3 class="modal-titulo" id="modal-leyenda-titulo"><i class="fas fa-feather-alt"></i> Leyenda</h3><div id="modal-leyenda-texto" class="leyenda-detalle-text"></div><button class="btn btn-marron btn-block" onclick="cerrarModal('modal-leyenda')">Volver</button></div></div>
-<div id="modal-privacidad" class="modal-overlay hidden"><div class="modal"><div class="modal-handle"></div><h3 class="modal-titulo"><i class="fas fa-shield-alt"></i> Políticas de privacidad</h3><div style="font-size:0.85rem; line-height:1.8"><p>Recopilamos tu nombre, email y fotos para el juego. Las fotos se almacenan en Google Drive del organizador. Puedes solicitar eliminación de datos contactando al organizador.</p></div><button class="btn btn-primary btn-block" onclick="cerrarModal('modal-privacidad')">Entendido</button></div></div>
-
+<div id="modal-reto" class="modal-overlay hidden"><div class="modal"><h3>Completar reto</h3><div class="upload-zone" onclick="document.getElementById('foto-file-input').click()"><i class="fas fa-cloud-upload-alt"></i><p>Selecciona una foto</p></div><img id="foto-preview" class="hidden" style="max-width:100%"><input type="file" id="foto-file-input" accept="image/*" capture="environment" class="hidden" onchange="previsualizarFoto(event)"><button class="btn btn-primary" onclick="submitReto()">Enviar</button><button class="btn btn-outline" onclick="cerrarModal('modal-reto')">Cancelar</button></div></div>
+<div id="modal-carta" class="modal-overlay hidden"><div class="modal"><h3>Completar carta</h3><p>¿Confirmas que completaste esta carta?</p><button class="btn btn-amarillo" onclick="submitCarta()">Sí, completé</button><button class="btn btn-outline" onclick="cerrarModal('modal-carta')">Cancelar</button></div></div>
+<div id="modal-leyenda" class="modal-overlay hidden"><div class="modal"><h3>Leyenda</h3><div id="modal-leyenda-texto"></div><button class="btn btn-marron" onclick="cerrarModal('modal-leyenda')">Cerrar</button></div></div>
+<div id="modal-privacidad" class="modal-overlay hidden"><div class="modal"><h3>Políticas de privacidad</h3><p>Recopilamos email, nombre y fotos para el juego. Las fotos se guardan en Drive del organizador. Puedes solicitar eliminación.</p><button class="btn btn-primary" onclick="cerrarModal('modal-privacidad')">Entendido</button></div></div>
 <script>
-// ==================== CONFIGURACIÓN (REEMPLAZAR AQUÍ) ====================
-const API_URL      = 'https://script.google.com/macros/s/TU_URL_AQUI/exec';
-const URL_RETOS    = 'URL_RETOS';      
-const URL_CARTAS   = 'URL_CARTAS';
+// ========== CONFIGURACIÓN - REEMPLAZA ESTAS URLS ==========
+const API_URL = 'https://script.google.com/macros/s/TU_URL_AQUI/exec';
+const URL_RETOS = 'URL_RETOS';
+const URL_CARTAS = 'URL_CARTAS';
 const URL_GLOSARIO = 'URL_GLOSARIO';
 const URL_LEYENDAS = 'URL_LEYENDAS';
 const URL_LEYENDAS_DETALLE = 'URL_LEYENDAS_DETALLE';
 
-// ==================== ESTADO GLOBAL ====================
-let sesion = {};               // email, nombre, puntos, completados[], fotos[], tipo_juego
-let todosLosRetos = [], todasLasCartas = [], todosGlosario = [], todasLeyendas = [], todasLeyendasDetalle = [];
+let sesion = {}, todosLosRetos = [], todasLasCartas = [], todosGlosario = [], todasLeyendas = [], todasLeyendasDetalle = [];
 let retoActual = null, cartaActual = null, fotoBase64 = null;
 
-// ==================== UTILIDADES ====================
-function mostrarSpinner(texto='Cargando...'){ const s=document.getElementById('spinner'); document.getElementById('spinner-texto').textContent=texto; s.classList.remove('hidden'); }
-function ocultarSpinner(){ document.getElementById('spinner').classList.add('hidden'); }
-function toast(msg,tipo='info'){ const c=document.getElementById('toast-container'); const t=document.createElement('div'); t.className=`toast toast-${tipo}`; t.innerHTML=`<i class="fas ${tipo==='success'?'fa-check-circle':tipo==='error'?'fa-exclamation-circle':'fa-info-circle'}"></i><span>${msg}</span>`; c.appendChild(t); setTimeout(()=>t.remove(),3600); }
-function parsearCSV(texto){ const lineas=texto.trim().split('\n'); if(lineas.length<2)return[]; const headers=parsearLineaCSV(lineas[0]); return lineas.slice(1).map(l=>{ const vals=parsearLineaCSV(l); let obj={}; headers.forEach((k,i)=>obj[k.trim()]=(vals[i]||'').trim()); return obj; }).filter(r=>Object.values(r).some(v=>v)); }
-function parsearLineaCSV(linea){ let res=[], actual='', dentro=false; for(let i=0;i<linea.length;i++){ const c=linea[i]; if(c==='"'){ if(dentro && linea[i+1]==='"'){ actual+='"'; i++; }else dentro=!dentro; }else if(c===',' && !dentro){ res.push(actual); actual=''; }else actual+=c; } res.push(actual); return res; }
-function guardarSesion(){ localStorage.setItem('gesta_sesion',JSON.stringify(sesion)); }
-function sumarPuntos(pts){ sesion.puntos=(sesion.puntos||0)+pts; guardarSesion(); actualizarPuntosUI(); }
-function agregarCompletado(item){ if(!sesion.completados) sesion.completados=[]; sesion.completados.push({...item, fecha:new Date().toLocaleDateString('es-PR')}); guardarSesion(); }
-function agregarFoto(url,nombre){ if(!sesion.fotos) sesion.fotos=[]; sesion.fotos.push({url,nombre,fecha:new Date().toLocaleDateString('es-PR')}); guardarSesion(); }
-function esItemCompletado(id,tipo){ return (sesion.completados||[]).some(c=>String(c.item_id)===String(id) && c.item_tipo===tipo); }
-function actualizarPuntosUI(){ const pts=sesion.puntos||0; document.getElementById('puntos-display').textContent=pts; document.getElementById('prog-puntos').textContent=pts; document.getElementById('stat-puntos').textContent=pts; const pct=Math.min(100,Math.round(pts/10)); document.getElementById('prog-fill').style.width=pct+'%'; document.getElementById('prog-pct').textContent=pct+'%'; document.getElementById('stat-retos').textContent=(sesion.completados||[]).filter(c=>c.item_tipo==='reto').length; document.getElementById('stat-cartas').textContent=(sesion.completados||[]).filter(c=>c.item_tipo==='carta').length; document.getElementById('stat-fotos').textContent=(sesion.fotos||[]).length; }
-
-// ==================== API ====================
-async function apiGET(params){ const qs=new URLSearchParams(params).toString(); const res=await fetch(`${API_URL}?${qs}`); if(!res.ok)throw new Error('Error de red'); return res.json(); }
-async function apiPOST(body){ const res=await fetch(API_URL,{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(body).toString()}); if(!res.ok)throw new Error(); return res.json(); }
-async function cargarCSV(url){ const res=await fetch(url); if(!res.ok)throw new Error(`No se pudo cargar ${url}`); return parsearCSV(await res.text()); }
-
-// ==================== LOGIN ====================
-async function loginUsuario(){
-  const email=document.getElementById('input-email').value.trim(), codigo=document.getElementById('input-codigo').value.trim(), nombre=document.getElementById('input-nombre').value.trim();
-  if(!email||!codigo) return toast('Completa correo y código','error');
-  mostrarSpinner('Verificando...');
-  try{
-    const val=await apiGET({accion:'validar',codigo,email});
-    if(!val.success) throw new Error(val.message||'Código inválido');
-    if(val.data?.estado==='nuevo'){
-      const reg=await apiGET({accion:'registrar',codigo,email,nombre});
-      if(!reg.success) throw new Error(reg.message||'Error al registrar');
-    }
-    sesion={
-      email, nombre:nombre||val.data?.nombre||email.split('@')[0], codigo,
-      tipo_juego:val.data?.tipo_juego||'digital',
-      puntos:val.data?.puntos||0,
-      completados:[], fotos:[]
-    };
-    guardarSesion();
-    iniciarApp();
-  }catch(e){ toast(e.message,'error'); }finally{ ocultarSpinner(); }
-}
-
-function iniciarApp(){
-  document.getElementById('screen-login').classList.add('hidden');
-  document.getElementById('app-main').classList.remove('hidden');
-  actualizarPuntosUI();
-  document.getElementById('nombre-usuario-display').textContent=sesion.nombre;
-  document.getElementById('config-nombre').textContent=sesion.nombre;
-  document.getElementById('config-email').textContent=sesion.email;
-  document.getElementById('config-tipo').textContent=sesion.tipo_juego;
-  irASeccion('inicio');
-  cargarDatosIniciales();
-}
-
-async function cargarDatosIniciales(){
-  try{
-    const [retos,cartas,glosario,leyendas,detalles]=await Promise.allSettled([
-      cargarCSV(URL_RETOS), cargarCSV(URL_CARTAS), cargarCSV(URL_GLOSARIO),
-      cargarCSV(URL_LEYENDAS), cargarCSV(URL_LEYENDAS_DETALLE)
-    ]);
-    if(retos.status==='fulfilled'){ todosLosRetos=retos.value; renderizarRetos(); }
-    if(cartas.status==='fulfilled'){ todasLasCartas=cartas.value; renderizarCartas(); }
-    if(glosario.status==='fulfilled'){ todosGlosario=glosario.value; renderizarGlosario(); }
-    if(leyendas.status==='fulfilled'){ todasLeyendas=leyendas.value; renderizarLeyendas(); }
-    if(detalles.status==='fulfilled') todasLeyendasDetalle=detalles.value;
-    const yuca=todasLeyendas.find(l=>String(l.id)==='1');
-    if(yuca&&yuca.texto_corto) document.getElementById('texto-yucahu').textContent=yuca.texto_corto;
-  }catch(e){ toast('Error cargando datos','error'); }
-}
-
-// ==================== NAVEGACIÓN SPA ====================
-const secciones=['inicio','retos','cartas','progreso','glosario','leyendas','config'];
-function irASeccion(id){
-  secciones.forEach(s=>{ document.getElementById(`seccion-${s}`).classList.add('hidden'); document.getElementById(`nav-${s}`)?.classList.remove('active'); });
-  document.getElementById(`seccion-${id}`).classList.remove('hidden');
-  document.getElementById(`nav-${id}`)?.classList.add('active');
-  if(id==='progreso') renderizarProgreso();
-  window.scrollTo({top:0,behavior:'smooth'});
-}
-
-// ==================== RETOS ====================
-function renderizarRetos(){
-  const temas=[...new Set(todosLosRetos.map(r=>r.tema).filter(Boolean))];
-  const areas=[...new Set(todosLosRetos.map(r=>r.area).filter(Boolean))];
-  const fTema=document.getElementById('filtro-tema'), fArea=document.getElementById('filtro-area');
-  fTema.innerHTML='<option value="">Todos los temas</option>'+temas.map(t=>`<option>${t}</option>`).join('');
-  fArea.innerHTML='<option value="">Todas las áreas</option>'+areas.map(a=>`<option>${a}</option>`).join('');
-  filtrarRetos();
-}
-function filtrarRetos(){
-  const tema=document.getElementById('filtro-tema').value, area=document.getElementById('filtro-area').value;
-  let filtrados=todosLosRetos;
-  if(tema) filtrados=filtrados.filter(r=>r.tema===tema);
-  if(area) filtrados=filtrados.filter(r=>r.area===area);
-  mostrarRetos(filtrados);
-}
-function mostrarRetos(lista){
-  const grid=document.getElementById('retos-grid');
-  if(!lista.length){ grid.innerHTML='<div class="empty-state"><i class="fas fa-map-signs"></i><p>No hay retos</p></div>'; return; }
-  grid.innerHTML=lista.map((r,i)=>`<div class="card reto-card"><div class="reto-head"><h3>${r.nombre_reto||'Reto'}</h3><span class="reto-pts">⭐ ${r.puntos||0} pts</span></div><div class="reto-body"><div class="reto-meta">${r.tema?`<span class="badge badge-verde">${r.tema}</span>`:''}${r.area?`<span class="badge badge-marron">${r.area}</span>`:''}${r.duracion?`<span class="badge badge-amarillo">${r.duracion}</span>`:''}</div><p style="font-size:0.83rem;margin-bottom:12px">${r.descripcion||''}</p>${esItemCompletado(r.id,'reto')?'<div class="reto-completado-badge"><i class="fas fa-check-circle"></i> ¡Completado!</div>':`<div class="reto-actions">${r.enlace_maps&&r.enlace_maps.startsWith('http')?`<a class="btn btn-outline btn-sm" href="${r.enlace_maps}" target="_blank"><i class="fas fa-map-pin"></i> Ver ubicación</a>`:''}<button class="btn btn-primary btn-sm" onclick="abrirModalReto('${encodeURIComponent(JSON.stringify(r))}')"><i class="fas fa-camera"></i> Completar</button></div>`}</div></div>`).join('');
-}
-function abrirModalReto(encoded){ const reto=JSON.parse(decodeURIComponent(encoded)); retoActual=reto; fotoBase64=null; document.getElementById('modal-reto-titulo').textContent=reto.nombre_reto; document.getElementById('modal-reto-desc').textContent=`${reto.puntos} pts · ${reto.tema||''} · ${reto.area||''}`; document.getElementById('foto-preview').classList.add('hidden'); document.getElementById('foto-file-input').value=''; document.getElementById('modal-reto').classList.remove('hidden'); document.body.style.overflow='hidden'; }
-function previsualizarFoto(e){ const file=e.target.files[0]; if(!file)return; const reader=new FileReader(); reader.onload=ev=>{ const img=document.getElementById('foto-preview'); img.src=ev.target.result; img.classList.remove('hidden'); fotoBase64=ev.target.result.split(',')[1]; }; reader.readAsDataURL(file); }
-async function submitReto(){
-  if(!retoActual||!fotoBase64) return toast('Selecciona una foto','error');
-  mostrarSpinner('Subiendo foto...'); cerrarModal('modal-reto');
-  try{
-    const subir=await apiPOST({accion:'subir_foto',foto_base64:fotoBase64});
-    if(!subir.success) throw new Error(subir.message||'Error al subir foto');
-    const fotoUrl=subir.data?.foto_url||'';
-    const comp=await apiGET({accion:'completar_reto',email:sesion.email,item_id:retoActual.id,item_tipo:'reto',puntos:retoActual.puntos||0,foto_url:fotoUrl});
-    if(!comp.success) throw new Error(comp.message||'Error al registrar');
-    sumarPuntos(parseInt(retoActual.puntos)||0);
-    agregarCompletado({item_id:retoActual.id,item_tipo:'reto',nombre:retoActual.nombre_reto,puntos:retoActual.puntos});
-    if(fotoUrl) agregarFoto(fotoUrl,retoActual.nombre_reto);
-    toast(`¡Reto completado! +${retoActual.puntos} pts`,'success');
-    filtrarRetos();
-  }catch(e){ toast(e.message,'error'); }finally{ ocultarSpinner(); retoActual=null; fotoBase64=null; }
-}
-
-// ==================== CARTAS ====================
-function renderizarCartas(){
-  if(sesion.tipo_juego==='fisico'){ document.getElementById('cartas-contenido').classList.add('hidden'); document.getElementById('cartas-mensaje-fisico').classList.remove('hidden'); return; }
-  document.getElementById('cartas-contenido').classList.remove('hidden'); document.getElementById('cartas-mensaje-fisico').classList.add('hidden');
-  const cats=[...new Set(todasLasCartas.map(c=>c.categoria).filter(Boolean))];
-  document.getElementById('cartas-tabs').innerHTML=`<button class="tab-btn active" onclick="filtrarCartas('')">Todas</button>`+cats.map(c=>`<button class="tab-btn" onclick="filtrarCartas('${c.replace(/'/g,"\\'")}')">${c}</button>`).join('');
-  mostrarCartas(todasLasCartas);
-}
-function filtrarCartas(cat){ document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active')); if(cat) document.querySelector(`.tab-btn[onclick*="${cat}"]`)?.classList.add('active'); else document.querySelector('.tab-btn')?.classList.add('active'); mostrarCartas(cat?todasLasCartas.filter(c=>c.categoria===cat):todasLasCartas); }
-function mostrarCartas(lista){
-  const grid=document.getElementById('cartas-grid');
-  if(!lista.length){ grid.innerHTML='<div class="empty-state"><i class="fas fa-scroll"></i><p>No hay cartas</p></div>'; return; }
-  grid.innerHTML=lista.map(c=>{ const comp=esItemCompletado(c.id,'carta'); const hibrido=sesion.tipo_juego==='hibrido'; return `<div class="card carta-card ${comp?'completada-ok':''} ${hibrido?'bloqueada':''}"><div class="carta-info"><h3>${c.nombre_carta||'Carta'}</h3><p>${c.descripcion||''}</p><span class="carta-pts">⭐ ${c.puntos||0} pts</span>${comp?'<div style="margin-top:8px;color:var(--verde)"><i class="fas fa-check-circle"></i> Completada</div>':hibrido?'<p class="bloqueada-msg"><i class="fas fa-lock"></i> Usa tu mazo físico</p>':`<button class="btn btn-amarillo btn-sm" style="margin-top:10px" onclick="abrirModalCarta('${encodeURIComponent(JSON.stringify(c))}')">Completar carta</button>`}</div></div>`; }).join('');
-}
-function abrirModalCarta(encoded){ cartaActual=JSON.parse(decodeURIComponent(encoded)); document.getElementById('modal-carta-titulo').textContent=cartaActual.nombre_carta; document.getElementById('modal-carta-desc').textContent=cartaActual.descripcion||''; document.getElementById('modal-carta').classList.remove('hidden'); document.body.style.overflow='hidden'; }
-async function submitCarta(){
-  if(!cartaActual) return; mostrarSpinner('Registrando carta...'); cerrarModal('modal-carta');
-  try{
-    const res=await apiGET({accion:'completar_reto',email:sesion.email,item_id:cartaActual.id,item_tipo:'carta',puntos:cartaActual.puntos||0,foto_url:''});
-    if(!res.success) throw new Error(res.message);
-    sumarPuntos(parseInt(cartaActual.puntos)||0);
-    agregarCompletado({item_id:cartaActual.id,item_tipo:'carta',nombre:cartaActual.nombre_carta,puntos:cartaActual.puntos});
-    toast(`¡Carta completada! +${cartaActual.puntos} pts`,'success');
-    mostrarCartas(todasLasCartas);
-  }catch(e){ toast(e.message,'error'); }finally{ ocultarSpinner(); cartaActual=null; }
-}
-
-// ==================== PROGRESO, GLOSARIO, LEYENDAS ====================
-function renderizarProgreso(){
-  const gal=document.getElementById('fotos-galeria'); const fotos=sesion.fotos||[];
-  gal.innerHTML=fotos.length?fotos.map(f=>`<div class="foto-thumb"><img src="${f.url}" alt="${f.nombre}"><div class="foto-overlay">${f.nombre||''}</div></div>`).join(''):'<div class="empty-state"><i class="fas fa-images"></i><p>Aún sin fotos</p></div>';
-  const hist=document.getElementById('historial-list'); const comps=(sesion.completados||[]).slice().reverse();
-  hist.innerHTML=comps.length?comps.map(c=>`<div class="historial-item"><div class="hist-icono"><i class="fas ${c.item_tipo==='carta'?'fa-scroll':'fa-map-marked-alt'}"></i></div><div class="hist-info"><div class="hist-nombre">${c.nombre||c.item_id}</div><div class="hist-fecha">${c.fecha||''}</div></div><div class="hist-pts">+${c.puntos} pts</div></div>`).join(''):'<div class="empty-state"><i class="fas fa-list-check"></i><p>Sin actividad</p></div>';
-}
-function renderizarGlosario(){ filtrarGlosario(); }
-function filtrarGlosario(){
-  const q=document.getElementById('busqueda-glosario').value.toLowerCase();
-  const filtrados=q?todosGlosario.filter(g=>(g.termino||'').toLowerCase().includes(q)||(g.definicion||'').toLowerCase().includes(q)):todosGlosario;
-  const cont=document.getElementById('glosario-list');
-  if(!filtrados.length){ cont.innerHTML='<div class="empty-state"><i class="fas fa-search"></i><p>No encontrado</p></div>'; return; }
-  cont.innerHTML=filtrados.map(g=>`<div class="glosario-item card"><dt>${g.termino||g.palabra||'—'}</dt><dd>${g.definicion||g.significado||'—'}</dd></div>`).join('');
-}
-function renderizarLeyendas(){
-  const grid=document.getElementById('leyendas-grid');
-  if(!todasLeyendas.length){ grid.innerHTML='<div class="empty-state"><i class="fas fa-book-open"></i><p>Cargando...</p></div>'; return; }
-  grid.innerHTML=todasLeyendas.map(l=>`<div class="leyenda-card" onclick="abrirLeyenda('${l.id}')"><h3>${l.titulo||l.nombre||'Leyenda'}</h3><p class="leyenda-preview">${(l.texto_corto||l.resumen||'').slice(0,120)}...</p><p class="leer-mas"><i class="fas fa-chevron-right"></i> Leer completa</p></div>`).join('');
-}
-function abrirLeyenda(id){
-  const ley=todasLeyendas.find(l=>String(l.id)===String(id));
-  if(!ley) return toast('No encontrada','error');
-  const det=todasLeyendasDetalle.find(d=>String(d.id)===String(id)||String(d.leyenda_id)===String(id));
-  document.getElementById('modal-leyenda-titulo').innerHTML=`<i class="fas fa-feather-alt"></i> ${ley.titulo||ley.nombre}`;
-  document.getElementById('modal-leyenda-texto').textContent=det? (det.texto_completo||det.texto||'Sin detalle') : (ley.texto_corto||ley.resumen||'');
-  document.getElementById('modal-leyenda').classList.remove('hidden');
-  document.body.style.overflow='hidden';
-}
-function cerrarModal(id){ document.getElementById(id).classList.add('hidden'); document.body.style.overflow=''; }
-function abrirPrivacidad(){ document.getElementById('modal-privacidad').classList.remove('hidden'); document.body.style.overflow='hidden'; }
-function cerrarSesion(){ if(confirm('¿Cerrar sesión? Se borrarán datos locales.')){ localStorage.removeItem('gesta_sesion'); location.reload(); } }
-
-// Cerrar modales al tocar overlay
-document.querySelectorAll('.modal-overlay').forEach(o=>o.addEventListener('click',e=>{ if(e.target===o) cerrarModal(o.id); }));
-document.addEventListener('DOMContentLoaded',()=>{ const saved=localStorage.getItem('gesta_sesion'); if(saved){ sesion=JSON.parse(saved); iniciarApp(); } });
+function toast(m,t){let c=document.getElementById('toast-container'),d=document.createElement('div');d.className=`toast toast-${t||'info'}`;d.innerHTML=m;c.appendChild(d);setTimeout(()=>d.remove(),3500);}
+function mostrarSpinner(){document.getElementById('spinner').classList.remove('hidden');}
+function ocultarSpinner(){document.getElementById('spinner').classList.add('hidden');}
+function guardarSesion(){localStorage.setItem('gesta_sesion',JSON.stringify(sesion));}
+function sumarPuntos(p){sesion.puntos=(sesion.puntos||0)+p;guardarSesion();actualizarPuntosUI();}
+function agregarCompletado(i){if(!sesion.completados)sesion.completados=[];sesion.completados.push({...i,fecha:new Date().toLocaleDateString('es-PR')});guardarSesion();}
+function agregarFoto(u,n){if(!sesion.fotos)sesion.fotos=[];sesion.fotos.push({url:u,nombre:n});guardarSesion();}
+function esCompletado(id,tipo){return(sesion.completados||[]).some(c=>String(c.item_id)===String(id)&&c.item_tipo===tipo);}
+function actualizarPuntosUI(){let pts=sesion.puntos||0;document.getElementById('puntos-display').innerText=pts;document.getElementById('prog-puntos').innerText=pts;document.getElementById('stat-puntos').innerText=pts;let pct=Math.min(100,Math.round(pts/10));document.getElementById('prog-fill').style.width=pct+'%';document.getElementById('prog-pct').innerText=pct+'%';document.getElementById('stat-retos').innerText=(sesion.completados||[]).filter(c=>c.item_tipo==='reto').length;document.getElementById('stat-cartas').innerText=(sesion.completados||[]).filter(c=>c.item_tipo==='carta').length;document.getElementById('stat-fotos').innerText=(sesion.fotos||[]).length;}
+function parsearCSV(t){let lineas=t.trim().split('\n');if(lineas.length<2)return[];let enc=lineas[0].split(',');return lineas.slice(1).map(l=>{let vals=l.split(','),o={};enc.forEach((k,i)=>o[k.trim()]=(vals[i]||'').trim());return o;});}
+async function apiGET(p){let q=new URLSearchParams(p).toString(),r=await fetch(`${API_URL}?${q}`);if(!r.ok)throw new Error();return r.json();}
+async function apiPOST(b){let r=await fetch(API_URL,{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(b).toString()});return r.json();}
+async function cargarCSV(u){let r=await fetch(u);if(!r.ok)throw new Error();return parsearCSV(await r.text());}
+async function login(){let e=document.getElementById('input-email').value.trim(),c=document.getElementById('input-codigo').value.trim(),n=document.getElementById('input-nombre').value.trim();if(!e||!c)return toast('Completa correo y código','error');mostrarSpinner();try{let val=await apiGET({accion:'validar',codigo:c,email:e});if(!val.success)throw new Error(val.message||'Código inválido');if(val.data?.estado==='nuevo'){let reg=await apiGET({accion:'registrar',codigo:c,email:e,nombre:n});if(!reg.success)throw new Error(reg.message);}sesion={email:e,nombre:n||val.data?.nombre||e.split('@')[0],codigo:c,tipo_juego:val.data?.tipo_juego||'digital',puntos:val.data?.puntos||0,completados:[],fotos:[]};guardarSesion();iniciarApp();}catch(e){toast(e.message,'error');}finally{ocultarSpinner();}}
+function iniciarApp(){document.getElementById('screen-login').classList.add('hidden');document.getElementById('app-main').classList.remove('hidden');actualizarPuntosUI();document.getElementById('nombre-usuario-display').innerText=sesion.nombre;document.getElementById('config-nombre').innerText=sesion.nombre;document.getElementById('config-email').innerText=sesion.email;document.getElementById('config-tipo').innerText=sesion.tipo_juego;irASeccion('inicio');cargarDatosIniciales();}
+async function cargarDatosIniciales(){try{let[r,c,g,ly,ld]=await Promise.allSettled([cargarCSV(URL_RETOS),cargarCSV(URL_CARTAS),cargarCSV(URL_GLOSARIO),cargarCSV(URL_LEYENDAS),cargarCSV(URL_LEYENDAS_DETALLE)]);if(r.status==='fulfilled'){todosLosRetos=r.value;renderizarRetos();}if(c.status==='fulfilled'){todasLasCartas=c.value;renderizarCartas();}if(g.status==='fulfilled'){todosGlosario=g.value;renderizarGlosario();}if(ly.status==='fulfilled'){todasLeyendas=ly.value;renderizarLeyendas();}if(ld.status==='fulfilled')todasLeyendasDetalle=ld.value;let yuca=todasLeyendas.find(l=>String(l.id)==='1');if(yuca&&yuca.texto_corto)document.getElementById('texto-yucahu').innerText=yuca.texto_corto;}catch(e){toast('Error al cargar datos','error');}}
+function irASeccion(id){['inicio','retos','cartas','progreso','glosario','leyendas','config'].forEach(s=>{document.getElementById(`seccion-${s}`).classList.add('hidden');document.getElementById(`nav-${s}`)?.classList.remove('active');});document.getElementById(`seccion-${id}`).classList.remove('hidden');document.getElementById(`nav-${id}`)?.classList.add('active');if(id==='progreso')renderizarProgreso();}
+function renderizarRetos(){let temas=[...new Set(todosLosRetos.map(r=>r.tema).filter(Boolean))];let areas=[...new Set(todosLosRetos.map(r=>r.area).filter(Boolean))];let ft=document.getElementById('filtro-tema'),fa=document.getElementById('filtro-area');ft.innerHTML='<option value="">Todos los temas</option>'+temas.map(t=>`<option>${t}</option>`).join('');fa.innerHTML='<option value="">Todas las áreas</option>'+areas.map(a=>`<option>${a}</option>`).join('');filtrarRetos();}
+function filtrarRetos(){let tema=document.getElementById('filtro-tema').value,area=document.getElementById('filtro-area').value;let f=todosLosRetos;if(tema)f=f.filter(r=>r.tema===tema);if(area)f=f.filter(r=>r.area===area);mostrarRetos(f);}
+function mostrarRetos(lista){let grid=document.getElementById('retos-grid');if(!lista.length){grid.innerHTML='<div class="empty-state">No hay retos</div>';return;}grid.innerHTML=lista.map(r=>`<div class="card reto-card"><div class="reto-head"><h3>${r.nombre_reto||'Reto'}</h3><span class="reto-pts">⭐ ${r.puntos||0}</span></div><div class="reto-body"><div>${r.tema?`<span class="badge">${r.tema}</span>`:''} ${r.area?`<span class="badge">${r.area}</span>`:''}</div><p>${r.descripcion||''}</p>${esCompletado(r.id,'reto')?'<div><i class="fas fa-check"></i> Completado</div>':`<div class="reto-actions">${r.enlace_maps?`<a href="${r.enlace_maps}" target="_blank" class="btn btn-outline btn-sm">📍 Ver mapa</a>`:''}<button class="btn btn-primary btn-sm" onclick='abrirModalReto(${JSON.stringify(r).replace(/'/g,"\\'")})'>📸 Completar</button></div>`}</div></div>`).join('');}
+function abrirModalReto(reto){retoActual=reto;fotoBase64=null;document.getElementById('foto-preview').classList.add('hidden');document.getElementById('foto-file-input').value='';document.getElementById('modal-reto').classList.remove('hidden');}
+function previsualizarFoto(e){let file=e.target.files[0];if(!file)return;let reader=new FileReader();reader.onload=ev=>{document.getElementById('foto-preview').src=ev.target.result;document.getElementById('foto-preview').classList.remove('hidden');fotoBase64=ev.target.result.split(',')[1];};reader.readAsDataURL(file);}
+async function submitReto(){if(!retoActual||!fotoBase64)return toast('Selecciona una foto','error');mostrarSpinner();cerrarModal('modal-reto');try{let sub=await apiPOST({accion:'subir_foto',foto_base64:fotoBase64});if(!sub.success)throw new Error(sub.message);let fotoUrl=sub.data?.foto_url||'';let comp=await apiGET({accion:'completar_reto',email:sesion.email,item_id:retoActual.id,item_tipo:'reto',puntos:retoActual.puntos||0,foto_url:fotoUrl});if(!comp.success)throw new Error(comp.message);sumarPuntos(parseInt(retoActual.puntos)||0);agregarCompletado({item_id:retoActual.id,item_tipo:'reto',nombre:retoActual.nombre_reto,puntos:retoActual.puntos});if(fotoUrl)agregarFoto(fotoUrl,retoActual.nombre_reto);toast(`¡Reto completado! +${retoActual.puntos} pts`,'success');filtrarRetos();}catch(e){toast(e.message,'error');}finally{ocultarSpinner();retoActual=null;fotoBase64=null;}}
+function renderizarCartas(){if(sesion.tipo_juego==='fisico'){document.getElementById('cartas-contenido').classList.add('hidden');document.getElementById('cartas-mensaje-fisico').classList.remove('hidden');return;}document.getElementById('cartas-contenido').classList.remove('hidden');document.getElementById('cartas-mensaje-fisico').classList.add('hidden');let cats=[...new Set(todasLasCartas.map(c=>c.categoria).filter(Boolean))];document.getElementById('cartas-tabs').innerHTML=`<button class="tab-btn active" onclick="filtrarCartas('')">Todas</button>`+cats.map(c=>`<button class="tab-btn" onclick="filtrarCartas('${c}')">${c}</button>`).join('');mostrarCartas(todasLasCartas);}
+function filtrarCartas(cat){mostrarCartas(cat?todasLasCartas.filter(c=>c.categoria===cat):todasLasCartas);}
+function mostrarCartas(lista){let grid=document.getElementById('cartas-grid');if(!lista.length){grid.innerHTML='<div class="empty-state">No hay cartas</div>';return;}grid.innerHTML=lista.map(c=>{let comp=esCompletado(c.id,'carta'),hib=sesion.tipo_juego==='hibrido';return`<div class="card carta-card ${comp?'completada':''} ${hib?'bloqueada':''}"><div><h3>${c.nombre_carta||'Carta'}</h3><p>${c.descripcion||''}</p><span>⭐ ${c.puntos||0} pts</span>${comp?'<div><i class="fas fa-check"></i> Completada</div>':hib?'<div><i class="fas fa-lock"></i> Usa tu mazo físico</div>':`<button class="btn btn-amarillo btn-sm" onclick='abrirModalCarta(${JSON.stringify(c).replace(/'/g,"\\'")})'>Completar carta</button>`}</div></div>`;}).join('');}
+function abrirModalCarta(carta){cartaActual=carta;document.getElementById('modal-carta').classList.remove('hidden');}
+async function submitCarta(){if(!cartaActual)return;mostrarSpinner();cerrarModal('modal-carta');try{let res=await apiGET({accion:'completar_reto',email:sesion.email,item_id:cartaActual.id,item_tipo:'carta',puntos:cartaActual.puntos||0,foto_url:''});if(!res.success)throw new Error(res.message);sumarPuntos(parseInt(cartaActual.puntos)||0);agregarCompletado({item_id:cartaActual.id,item_tipo:'carta',nombre:cartaActual.nombre_carta,puntos:cartaActual.puntos});toast(`¡Carta completada! +${cartaActual.puntos} pts`,'success');mostrarCartas(todasLasCartas);}catch(e){toast(e.message,'error');}finally{ocultarSpinner();cartaActual=null;}}
+function renderizarProgreso(){let gal=document.getElementById('fotos-galeria'),fotos=sesion.fotos||[];gal.innerHTML=fotos.length?fotos.map(f=>`<div class="foto-thumb"><img src="${f.url}" alt="${f.nombre}"><div>${f.nombre||''}</div></div>`).join(''):'<div class="empty-state">Sin fotos</div>';let hist=document.getElementById('historial-list'),comps=(sesion.completados||[]).slice().reverse();hist.innerHTML=comps.length?comps.map(c=>`<div>${c.nombre} - ${c.puntos} pts - ${c.fecha}</div>`).join(''):'<div class="empty-state">Sin actividad</div>';}
+function renderizarGlosario(){filtrarGlosario();}
+function filtrarGlosario(){let q=document.getElementById('busqueda-glosario').value.toLowerCase();let f=q?todosGlosario.filter(g=>(g.termino||'').toLowerCase().includes(q)||(g.definicion||'').toLowerCase().includes(q)):todosGlosario;let cont=document.getElementById('glosario-list');if(!f.length){cont.innerHTML='<div class="empty-state">No encontrado</div>';return;}cont.innerHTML=f.map(g=>`<div><dt>${g.termino||g.palabra}</dt><dd>${g.definicion||g.significado}</dd></div>`).join('');}
+function renderizarLeyendas(){let grid=document.getElementById('leyendas-grid');if(!todasLeyendas.length){grid.innerHTML='<div class="empty-state">Cargando...</div>';return;}grid.innerHTML=todasLeyendas.map(l=>`<div class="leyenda-card" onclick="abrirLeyenda('${l.id}')"><h3>${l.titulo||l.nombre}</h3><p>${(l.texto_corto||'').slice(0,120)}...</p><span>Leer más</span></div>`).join('');}
+function abrirLeyenda(id){let ley=todasLeyendas.find(l=>String(l.id)===String(id));if(!ley)return;let det=todasLeyendasDetalle.find(d=>String(d.id)===String(id)||String(d.leyenda_id)===String(id));document.getElementById('modal-leyenda-texto').innerText=det?(det.texto_completo||det.texto):(ley.texto_corto||'');document.getElementById('modal-leyenda').classList.remove('hidden');}
+function cerrarModal(id){document.getElementById(id).classList.add('hidden');}
+function abrirPrivacidad(){document.getElementById('modal-privacidad').classList.remove('hidden');}
+function cerrarSesion(){if(confirm('¿Cerrar sesión?')){localStorage.removeItem('gesta_sesion');location.reload();}}
+document.querySelectorAll('.modal-overlay').forEach(o=>o.addEventListener('click',e=>{if(e.target===o)cerrarModal(o.id);}));
+document.addEventListener('DOMContentLoaded',()=>{let s=localStorage.getItem('gesta_sesion');if(s){sesion=JSON.parse(s);iniciarApp();}});
 </script>
 </body>
 </html>
